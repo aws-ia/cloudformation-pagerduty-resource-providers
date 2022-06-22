@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from "axios";
+import {CaseTransformer, transformObjectCase} from "./util";
 
 export type ApiErrorResponse = {
     error: ApiError
@@ -27,7 +28,7 @@ export class PagerDutyClient {
             url: `https://api.pagerduty.com${path}`,
             params: params,
             method: method,
-            data: this.sanitizePayload(body),
+            data: transformObjectCase(body, CaseTransformer.PASCAL_TO_SNAKE),
             headers: {
                 Authorization: `Token token=${this.apiToken}`,
                 'Content-type': 'application/json',
@@ -58,28 +59,5 @@ export class PagerDutyClient {
         }
 
         return results;
-    }
-
-    private sanitizePayload(model: { [key: string]: any }) {
-        if (!model) {
-            return model;
-        }
-
-        return Object.keys(model).reduce((map, key) => {
-            let value = model[key];
-            if (value && value instanceof Object && !(value instanceof Array) && !(value instanceof Set)) {
-                value = this.sanitizePayload(value);
-            }
-            if (value && value instanceof Set) {
-                value = Array.of(...value);
-            }
-            if (value && Array.isArray(value)) {
-                value = value.map(item => item && item instanceof Object && !(item instanceof Array) && !(item instanceof Set)
-                    ? this.sanitizePayload(item)
-                    : item);
-            }
-            map[key.substring(0, 1).toLocaleLowerCase() + key.substring(1).replace(/([A-Z])/g, (input) => `_${input.toLocaleLowerCase()}`)] = value;
-            return map;
-        }, {} as { [key: string]: any })
     }
 }

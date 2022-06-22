@@ -1,0 +1,39 @@
+{
+  "CREATE": {
+    "/PagerDutyAccess": "<PAGER_DUTY_TOKEN>",
+    "/NumLoops": 5,
+    "/EscalationRules": [
+      {
+        "EscalationDelayInMinutes": 30,
+        "Targets": [
+          {
+            "id": "<PAGER_DUTY_USER>",
+            "type": "user_reference"
+          }
+        ]
+      }
+    ],
+    "/Teams": null
+  },
+  "UPDATE": {
+    "/PagerDutyAccess": "<PAGER_DUTY_TOKEN>",
+    "/NumLoops": 8,
+    "/EscalationRules": [
+      {
+        "EscalationDelayInMinutes": 5,
+        "Targets": [
+          {
+            "id": "<PAGER_DUTY_USER>",
+            "type": "user_reference"
+          }
+        ]
+      }
+    ],
+    "/Teams": [
+      {
+        "Id": "<PAGER_DUTY_TEAM>",
+        "Type": "team_reference"
+      }
+    ]
+  }
+}
