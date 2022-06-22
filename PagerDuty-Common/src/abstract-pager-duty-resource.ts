@@ -30,7 +30,7 @@ export abstract class AbstractPagerDutyResource<ResourceModelType extends BaseMo
                 throw new exceptions.InvalidCredentials(errorMessage);
             case 402:
             case 403:
-                throw new exceptions.AccessDenied(`Access denied, please check your API token: ${errorMessage}`);
+                throw new exceptions.AccessDenied(`Access denied, please check your API token and abilities: ${errorMessage}`);
             case 404:
                 throw new exceptions.NotFound(this.typeName, request.logicalResourceIdentifier);
             case 429:
