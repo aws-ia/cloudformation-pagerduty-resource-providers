@@ -55,7 +55,7 @@
           "type": "array",
           "insertionOrder": false,
           "items": {
-            "type": "object"
+            "$ref": "#/definitions/Target"
           },
           "minItems": 1,
           "maxItems": 10
@@ -64,6 +64,36 @@
       "required": [
         "EscalationDelayInMinutes",
         "Targets"
+      ],
+      "additionalProperties": false
+    },
+    "Target": {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by _reference if the object is a reference./, =, +, and -.",
+          "type": "string",
+          "enum": [
+            "user",
+            "schedule",
+            "user_reference",
+            "schedule_reference"
+          ]
+        },
+        "Id": {
+          "$ref": "#/definitions/Id"
+        },
+        "Summary": {
+          "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
+          "type": "string"
+        },
+        "HtmlUrl": {
+          "$ref": "#/definitions/HtmlUrl"
+        }
+      },
+      "required": [
+        "Type",
+        "Id"
       ],
       "additionalProperties": false
     },

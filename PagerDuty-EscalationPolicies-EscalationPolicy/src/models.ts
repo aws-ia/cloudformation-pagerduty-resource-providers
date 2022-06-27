@@ -117,14 +117,51 @@ export class EscalationRules extends BaseModel {
     )
     escalationDelayInMinutes?: Optional<integer>;
     @Expose({ name: 'Targets' })
+    @Type(() => Target)
+    targets?: Optional<Array<Target>>;
+
+}
+
+export class Target extends BaseModel {
+    ['constructor']: typeof Target;
+
+
+    @Expose({ name: 'Type' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(Object, 'targets', value, obj, [Array, Map]),
+            transformValue(String, 'type_', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    targets?: Optional<Array<Map<string, object>>>;
+    type_?: Optional<string>;
+    @Expose({ name: 'Id' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'id', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    id?: Optional<string>;
+    @Expose({ name: 'Summary' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'summary', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    summary?: Optional<string>;
+    @Expose({ name: 'HtmlUrl' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'htmlUrl', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    htmlUrl?: Optional<string>;
 
 }
 

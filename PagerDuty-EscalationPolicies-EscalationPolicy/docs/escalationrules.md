@@ -10,7 +10,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 {
     "<a href="#id" title="Id">Id</a>" : <i>String</i>,
     "<a href="#escalationdelayinminutes" title="EscalationDelayInMinutes">EscalationDelayInMinutes</a>" : <i>Integer</i>,
-    "<a href="#targets" title="Targets">Targets</a>" : <i>[ Map, ... ]</i>
+    "<a href="#targets" title="Targets">Targets</a>" : <i>[ <a href="target.md">Target</a>, ... ]</i>
 }
 </pre>
 
@@ -20,7 +20,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 <a href="#id" title="Id">Id</a>: <i>String</i>
 <a href="#escalationdelayinminutes" title="EscalationDelayInMinutes">EscalationDelayInMinutes</a>: <i>Integer</i>
 <a href="#targets" title="Targets">Targets</a>: <i>
-      - Map</i>
+      - <a href="target.md">Target</a></i>
 </pre>
 
 ## Properties
@@ -49,7 +49,7 @@ The targets an incident should be assigned to upon reaching this rule.
 
 _Required_: Yes
 
-_Type_: List of Map
+_Type_: List of <a href="target.md">Target</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
