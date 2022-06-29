@@ -1,0 +1,32 @@
+{
+  "CREATE": {
+    "/PagerDutyAccess": "<PAGER_DUTY_TOKEN>",
+    "/Name": "End-to-end schedule",
+    "/TimeZone": "Europe/London",
+    "/ScheduleLayers": [
+      {
+        "Name": "Night Shift",
+        "Start": "2015-11-06T20:00:00-05:00",
+        "RotationVirtualStart": "2015-11-06T20:00:00-05:00",
+        "RotationTurnLengthSeconds": 86400,
+        "Users": [
+          {
+            "User": {
+              "Id": "<PAGER_DUTY_USER>",
+              "Type": "user_reference"
+            }
+          }
+        ],
+        "Restrictions": [
+          {
+            "Type": "daily_restriction",
+            "StartTimeOfDay": "08:00:00",
+            "DurationSeconds": 32400
+          }
+        ]
+      }
+    ],
+    "/FinalSchedule": null,
+    "/OverridesSubschedule": null
+  }
+}
