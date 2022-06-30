@@ -23,7 +23,7 @@ export class PagerDutyClient {
         this.apiToken = apiToken;
     }
 
-    public async doRequest<ResponseType>(method: 'get' | 'put' | 'post' | 'delete', path: string, params: any = {}, body?: {}): Promise<AxiosResponse<ResponseType>> {
+    public async doRequest<ResponseType>(method: 'get' | 'put' | 'post' | 'delete', path: string, params: any = {}, body?: {}, headers?: {[key: string]: string}): Promise<AxiosResponse<ResponseType>> {
         return await axios.request<ResponseType>({
             url: `https://api.pagerduty.com${path}`,
             params: params,
@@ -33,12 +33,13 @@ export class PagerDutyClient {
                 Authorization: `Token token=${this.apiToken}`,
                 'Content-type': 'application/json',
                 Accept: 'application/vnd.pagerduty+json;version=2',
-                From: ''
+                From: '',
+                ...headers
             }
         });
     }
 
-    public async paginate<ResponseType extends PaginatedResponseType, ResultType>(method: 'get' | 'put' | 'post' | 'delete', path: string, transform: (response: AxiosResponse<ResponseType>) => ResultType[], params: any = {}, body?: {}): Promise<ResultType[]> {
+    public async paginate<ResponseType extends PaginatedResponseType, ResultType>(method: 'get' | 'put' | 'post' | 'delete', path: string, transform: (response: AxiosResponse<ResponseType>) => ResultType[], params: any = {}, body?: {}, headers?: {[key: string]: string}): Promise<ResultType[]> {
         const results: ResultType[] = [];
 
         let page = 1;
@@ -49,7 +50,7 @@ export class PagerDutyClient {
         };
 
         while (delegateParams.offset >= 0) {
-            const response = await this.doRequest<ResponseType>(method, path, delegateParams, body);
+            const response = await this.doRequest<ResponseType>(method, path, delegateParams, body, headers);
             results.push(...transform(response))
             delegateParams = {
                 ...delegateParams,
