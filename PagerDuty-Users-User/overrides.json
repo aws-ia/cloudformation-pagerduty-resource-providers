@@ -1,0 +1,9 @@
+{
+  "CREATE": {
+    "/PagerDutyAccess": "<PAGER_DUTY_TOKEN>",
+    "/Email": "info@acme.com",
+    "/Color": "green",
+    "/TimeZone": null,
+    "/Role": "user"
+  }
+}
