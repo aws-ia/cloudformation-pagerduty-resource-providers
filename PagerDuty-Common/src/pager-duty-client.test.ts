@@ -119,7 +119,7 @@ describe('PagerDutyClient', () => {
                     }
                 ]
             }]
-        ])('converts payload keys from PascalCase to underscore_case', async (input, output) => {
+        ])('converts payload keys from PascalCase to snake_case', async (input, output) => {
             mockedAxios.request.mockResolvedValueOnce({});
 
             await testInstance.doRequest('get', 'foo/bar', undefined, input);

@@ -1,0 +1,299 @@
+{
+  "typeName": "PagerDuty::EscalationPolicies::EscalationPolicy",
+  "description": "Manage an escalation policy in PagerDuty.",
+  "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+  "definitions": {
+    "PagerDutyAccess": {
+      "type": "object",
+      "properties": {
+        "AccessToken": {
+          "description": "Personal Access Token",
+          "type": "string",
+          "pattern": "^\\w{20}$"
+        }
+      },
+      "required": [
+        "AccessToken"
+      ],
+      "additionalProperties": false
+    },
+    "Name": {
+      "description": "The name of the escalation policy.",
+      "type": "string",
+      "minLength": 1
+    },
+    "Description": {
+      "description": "Escalation policy description.",
+      "type": "string"
+    },
+    "NumLoops": {
+      "description": "The number of times the escalation policy will repeat after reaching the end of its escalation.",
+      "type": "integer",
+      "default": 0,
+      "minimum": 0
+    },
+    "OnCallHandoffNotifications": {
+      "description": "Determines how on call handoff notifications will be sent for users on the escalation policy. Defaults to \"if_has_services\".",
+      "type": "string",
+      "enum": [
+        "if_has_services",
+        "always"
+      ]
+    },
+    "EscalationRules": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "EscalationDelayInMinutes": {
+          "description": "The number of minutes before an unacknowledged incident escalates away from this rule.",
+          "type": "integer"
+        },
+        "Targets": {
+          "description": "The targets an incident should be assigned to upon reaching this rule.",
+          "type": "array",
+          "insertionOrder": false,
+          "items": {
+            "$ref": "#/definitions/Target"
+          },
+          "minItems": 1,
+          "maxItems": 10
+        }
+      },
+      "required": [
+        "EscalationDelayInMinutes",
+        "Targets"
+      ],
+      "additionalProperties": false
+    },
+    "Target": {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by _reference if the object is a reference./, =, +, and -.",
+          "type": "string",
+          "enum": [
+            "user",
+            "schedule",
+            "user_reference",
+            "schedule_reference"
+          ]
+        },
+        "Id": {
+          "$ref": "#/definitions/Id"
+        },
+        "Summary": {
+          "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
+          "type": "string"
+        },
+        "HtmlUrl": {
+          "$ref": "#/definitions/HtmlUrl"
+        }
+      },
+      "required": [
+        "Type",
+        "Id"
+      ],
+      "additionalProperties": false
+    },
+    "Teams": {
+      "description": "Teams associated with the policy. Account must have the teams ability to use this parameter.",
+      "type": "array",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/Team"
+      },
+      "minItems": 1
+    },
+    "Team": {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by _reference if the object is a reference./, =, +, and -.",
+          "type": "string",
+          "enum": [
+            "team_reference"
+          ]
+        },
+        "Id": {
+          "$ref": "#/definitions/Id"
+        },
+        "Summary": {
+          "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
+          "type": "string"
+        },
+        "HtmlUrl": {
+          "$ref": "#/definitions/HtmlUrl"
+        }
+      },
+      "required": [
+        "Type",
+        "Id"
+      ],
+      "additionalProperties": false
+    },
+    "Services": {
+      "type": "array",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/Service"
+      }
+    },
+    "Service": {
+      "type": "object",
+      "properties": {
+        "Type": {
+          "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by _reference if the object is a reference./, =, +, and -.",
+          "type": "string",
+          "enum": [
+            "service_reference"
+          ]
+        },
+        "Id": {
+          "$ref": "#/definitions/Id"
+        },
+        "Summary": {
+          "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
+          "type": "string"
+        },
+        "HtmlUrl": {
+          "$ref": "#/definitions/HtmlUrl"
+        }
+      },
+      "required": [
+        "Type",
+        "Id"
+      ],
+      "additionalProperties": false
+    },
+    "HtmlUrl": {
+      "description": "A URL at which the entity is uniquely displayed in the Web app.",
+      "type": "string"
+    },
+    "Id": {
+      "type": "string"
+    },
+    "EscalationPolicy": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "$ref": "#/definitions/Id"
+        },
+        "Type": {
+          "description": "The type of object being created.",
+          "type": "string",
+          "default": "escalation_policy",
+          "enum": [
+            "escalation_policy"
+          ]
+        },
+        "HtmlUrl": {
+          "$ref": "#/definitions/HtmlUrl"
+        },
+        "Name": {
+          "$ref": "#/definitions/Name"
+        },
+        "Description": {
+          "$ref": "#/definitions/Description"
+        },
+        "NumLoops": {
+          "$ref": "#/definitions/NumLoops"
+        },
+        "OnCallHandoffNotifications": {
+          "$ref": "#/definitions/OnCallHandoffNotifications"
+        },
+        "EscalationRules": {
+          "$ref": "#/definitions/EscalationRules"
+        },
+        "Services": {
+          "$ref": "#/definitions/Services"
+        },
+        "Teams": {
+          "$ref": "#/definitions/Teams"
+        }
+      },
+      "required": [
+        "Type",
+        "Name",
+        "EscalationRules"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "typeConfiguration": {
+    "properties": {
+      "PagerDutyAccess": {
+        "$ref": "#/definitions/PagerDutyAccess"
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "PagerDutyAccess"
+    ]
+  },
+  "properties": {
+    "PagerDutyAccess": {
+      "description": "Personal Access Token",
+      "type": "string",
+      "pattern": "^\\w{20}$"
+    },
+    "Name": {
+      "$ref": "#/definitions/Name"
+    },
+    "Description": {
+      "$ref": "#/definitions/Description"
+    },
+    "NumLoops": {
+      "$ref": "#/definitions/NumLoops"
+    },
+    "OnCallHandoffNotifications": {
+      "$ref": "#/definitions/OnCallHandoffNotifications"
+    },
+    "EscalationRules": {
+      "$ref": "#/definitions/EscalationRules"
+    },
+    "Teams": {
+      "$ref": "#/definitions/Teams"
+    },
+    "Id": {
+      "$ref": "#/definitions/Id"
+    },
+    "EscalationPolicy": {
+      "$ref": "#/definitions/EscalationPolicy"
+    }
+  },
+  "additionalProperties": false,
+  "tagging": {
+    "taggable": false
+  },
+  "required": [
+    "PagerDutyAccess",
+    "Name",
+    "EscalationRules"
+  ],
+  "readOnlyProperties": [
+    "/properties/Id",
+    "/properties/EscalationPolicy"
+  ],
+  "primaryIdentifier": [
+    "/properties/Id"
+  ],
+  "handlers": {
+    "create": {
+      "permissions": []
+    },
+    "read": {
+      "permissions": []
+    },
+    "update": {
+      "permissions": []
+    },
+    "delete": {
+      "permissions": []
+    },
+    "list": {
+      "permissions": []
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "CREATE": {
+    "/PagerDutyAccess": "<PAGER_DUTY_TOKEN>",
+    "/From": "<PAGER_DUTY_EMAIL>",
+    "/Team": null,
+    "/Subscribers": [],
+    "/Responders": [
+      {
+        "Type": "user_reference",
+        "Id": "<PAGER_DUTY_USER>"
+      }
+    ]
+  },
+  "UPDATE": {
+    "/PagerDutyAccess": "<PAGER_DUTY_TOKEN>",
+    "/From": "<PAGER_DUTY_EMAIL>",
+    "/Team": null,
+    "/Subscribers": [
+      {
+        "Type": "user_reference",
+        "Id": "<PAGER_DUTY_USER>"
+      },
+      {
+        "Type": "team_reference",
+        "Id": "<PAGER_DUTY_TEAM>"
+      }
+    ],
+    "/Responders": [
+      {
+        "Type": "user_reference",
+        "Id": "<PAGER_DUTY_USER>"
+      },
+      {
+        "Type": "escalation_policy_reference",
+        "Id": "<PAGER_DUTY_ESCALATION_POLICY>"
+      }
+    ]
+  }
+}
