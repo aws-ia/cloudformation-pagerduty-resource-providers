@@ -197,7 +197,15 @@ For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::G
 
 Returns the <code>Id</code> value.
 
-#### ResponsePlay
+#### Summary
 
-Returns the <code>ResponsePlay</code> value.
+A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.
+
+#### Type
+
+The type of object being created.
+
+#### HtmlUrl
+
+A URL at which the entity is uniquely displayed in the Web app.
 

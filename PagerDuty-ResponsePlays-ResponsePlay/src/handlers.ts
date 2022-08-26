@@ -1,19 +1,30 @@
-import {ResourceModel, ResponsePlay, TypeConfigurationModel} from './models';
+import {ResourceModel, TypeConfigurationModel} from './models';
 import {AbstractPagerDutyResource} from '../../PagerDuty-Common/src/abstract-pager-duty-resource';
 import {PagerDutyClient, PaginatedResponseType} from '../../PagerDuty-Common/src/pager-duty-client';
-import {CaseTransformer, transformObjectCase} from '../../PagerDuty-Common/src/util';
+import {CaseTransformer, Transformer} from '../../PagerDuty-Common/src/util';
 import {version} from '../package.json';
 
-type ResponsePlaysResponse = {
-    response_plays: ResponsePlay[]
+type ResponsePlayPayload = {
+    description: string
+    subscribers: any
+    subscribers_message: string
+    responders: any
+    responders_message: string
+    conference_number: string
+    conference_url: string
+    conference_type: string
+};
+
+type ResponsePlaysPayload = {
+    response_plays: ResponsePlayPayload[]
 } & PaginatedResponseType;
 
-class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlay, ResponsePlay, ResponsePlay, TypeConfigurationModel> {
+class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlayPayload, ResponsePlayPayload, ResponsePlayPayload, TypeConfigurationModel> {
 
     private userAgent = `AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation resource ${this.typeName}/${version}`;
 
-    async get(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResponsePlay> {
-        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ response_play: ResponsePlay }>(
+    async get(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResponsePlayPayload> {
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ response_play: ResponsePlayPayload }>(
             'get',
             `/response_plays/${model.id}`,
             undefined,
@@ -21,17 +32,14 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlay, Re
             {
                 From: model.from_
             });
-        return new ResponsePlay(transformObjectCase(response.data.response_play, CaseTransformer.SNAKE_TO_CAMEL));
+        return response.data.response_play;
     }
 
     async list(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResourceModel[]> {
-        return await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).paginate<ResponsePlaysResponse, ResourceModel>(
+        return await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).paginate<ResponsePlaysPayload, ResourceModel>(
             'get',
             `/response_plays`,
-            response => response.data.response_plays.map(apiResponsePlay => new ResourceModel(transformObjectCase({
-                id: apiResponsePlay.id,
-                responsePlay: apiResponsePlay
-            }, CaseTransformer.SNAKE_TO_CAMEL))),
+            response => response.data.response_plays.map(responsePlayPayload => this.setModelFrom(model, responsePlayPayload)),
             undefined,
             undefined,
             {
@@ -39,36 +47,40 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlay, Re
             });
     }
 
-    async create(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResponsePlay> {
-        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ response_play: ResponsePlay }>(
+    async create(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResponsePlayPayload> {
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ response_play: ResponsePlayPayload }>(
             'post',
             `/response_plays`,
-            {},
+            undefined,
             {
-                response_play: model.toJSON()
+                response_play: Transformer.for(model.toJSON())
+                    .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+                    .transform()
             },
             {
                 From: model.from_
             });
-        return new ResponsePlay(transformObjectCase(response.data.response_play, CaseTransformer.SNAKE_TO_CAMEL));
+        return response.data.response_play;
     }
 
-    async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResponsePlay> {
-        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ response_play: ResponsePlay }>(
+    async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResponsePlayPayload> {
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ response_play: ResponsePlayPayload }>(
             'put',
             `/response_plays/${model.id}`,
-            {},
+            undefined,
             {
-                response_play: model.toJSON()
+                response_play: Transformer.for(model.toJSON())
+                    .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+                    .transform()
             },
             {
                 From: model.from_
             });
-        return new ResponsePlay(transformObjectCase(response.data.response_play, CaseTransformer.SNAKE_TO_CAMEL));
+        return response.data.response_play;
     }
 
     async delete(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<void> {
-        await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ response_play: ResponsePlay }>(
+        await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ response_play: ResponsePlayPayload }>(
             'delete',
             `/response_plays/${model.id}`,
             undefined,
@@ -82,15 +94,39 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlay, Re
         return new ResourceModel(partial);
     }
 
-    setModelFrom(model: ResourceModel, from: ResponsePlay | undefined): ResourceModel {
+    setModelFrom(model: ResourceModel, from?: ResponsePlayPayload): ResourceModel {
         if (!from) {
             return model;
         }
-        model.responsePlay = from;
-        if (!!from.id) {
-            model.id = from.id;
+
+        if (from.description === null) {
+            delete from.description;
         }
-        return model;
+        if (from.subscribers_message === null) {
+            delete from.subscribers_message;
+        }
+        if (from.responders_message === null) {
+            delete from.responders_message;
+        }
+        if (from.conference_number === null) {
+            delete from.conference_number;
+        }
+        if (from.conference_url === null) {
+            delete from.conference_url;
+        }
+        if (from.conference_type === null) {
+            delete from.conference_type;
+        }
+        delete from.subscribers;
+        delete from.responders;
+
+        return new ResourceModel({
+            ...model,
+            ...Transformer.for(from)
+                .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                .forModelIngestion()
+                .transform()
+        });
     }
 
 }
