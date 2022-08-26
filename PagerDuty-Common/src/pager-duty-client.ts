@@ -1,5 +1,4 @@
 import axios, {AxiosResponse} from "axios";
-import {CaseTransformer, transformObjectCase} from "./util";
 
 export type ApiErrorResponse = {
     error: ApiError
@@ -30,7 +29,7 @@ export class PagerDutyClient {
             url: `https://api.pagerduty.com${path}`,
             params: params,
             method: method,
-            data: transformObjectCase(body, CaseTransformer.PASCAL_TO_SNAKE),
+            data: body,
             headers: {
                 Authorization: `Token token=${this.apiToken}`,
                 'Content-type': 'application/json',
