@@ -12,7 +12,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 {
     "Type" : "PagerDuty::ResponsePlays::ResponsePlay",
     "Properties" : {
-        "<a href="#pagerdutyaccess" title="PagerDutyAccess">PagerDutyAccess</a>" : <i>String</i>,
         "<a href="#from" title="From">From</a>" : <i>String</i>,
         "<a href="#name" title="Name">Name</a>" : <i>String</i>,
         "<a href="#description" title="Description">Description</a>" : <i>String</i>,
@@ -34,7 +33,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 <pre>
 Type: PagerDuty::ResponsePlays::ResponsePlay
 Properties:
-    <a href="#pagerdutyaccess" title="PagerDutyAccess">PagerDutyAccess</a>: <i>String</i>
     <a href="#from" title="From">From</a>: <i>String</i>
     <a href="#name" title="Name">Name</a>: <i>String</i>
     <a href="#description" title="Description">Description</a>: <i>String</i>
@@ -52,18 +50,6 @@ Properties:
 </pre>
 
 ## Properties
-
-#### PagerDutyAccess
-
-Personal Access Token
-
-_Required_: Yes
-
-_Type_: String
-
-_Pattern_: <code>^\w{20}$</code>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### From
 

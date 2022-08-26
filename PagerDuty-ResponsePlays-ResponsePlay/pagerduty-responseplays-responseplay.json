@@ -6,14 +6,14 @@
     "PagerDutyAccess": {
       "type": "object",
       "properties": {
-        "AccessToken": {
+        "Token": {
           "description": "Personal Access Token",
           "type": "string",
-          "pattern": "^\\w{20}$"
+          "pattern": "^\\S{20}$"
         }
       },
       "required": [
-        "AccessToken"
+        "Token"
       ],
       "additionalProperties": false
     },
@@ -195,7 +195,7 @@
           "$ref": "#/definitions/Description"
         },
         "Team": {
-          "oneOf": [
+          "anyOf": [
             {
               "$ref": "#/definitions/Team"
             },
@@ -244,11 +244,6 @@
     ]
   },
   "properties": {
-    "PagerDutyAccess": {
-      "description": "Personal Access Token",
-      "type": "string",
-      "pattern": "^\\w{20}$"
-    },
     "From": {
       "description": "The email address of a valid user associated with the account making the request.",
       "type": "string",
@@ -261,7 +256,7 @@
       "$ref": "#/definitions/Description"
     },
     "Team": {
-      "oneOf": [
+      "anyOf": [
         {
           "$ref": "#/definitions/Team"
         },

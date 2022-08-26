@@ -15,7 +15,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
     "<a href="#description" title="Description">Description</a>" : <i>String</i>,
     "<a href="#numloops" title="NumLoops">NumLoops</a>" : <i>Integer</i>,
     "<a href="#oncallhandoffnotifications" title="OnCallHandoffNotifications">OnCallHandoffNotifications</a>" : <i>String</i>,
-    "<a href="#escalationrules" title="EscalationRules">EscalationRules</a>" : <i><a href="escalationrules.md">EscalationRules</a></i>,
+    "<a href="#escalationrules" title="EscalationRules">EscalationRules</a>" : <i>[ <a href="escalationrule.md">EscalationRule</a>, ... ]</i>,
     "<a href="#services" title="Services">Services</a>" : <i>[ <a href="service.md">Service</a>, ... ]</i>,
     "<a href="#teams" title="Teams">Teams</a>" : <i>[ <a href="team.md">Team</a>, ... ]</i>
 }
@@ -31,7 +31,8 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 <a href="#description" title="Description">Description</a>: <i>String</i>
 <a href="#numloops" title="NumLoops">NumLoops</a>: <i>Integer</i>
 <a href="#oncallhandoffnotifications" title="OnCallHandoffNotifications">OnCallHandoffNotifications</a>: <i>String</i>
-<a href="#escalationrules" title="EscalationRules">EscalationRules</a>: <i><a href="escalationrules.md">EscalationRules</a></i>
+<a href="#escalationrules" title="EscalationRules">EscalationRules</a>: <i>
+      - <a href="escalationrule.md">EscalationRule</a></i>
 <a href="#services" title="Services">Services</a>: <i>
       - <a href="service.md">Service</a></i>
 <a href="#teams" title="Teams">Teams</a>: <i>
@@ -118,7 +119,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 _Required_: Yes
 
-_Type_: <a href="escalationrules.md">EscalationRules</a>
+_Type_: List of <a href="escalationrule.md">EscalationRule</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 

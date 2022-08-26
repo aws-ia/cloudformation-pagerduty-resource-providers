@@ -12,7 +12,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 {
     "Type" : "PagerDuty::Users::User",
     "Properties" : {
-        "<a href="#pagerdutyaccess" title="PagerDutyAccess">PagerDutyAccess</a>" : <i>String</i>,
         "<a href="#name" title="Name">Name</a>" : <i>String</i>,
         "<a href="#email" title="Email">Email</a>" : <i>String</i>,
         "<a href="#timezone" title="TimeZone">TimeZone</a>" : <i>String</i>,
@@ -29,7 +28,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 <pre>
 Type: PagerDuty::Users::User
 Properties:
-    <a href="#pagerdutyaccess" title="PagerDutyAccess">PagerDutyAccess</a>: <i>String</i>
     <a href="#name" title="Name">Name</a>: <i>String</i>
     <a href="#email" title="Email">Email</a>: <i>String</i>
     <a href="#timezone" title="TimeZone">TimeZone</a>: <i>String</i>
@@ -40,18 +38,6 @@ Properties:
 </pre>
 
 ## Properties
-
-#### PagerDutyAccess
-
-Personal Access Token
-
-_Required_: No
-
-_Type_: String
-
-_Pattern_: <code>^\w{20}$</code>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### Name
 

@@ -11,15 +11,6 @@ export class ResourceModel extends BaseModel {
     @Exclude()
     protected readonly IDENTIFIER_KEY_ID: string = '/properties/Id';
 
-    @Expose({ name: 'PagerDutyAccess' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'pagerDutyAccess', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    pagerDutyAccess?: Optional<string>;
     @Expose({ name: 'Name' })
     @Transform(
         (value: any, obj: any) =>
@@ -391,15 +382,15 @@ export class PagerDutyAccess extends BaseModel {
     ['constructor']: typeof PagerDutyAccess;
 
 
-    @Expose({ name: 'AccessToken' })
+    @Expose({ name: 'Token' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'accessToken', value, obj, []),
+            transformValue(String, 'token', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    accessToken?: Optional<string>;
+    token?: Optional<string>;
 
 }
 
