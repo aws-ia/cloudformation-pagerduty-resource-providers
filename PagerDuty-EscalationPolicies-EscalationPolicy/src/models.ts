@@ -62,9 +62,36 @@ export class ResourceModel extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'EscalationPolicy' })
-    @Type(() => EscalationPolicy)
-    escalationPolicy?: Optional<EscalationPolicy>;
+    @Expose({ name: 'Type' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'type_', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    type_?: Optional<string>;
+    @Expose({ name: 'Summary' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'summary', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    summary?: Optional<string>;
+    @Expose({ name: 'HtmlUrl' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'htmlUrl', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    htmlUrl?: Optional<string>;
+    @Expose({ name: 'Services' })
+    @Type(() => Service)
+    services?: Optional<Array<Service>>;
 
     @Exclude()
     public getPrimaryIdentifier(): Dict {
@@ -196,85 +223,6 @@ export class Team extends BaseModel {
         }
     )
     htmlUrl?: Optional<string>;
-
-}
-
-export class EscalationPolicy extends BaseModel {
-    ['constructor']: typeof EscalationPolicy;
-
-
-    @Expose({ name: 'Id' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'id', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    id?: Optional<string>;
-    @Expose({ name: 'Type' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'type_', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    type_?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
-    @Expose({ name: 'Name' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'name', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    name?: Optional<string>;
-    @Expose({ name: 'Description' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'description', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    description?: Optional<string>;
-    @Expose({ name: 'NumLoops' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Integer, 'numLoops', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    numLoops?: Optional<integer>;
-    @Expose({ name: 'OnCallHandoffNotifications' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'onCallHandoffNotifications', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    onCallHandoffNotifications?: Optional<string>;
-    @Expose({ name: 'EscalationRules' })
-    @Type(() => EscalationRule)
-    escalationRules?: Optional<Array<EscalationRule>>;
-    @Expose({ name: 'Services' })
-    @Type(() => Service)
-    services?: Optional<Array<Service>>;
-    @Expose({ name: 'Teams' })
-    @Type(() => Team)
-    teams?: Optional<Array<Team>>;
 
 }
 

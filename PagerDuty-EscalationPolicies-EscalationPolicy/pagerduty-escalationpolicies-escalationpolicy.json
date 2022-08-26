@@ -17,42 +17,11 @@
       ],
       "additionalProperties": false
     },
-    "Name": {
-      "description": "The name of the escalation policy.",
-      "type": "string",
-      "minLength": 1
-    },
-    "Description": {
-      "description": "Escalation policy description.",
-      "type": "string"
-    },
-    "NumLoops": {
-      "description": "The number of times the escalation policy will repeat after reaching the end of its escalation.",
-      "type": "integer",
-      "default": 0,
-      "minimum": 0
-    },
-    "OnCallHandoffNotifications": {
-      "description": "Determines how on call handoff notifications will be sent for users on the escalation policy. Defaults to \"if_has_services\".",
-      "type": "string",
-      "enum": [
-        "if_has_services",
-        "always"
-      ]
-    },
-    "EscalationRules": {
-      "type": "array",
-      "insertionOrder": false,
-      "items": {
-        "$ref": "#/definitions/EscalationRule"
-      },
-      "minItems": 1
-    },
     "EscalationRule": {
       "type": "object",
       "properties": {
         "Id": {
-          "type": "string"
+          "$ref": "#/definitions/Id"
         },
         "EscalationDelayInMinutes": {
           "description": "The number of minutes before an unacknowledged incident escalates away from this rule.",
@@ -92,8 +61,7 @@
           "$ref": "#/definitions/Id"
         },
         "Summary": {
-          "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
-          "type": "string"
+          "$ref": "#/definitions/Summary"
         },
         "HtmlUrl": {
           "$ref": "#/definitions/HtmlUrl"
@@ -104,15 +72,6 @@
         "Id"
       ],
       "additionalProperties": false
-    },
-    "Teams": {
-      "description": "Teams associated with the policy. Account must have the teams ability to use this parameter.",
-      "type": "array",
-      "insertionOrder": false,
-      "items": {
-        "$ref": "#/definitions/Team"
-      },
-      "minItems": 1
     },
     "Team": {
       "type": "object",
@@ -128,8 +87,7 @@
           "$ref": "#/definitions/Id"
         },
         "Summary": {
-          "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
-          "type": "string"
+          "$ref": "#/definitions/Summary"
         },
         "HtmlUrl": {
           "$ref": "#/definitions/HtmlUrl"
@@ -140,13 +98,6 @@
         "Id"
       ],
       "additionalProperties": false
-    },
-    "Services": {
-      "type": "array",
-      "insertionOrder": false,
-      "items": {
-        "$ref": "#/definitions/Service"
-      }
     },
     "Service": {
       "type": "object",
@@ -162,8 +113,7 @@
           "$ref": "#/definitions/Id"
         },
         "Summary": {
-          "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
-          "type": "string"
+          "$ref": "#/definitions/Summary"
         },
         "HtmlUrl": {
           "$ref": "#/definitions/HtmlUrl"
@@ -182,51 +132,9 @@
     "Id": {
       "type": "string"
     },
-    "EscalationPolicy": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "$ref": "#/definitions/Id"
-        },
-        "Type": {
-          "description": "The type of object being created.",
-          "type": "string",
-          "default": "escalation_policy",
-          "enum": [
-            "escalation_policy"
-          ]
-        },
-        "HtmlUrl": {
-          "$ref": "#/definitions/HtmlUrl"
-        },
-        "Name": {
-          "$ref": "#/definitions/Name"
-        },
-        "Description": {
-          "$ref": "#/definitions/Description"
-        },
-        "NumLoops": {
-          "$ref": "#/definitions/NumLoops"
-        },
-        "OnCallHandoffNotifications": {
-          "$ref": "#/definitions/OnCallHandoffNotifications"
-        },
-        "EscalationRules": {
-          "$ref": "#/definitions/EscalationRules"
-        },
-        "Services": {
-          "$ref": "#/definitions/Services"
-        },
-        "Teams": {
-          "$ref": "#/definitions/Teams"
-        }
-      },
-      "required": [
-        "Type",
-        "Name",
-        "EscalationRules"
-      ],
-      "additionalProperties": false
+    "Summary": {
+      "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
+      "type": "string"
     }
   },
   "typeConfiguration": {
@@ -242,28 +150,68 @@
   },
   "properties": {
     "Name": {
-      "$ref": "#/definitions/Name"
+      "description": "The name of the escalation policy.",
+      "type": "string",
+      "minLength": 1
     },
     "Description": {
-      "$ref": "#/definitions/Description"
+      "description": "Escalation policy description.",
+      "type": "string"
     },
     "NumLoops": {
-      "$ref": "#/definitions/NumLoops"
+      "description": "The number of times the escalation policy will repeat after reaching the end of its escalation.",
+      "type": "integer",
+      "default": 0,
+      "minimum": 0
     },
     "OnCallHandoffNotifications": {
-      "$ref": "#/definitions/OnCallHandoffNotifications"
+      "description": "Determines how on call handoff notifications will be sent for users on the escalation policy. Defaults to \"if_has_services\".",
+      "type": "string",
+      "enum": [
+        "if_has_services",
+        "always"
+      ]
     },
     "EscalationRules": {
-      "$ref": "#/definitions/EscalationRules"
+      "type": "array",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/EscalationRule"
+      },
+      "minItems": 1
     },
     "Teams": {
-      "$ref": "#/definitions/Teams"
+      "description": "Teams associated with the policy. Account must have the teams ability to use this parameter.",
+      "type": "array",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/Team"
+      },
+      "minItems": 1
     },
     "Id": {
       "$ref": "#/definitions/Id"
     },
-    "EscalationPolicy": {
-      "$ref": "#/definitions/EscalationPolicy"
+    "Type": {
+      "description": "The type of object being created.",
+      "type": "string",
+      "default": "escalation_policy",
+      "enum": [
+        "escalation_policy"
+      ]
+    },
+    "Summary": {
+      "$ref": "#/definitions/Summary"
+    },
+    "HtmlUrl": {
+      "$ref": "#/definitions/HtmlUrl"
+    },
+    "Services": {
+      "type": "array",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/Service"
+      }
     }
   },
   "additionalProperties": false,
@@ -271,13 +219,15 @@
     "taggable": false
   },
   "required": [
-    "PagerDutyAccess",
     "Name",
     "EscalationRules"
   ],
   "readOnlyProperties": [
     "/properties/Id",
-    "/properties/EscalationPolicy"
+    "/properties/Type",
+    "/properties/Summary",
+    "/properties/HtmlUrl",
+    "/properties/Services"
   ],
   "primaryIdentifier": [
     "/properties/Id"

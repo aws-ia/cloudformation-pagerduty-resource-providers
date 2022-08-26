@@ -117,7 +117,19 @@ For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::G
 
 Returns the <code>Id</code> value.
 
-#### EscalationPolicy
+#### Type
 
-Returns the <code>EscalationPolicy</code> value.
+The type of object being created.
+
+#### Summary
+
+A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.
+
+#### HtmlUrl
+
+A URL at which the entity is uniquely displayed in the Web app.
+
+#### Services
+
+Returns the <code>Services</code> value.
 
