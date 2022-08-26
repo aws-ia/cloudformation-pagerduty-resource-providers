@@ -37,6 +37,7 @@ describe('PagerDutyClient', () => {
                     Authorization: `Token token=${token}`,
                     'Content-type': 'application/json',
                     Accept: 'application/vnd.pagerduty+json;version=2',
+                    'User-Agent': 'AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation custom resource',
                     From: ''
                 }
             }));

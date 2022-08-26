@@ -2,6 +2,7 @@ import {ResourceModel, ResponsePlay} from './models';
 import {AbstractPagerDutyResource} from '../../PagerDuty-Common/src/abstract-pager-duty-resource';
 import {PagerDutyClient, PaginatedResponseType} from '../../PagerDuty-Common/src/pager-duty-client';
 import {CaseTransformer, transformObjectCase} from '../../PagerDuty-Common/src/util';
+import {version} from '../package.json';
 
 type ResponsePlaysResponse = {
     response_plays: ResponsePlay[]
@@ -9,8 +10,10 @@ type ResponsePlaysResponse = {
 
 class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlay, ResponsePlay, ResponsePlay> {
 
+    private userAgent = `AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation resource ${this.typeName}/${version}`;
+
     async get(model: ResourceModel): Promise<ResponsePlay> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ response_play: ResponsePlay }>(
+        const response = await new PagerDutyClient(model.pagerDutyAccess, this.userAgent).doRequest<{ response_play: ResponsePlay }>(
             'get',
             `/response_plays/${model.id}`,
             undefined,
@@ -22,7 +25,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlay, Re
     }
 
     async list(model: ResourceModel): Promise<ResourceModel[]> {
-        return await new PagerDutyClient(model.pagerDutyAccess).paginate<ResponsePlaysResponse, ResourceModel>(
+        return await new PagerDutyClient(model.pagerDutyAccess, this.userAgent).paginate<ResponsePlaysResponse, ResourceModel>(
             'get',
             `/response_plays`,
             response => response.data.response_plays.map(apiResponsePlay => new ResourceModel(transformObjectCase({
@@ -37,7 +40,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlay, Re
     }
 
     async create(model: ResourceModel): Promise<ResponsePlay> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ response_play: ResponsePlay }>(
+        const response = await new PagerDutyClient(model.pagerDutyAccess, this.userAgent).doRequest<{ response_play: ResponsePlay }>(
             'post',
             `/response_plays`,
             {},
@@ -51,7 +54,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlay, Re
     }
 
     async update(model: ResourceModel): Promise<ResponsePlay> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ response_play: ResponsePlay }>(
+        const response = await new PagerDutyClient(model.pagerDutyAccess, this.userAgent).doRequest<{ response_play: ResponsePlay }>(
             'put',
             `/response_plays/${model.id}`,
             {},
@@ -65,7 +68,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlay, Re
     }
 
     async delete(model: ResourceModel): Promise<void> {
-        await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ response_play: ResponsePlay }>(
+        await new PagerDutyClient(model.pagerDutyAccess, this.userAgent).doRequest<{ response_play: ResponsePlay }>(
             'delete',
             `/response_plays/${model.id}`,
             undefined,

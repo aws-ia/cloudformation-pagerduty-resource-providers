@@ -18,9 +18,11 @@ export type PaginatedResponseType = {
 
 export class PagerDutyClient {
     private readonly apiToken: string;
+    private readonly userAgent: string;
 
-    constructor(apiToken: string) {
+    constructor(apiToken: string, userAgent?: string) {
         this.apiToken = apiToken;
+        this.userAgent = userAgent;
     }
 
     public async doRequest<ResponseType>(method: 'get' | 'put' | 'post' | 'delete', path: string, params: any = {}, body?: {}, headers?: {[key: string]: string}): Promise<AxiosResponse<ResponseType>> {
@@ -33,6 +35,7 @@ export class PagerDutyClient {
                 Authorization: `Token token=${this.apiToken}`,
                 'Content-type': 'application/json',
                 Accept: 'application/vnd.pagerduty+json;version=2',
+                'User-Agent': this.userAgent || 'AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation custom resource',
                 From: '',
                 ...headers
             }

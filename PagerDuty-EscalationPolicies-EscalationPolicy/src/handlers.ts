@@ -2,6 +2,7 @@ import {EscalationPolicy, ResourceModel} from './models';
 import {AbstractPagerDutyResource} from '../../PagerDuty-Common/src/abstract-pager-duty-resource';
 import {PagerDutyClient, PaginatedResponseType} from '../../PagerDuty-Common/src/pager-duty-client';
 import {CaseTransformer, transformObjectCase} from "../../PagerDuty-Common/src/util";
+import {version} from '../package.json';
 
 type EscalationPoliciesResponse = {
     escalation_policies: EscalationPolicy[]
@@ -9,15 +10,17 @@ type EscalationPoliciesResponse = {
 
 class Resource extends AbstractPagerDutyResource<ResourceModel, EscalationPolicy, EscalationPolicy, EscalationPolicy> {
 
+    private userAgent = `AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation resource ${this.typeName}/${version}`;
+
     async get(model: ResourceModel): Promise<EscalationPolicy> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ escalation_policy: EscalationPolicy }>(
+        const response = await new PagerDutyClient(model.pagerDutyAccess, this.userAgent).doRequest<{ escalation_policy: EscalationPolicy }>(
             'get',
             `/escalation_policies/${model.id}`);
         return new EscalationPolicy(transformObjectCase(response.data.escalation_policy, CaseTransformer.SNAKE_TO_CAMEL));
     }
 
     async list(model: ResourceModel): Promise<ResourceModel[]> {
-        return await new PagerDutyClient(model.pagerDutyAccess).paginate<EscalationPoliciesResponse, ResourceModel>(
+        return await new PagerDutyClient(model.pagerDutyAccess, this.userAgent).paginate<EscalationPoliciesResponse, ResourceModel>(
             'get',
             `/escalation_policies`,
             response => response.data.escalation_policies.map(apiEscalationPolicy => new ResourceModel(transformObjectCase({
@@ -28,7 +31,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, EscalationPolicy
     }
 
     async create(model: ResourceModel): Promise<EscalationPolicy> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ escalation_policy: EscalationPolicy }>(
+        const response = await new PagerDutyClient(model.pagerDutyAccess, this.userAgent).doRequest<{ escalation_policy: EscalationPolicy }>(
             'post',
             `/escalation_policies`,
             {},
@@ -39,7 +42,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, EscalationPolicy
     }
 
     async update(model: ResourceModel): Promise<EscalationPolicy> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ escalation_policy: EscalationPolicy }>(
+        const response = await new PagerDutyClient(model.pagerDutyAccess, this.userAgent).doRequest<{ escalation_policy: EscalationPolicy }>(
             'put',
             `/escalation_policies/${model.id}`,
             {},
@@ -50,7 +53,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, EscalationPolicy
     }
 
     async delete(model: ResourceModel): Promise<void> {
-        await new PagerDutyClient(model.pagerDutyAccess).doRequest(
+        await new PagerDutyClient(model.pagerDutyAccess, this.userAgent).doRequest(
             'delete',
             `/escalation_policies/${model.id}`);
     }
