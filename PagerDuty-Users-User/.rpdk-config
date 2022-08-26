@@ -2,7 +2,7 @@
     "artifact_type": "RESOURCE",
     "typeName": "PagerDuty::Users::User",
     "language": "typescript",
-    "runtime": "nodejs12.x",
+    "runtime": "nodejs14.x",
     "entrypoint": "dist/PagerDuty-Users-User/src/handlers.entrypoint",
     "testEntrypoint": "dist/PagerDuty-Users-User/src/handlers.testEntrypoint",
     "settings": {

@@ -2,7 +2,7 @@
     "artifact_type": "RESOURCE",
     "typeName": "PagerDuty::EscalationPolicies::EscalationPolicy",
     "language": "typescript",
-    "runtime": "nodejs12.x",
+    "runtime": "nodejs14.x",
     "entrypoint": "dist/PagerDuty-EscalationPolicies-EscalationPolicy/src/handlers.entrypoint",
     "testEntrypoint": "dist/PagerDuty-EscalationPolicies-EscalationPolicy/src/handlers.testEntrypoint",
     "settings": {

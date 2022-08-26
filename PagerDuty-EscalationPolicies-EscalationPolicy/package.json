@@ -20,7 +20,7 @@
         "pagerduty-common": "file:../PagerDuty-Common"
     },
     "devDependencies": {
-        "@types/node": "^12.0.0",
+        "@types/node": "^14.0.0",
         "typescript": "^4.1.2"
     },
     "optionalDependencies": {
