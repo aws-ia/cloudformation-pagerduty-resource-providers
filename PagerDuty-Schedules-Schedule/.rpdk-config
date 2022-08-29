@@ -2,7 +2,7 @@
     "artifact_type": "RESOURCE",
     "typeName": "PagerDuty::Schedules::Schedule",
     "language": "typescript",
-    "runtime": "nodejs12.x",
+    "runtime": "nodejs14.x",
     "entrypoint": "dist/PagerDuty-Schedules-Schedule/src/handlers.entrypoint",
     "testEntrypoint": "dist/PagerDuty-Schedules-Schedule/src/handlers.testEntrypoint",
     "settings": {
