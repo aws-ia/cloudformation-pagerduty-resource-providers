@@ -6,14 +6,14 @@
     "PagerDutyAccess": {
       "type": "object",
       "properties": {
-        "AccessToken": {
+        "Token": {
           "description": "Personal Access Token",
           "type": "string",
-          "pattern": "^\\w{20}$"
+          "pattern": "^\\S{20}$"
         }
       },
       "required": [
-        "AccessToken"
+        "Token"
       ],
       "additionalProperties": false
     },
@@ -47,11 +47,6 @@
     ]
   },
   "properties": {
-    "PagerDutyAccess": {
-      "description": "Personal Access Token",
-      "type": "string",
-      "pattern": "^\\w{20}$"
-    },
     "TeamId": {
       "$ref": "#/definitions/TeamId"
     },
@@ -67,7 +62,6 @@
     "taggable": false
   },
   "required": [
-    "PagerDutyAccess",
     "TeamId",
     "UserId"
   ],

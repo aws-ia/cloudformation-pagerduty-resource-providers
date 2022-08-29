@@ -13,15 +13,6 @@ export class ResourceModel extends BaseModel {
     @Exclude()
     protected readonly IDENTIFIER_KEY_USERID: string = '/properties/UserId';
 
-    @Expose({ name: 'PagerDutyAccess' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'pagerDutyAccess', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    pagerDutyAccess?: Optional<string>;
     @Expose({ name: 'TeamId' })
     @Transform(
         (value: any, obj: any) =>
@@ -71,5 +62,31 @@ export class ResourceModel extends BaseModel {
         // only return the identifiers if any can be used
         return identifiers.length === 0 ? null : identifiers;
     }
+}
+
+export class TypeConfigurationModel extends BaseModel {
+    ['constructor']: typeof TypeConfigurationModel;
+
+
+    @Expose({ name: 'PagerDutyAccess' })
+    @Type(() => PagerDutyAccess)
+    pagerDutyAccess?: Optional<PagerDutyAccess>;
+
+}
+
+export class PagerDutyAccess extends BaseModel {
+    ['constructor']: typeof PagerDutyAccess;
+
+
+    @Expose({ name: 'Token' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'token', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    token?: Optional<string>;
+
 }
 
