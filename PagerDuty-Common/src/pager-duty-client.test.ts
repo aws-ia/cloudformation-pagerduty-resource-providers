@@ -37,6 +37,7 @@ describe('PagerDutyClient', () => {
                     Authorization: `Token token=${token}`,
                     'Content-type': 'application/json',
                     Accept: 'application/vnd.pagerduty+json;version=2',
+                    'User-Agent': 'AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation custom resource',
                     From: ''
                 }
             }));
@@ -72,60 +73,6 @@ describe('PagerDutyClient', () => {
 
             expect(mockedAxios.request).toHaveBeenCalledWith(expect.objectContaining({
                 method: method
-            }));
-        });
-
-        it.each([
-            [{
-                Foo: 'foo',
-                baR: 123,
-                HelloWorld: 'Hi'
-            }, {
-                foo: 'foo',
-                ba_r: 123,
-                hello_world: 'Hi'
-            }],
-            [{
-                HelloWorld: {
-                    Foo: 'foo',
-                    baR: 123,
-                    HelloWorld: 'Hi'
-                }
-            }, {
-                hello_world: {
-                    foo: 'foo',
-                    ba_r: 123,
-                    hello_world: 'Hi'
-                }
-            }],
-            [{
-                HelloWorld: [
-                    'foo',
-                    ['hello', 'world'],
-                    {
-                        foo: 'foo',
-                        baR: 123,
-                        helloWorld: 'Hi'
-                    }
-                ]
-            }, {
-                hello_world: [
-                    'foo',
-                    ['hello', 'world'],
-                    {
-                        foo: 'foo',
-                        ba_r: 123,
-                        hello_world: 'Hi'
-                    }
-                ]
-            }]
-        ])('converts payload keys from PascalCase to snake_case', async (input, output) => {
-            mockedAxios.request.mockResolvedValueOnce({});
-
-            await testInstance.doRequest('get', 'foo/bar', undefined, input);
-
-            expect(mockedAxios.request).toHaveBeenCalledWith(expect.objectContaining({
-                data: output
             }));
         });
     });
@@ -172,7 +119,7 @@ describe('PagerDutyClient', () => {
                     limit: limit,
                     offset: limit * i
                 };
-                expect(testInstance.doRequest).toHaveBeenCalledWith(method, path, params, body);
+                expect(testInstance.doRequest).toHaveBeenCalledWith(method, path, params, body, undefined);
             }
         });
 

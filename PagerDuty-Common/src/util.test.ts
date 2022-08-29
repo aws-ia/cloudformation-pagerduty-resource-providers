@@ -1,7 +1,7 @@
-import {CaseTransformer, transformObjectCase} from "./util";
+import {CaseTransformer, Transformer, transformObjectCase} from "./util";
 
 describe('Util', () => {
-    describe('transformObjectCase', () => {
+    describe('Transformer class', () => {
         it.each([
             [{
                 Foo: 'foo',
@@ -47,7 +47,10 @@ describe('Util', () => {
                 ]
             }]
         ])('converts payload keys from PascalCase to snake_case', (input, expected) => {
-            expect(transformObjectCase(input, CaseTransformer.PASCAL_TO_SNAKE)).toStrictEqual(expected);
+            expect(Transformer.for(input)
+                .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+                .transform()
+            ).toStrictEqual(expected);
         });
 
         it.each([
@@ -95,7 +98,10 @@ describe('Util', () => {
                 ]
             }]
         ])('converts payload keys from PascalCase to camelCase', (input, expected) => {
-            expect(transformObjectCase(input, CaseTransformer.PASCAL_TO_CAMEL)).toStrictEqual(expected);
+            expect(Transformer.for(input)
+                .transformKeys(CaseTransformer.PASCAL_TO_CAMEL)
+                .transform()
+            ).toStrictEqual(expected);
         });
 
         it.each([
@@ -143,7 +149,62 @@ describe('Util', () => {
                 ]
             }]
         ])('converts payload keys from snake_case to PascalCase', (input, expected) => {
-            expect(transformObjectCase(input, CaseTransformer.SNAKE_TO_CAMEL)).toStrictEqual(expected);
+            expect(Transformer.for(input)
+                .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                .transform()
+            ).toStrictEqual(expected);
+        });
+
+        it.each([
+            [{
+                foo: 'foo',
+                ba_r: 123,
+                type: 'Hi'
+            }, {
+                foo: 'foo',
+                baR: 123,
+                type_: 'Hi'
+            }],
+            [{
+                hello_world: {
+                    foo: 'foo',
+                    ba_r: 123,
+                    type: 'Hi'
+                }
+            }, {
+                helloWorld: {
+                    foo: 'foo',
+                    baR: 123,
+                    type_: 'Hi'
+                }
+            }],
+            [{
+                hello_world: [
+                    'foo',
+                    ['hello', 'world'],
+                    {
+                        foo: 'foo',
+                        ba_r: 123,
+                        type: 'Hi'
+                    }
+                ]
+            }, {
+                helloWorld: [
+                    'foo',
+                    ['hello', 'world'],
+                    {
+                        foo: 'foo',
+                        baR: 123,
+                        type_: 'Hi'
+                    }
+                ]
+            }]
+        ])('converts payload keys in a safe manner if keys are reserved keywords', (input, expected) => {
+            expect(Transformer.for(input)
+                .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                .forModelIngestion()
+                .transform()
+            ).toStrictEqual(expected);
         });
     });
 });

@@ -2,7 +2,7 @@
     "artifact_type": "RESOURCE",
     "typeName": "PagerDuty::EscalationPolicies::EscalationPolicy",
     "language": "typescript",
-    "runtime": "nodejs12.x",
+    "runtime": "nodejs14.x",
     "entrypoint": "dist/PagerDuty-EscalationPolicies-EscalationPolicy/src/handlers.entrypoint",
     "testEntrypoint": "dist/PagerDuty-EscalationPolicies-EscalationPolicy/src/handlers.testEntrypoint",
     "settings": {
@@ -15,7 +15,7 @@
         "endpoint_url": null,
         "region": null,
         "target_schemas": [],
-        "useDocker": true,
+        "useDocker": false,
         "protocolVersion": "2.0.0"
     }
 }

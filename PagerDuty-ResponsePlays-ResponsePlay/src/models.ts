@@ -11,15 +11,6 @@ export class ResourceModel extends BaseModel {
     @Exclude()
     protected readonly IDENTIFIER_KEY_ID: string = '/properties/Id';
 
-    @Expose({ name: 'PagerDutyAccess' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'pagerDutyAccess', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    pagerDutyAccess?: Optional<string>;
     @Expose({ name: 'From' })
     @Transform(
         (value: any, obj: any) =>
@@ -125,9 +116,33 @@ export class ResourceModel extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'ResponsePlay' })
-    @Type(() => ResponsePlay)
-    responsePlay?: Optional<ResponsePlay>;
+    @Expose({ name: 'Summary' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'summary', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    summary?: Optional<string>;
+    @Expose({ name: 'Type' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'type_', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    type_?: Optional<string>;
+    @Expose({ name: 'HtmlUrl' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'htmlUrl', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    htmlUrl?: Optional<string>;
 
     @Exclude()
     public getPrimaryIdentifier(): Dict {
@@ -277,133 +292,29 @@ export class Responder extends BaseModel {
 
 }
 
-export class ResponsePlay extends BaseModel {
-    ['constructor']: typeof ResponsePlay;
+export class TypeConfigurationModel extends BaseModel {
+    ['constructor']: typeof TypeConfigurationModel;
 
 
-    @Expose({ name: 'Id' })
+    @Expose({ name: 'PagerDutyAccess' })
+    @Type(() => PagerDutyAccess)
+    pagerDutyAccess?: Optional<PagerDutyAccess>;
+
+}
+
+export class PagerDutyAccess extends BaseModel {
+    ['constructor']: typeof PagerDutyAccess;
+
+
+    @Expose({ name: 'Token' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'id', value, obj, []),
+            transformValue(String, 'token', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    id?: Optional<string>;
-    @Expose({ name: 'Summary' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'summary', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    summary?: Optional<string>;
-    @Expose({ name: 'Type' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'type_', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    type_?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
-    @Expose({ name: 'Name' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'name', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    name?: Optional<string>;
-    @Expose({ name: 'Description' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'description', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    description?: Optional<string>;
-    @Expose({ name: 'Team' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Object, 'team', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    team?: Optional<object>;
-    @Expose({ name: 'Subscribers' })
-    @Type(() => Subscriber)
-    subscribers?: Optional<Array<Subscriber>>;
-    @Expose({ name: 'SubscribersMessage' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'subscribersMessage', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    subscribersMessage?: Optional<string>;
-    @Expose({ name: 'Responders' })
-    @Type(() => Responder)
-    responders?: Optional<Array<Responder>>;
-    @Expose({ name: 'RespondersMessage' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'respondersMessage', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    respondersMessage?: Optional<string>;
-    @Expose({ name: 'Runnability' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'runnability', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    runnability?: Optional<string>;
-    @Expose({ name: 'ConferenceNumber' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'conferenceNumber', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    conferenceNumber?: Optional<string>;
-    @Expose({ name: 'ConferenceUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'conferenceUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    conferenceUrl?: Optional<string>;
-    @Expose({ name: 'ConferenceType' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'conferenceType', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    conferenceType?: Optional<string>;
+    token?: Optional<string>;
 
 }
 

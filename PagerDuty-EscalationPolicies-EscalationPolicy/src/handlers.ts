@@ -1,56 +1,65 @@
-import {EscalationPolicy, ResourceModel} from './models';
+import {ResourceModel, TypeConfigurationModel} from './models';
 import {AbstractPagerDutyResource} from '../../PagerDuty-Common/src/abstract-pager-duty-resource';
 import {PagerDutyClient, PaginatedResponseType} from '../../PagerDuty-Common/src/pager-duty-client';
-import {CaseTransformer, transformObjectCase} from "../../PagerDuty-Common/src/util";
+import {CaseTransformer, Transformer} from "../../PagerDuty-Common/src/util";
+import {version} from '../package.json';
 
-type EscalationPoliciesResponse = {
-    escalation_policies: EscalationPolicy[]
+type EscalationPolicyPayload = {
+    escalation_rules: []
+    teams: []
+};
+
+type EscalationPoliciesPayload = {
+    escalation_policies: EscalationPolicyPayload[]
 } & PaginatedResponseType;
 
-class Resource extends AbstractPagerDutyResource<ResourceModel, EscalationPolicy, EscalationPolicy, EscalationPolicy> {
+class Resource extends AbstractPagerDutyResource<ResourceModel, EscalationPolicyPayload, EscalationPolicyPayload, EscalationPolicyPayload, TypeConfigurationModel> {
 
-    async get(model: ResourceModel): Promise<EscalationPolicy> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ escalation_policy: EscalationPolicy }>(
+    private userAgent = `AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation resource ${this.typeName}/${version}`;
+
+    async get(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<EscalationPolicyPayload> {
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ escalation_policy: EscalationPolicyPayload }>(
             'get',
             `/escalation_policies/${model.id}`);
-        return new EscalationPolicy(transformObjectCase(response.data.escalation_policy, CaseTransformer.SNAKE_TO_CAMEL));
+        return response.data.escalation_policy;
     }
 
-    async list(model: ResourceModel): Promise<ResourceModel[]> {
-        return await new PagerDutyClient(model.pagerDutyAccess).paginate<EscalationPoliciesResponse, ResourceModel>(
+    async list(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResourceModel[]> {
+        return await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).paginate<EscalationPoliciesPayload, ResourceModel>(
             'get',
             `/escalation_policies`,
-            response => response.data.escalation_policies.map(apiEscalationPolicy => new ResourceModel(transformObjectCase({
-                id: apiEscalationPolicy.id,
-                escalation_policy: apiEscalationPolicy
-            }, CaseTransformer.SNAKE_TO_CAMEL))),
+            response => response.data.escalation_policies.map(escalationPolicyPayload => this.setModelFrom(model, escalationPolicyPayload)),
             {limit: 100});
     }
 
-    async create(model: ResourceModel): Promise<EscalationPolicy> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ escalation_policy: EscalationPolicy }>(
+    async create(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<EscalationPolicyPayload> {
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ escalation_policy: EscalationPolicyPayload }>(
             'post',
             `/escalation_policies`,
             {},
             {
-                escalation_policy: model.toJSON()
+                escalation_policy: Transformer.for(model.toJSON())
+                    .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+                    .transform()
             });
-        return new EscalationPolicy(transformObjectCase(response.data.escalation_policy, CaseTransformer.SNAKE_TO_CAMEL));
+        return response.data.escalation_policy;
     }
 
-    async update(model: ResourceModel): Promise<EscalationPolicy> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ escalation_policy: EscalationPolicy }>(
+    async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<EscalationPolicyPayload> {
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ escalation_policy: EscalationPolicyPayload }>(
             'put',
             `/escalation_policies/${model.id}`,
             {},
             {
-                escalation_policy: model.toJSON()
+                escalation_policy: Transformer.for(model.toJSON())
+                    .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+                    .transform()
             });
-        return new EscalationPolicy(transformObjectCase(response.data.escalation_policy, CaseTransformer.SNAKE_TO_CAMEL));
+        return response.data.escalation_policy;
     }
 
-    async delete(model: ResourceModel): Promise<void> {
-        await new PagerDutyClient(model.pagerDutyAccess).doRequest(
+    async delete(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<void> {
+        await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest(
             'delete',
             `/escalation_policies/${model.id}`);
     }
@@ -59,20 +68,26 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, EscalationPolicy
         return new ResourceModel(partial);
     }
 
-    setModelFrom(model: ResourceModel, from: EscalationPolicy | undefined): ResourceModel {
+    setModelFrom(model: ResourceModel, from?: EscalationPolicyPayload): ResourceModel {
         if (!from) {
             return model;
         }
-        model.escalationPolicy = from;
-        if (!!from.id) {
-            model.id = from.id;
-        }
-        return model;
+
+        delete from.escalation_rules;
+        delete from.teams;
+
+        return new ResourceModel({
+            ...model,
+            ...Transformer.for(from)
+                .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                .forModelIngestion()
+                .transform()
+        });
     }
 
 }
 
-export const resource = new Resource(ResourceModel.TYPE_NAME, ResourceModel);
+export const resource = new Resource(ResourceModel.TYPE_NAME, ResourceModel, null, null, TypeConfigurationModel);
 
 // Entrypoint for production usage after registered in CloudFormation
 export const entrypoint = resource.entrypoint;

@@ -10,7 +10,7 @@ import {
     ServiceLimitExceeded
 } from "@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib/dist/exceptions";
 
-class TestAbstractPagerDutyResource extends AbstractPagerDutyResource<BaseModel, {}, {}, {}> {
+class TestAbstractPagerDutyResource extends AbstractPagerDutyResource<BaseModel, {}, {}, {}, {}> {
     create(model: BaseModel): Promise<{}> {
         return Promise.resolve({});
     }

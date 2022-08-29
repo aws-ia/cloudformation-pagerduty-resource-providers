@@ -12,7 +12,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 {
     "Type" : "PagerDuty::Users::User",
     "Properties" : {
-        "<a href="#pagerdutyaccess" title="PagerDutyAccess">PagerDutyAccess</a>" : <i>String</i>,
         "<a href="#name" title="Name">Name</a>" : <i>String</i>,
         "<a href="#email" title="Email">Email</a>" : <i>String</i>,
         "<a href="#timezone" title="TimeZone">TimeZone</a>" : <i>String</i>,
@@ -29,7 +28,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 <pre>
 Type: PagerDuty::Users::User
 Properties:
-    <a href="#pagerdutyaccess" title="PagerDutyAccess">PagerDutyAccess</a>: <i>String</i>
     <a href="#name" title="Name">Name</a>: <i>String</i>
     <a href="#email" title="Email">Email</a>: <i>String</i>
     <a href="#timezone" title="TimeZone">TimeZone</a>: <i>String</i>
@@ -40,18 +38,6 @@ Properties:
 </pre>
 
 ## Properties
-
-#### PagerDutyAccess
-
-Personal Access Token
-
-_Required_: No
-
-_Type_: String
-
-_Pattern_: <code>^\w{20}$</code>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### Name
 
@@ -153,7 +139,35 @@ For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::G
 
 The ID of the user
 
-#### User
+#### Summary
 
- A PagerDuty user
+A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.
+
+#### Type
+
+The type of object being created.
+
+#### HtmlUrl
+
+A URL at which the entity is uniquely displayed in the Web app
+
+#### AvatarUrl
+
+The URL of the user's avatar.
+
+#### InvitationSent
+
+If true, the user has an outstanding invitation.
+
+#### Teams
+
+The list of teams to which the user belongs. Account must have the teams ability to set this.
+
+#### ContactMethods
+
+The list of contact methods for the user.
+
+#### NotificationRules
+
+The list of notification rules for the user.
 

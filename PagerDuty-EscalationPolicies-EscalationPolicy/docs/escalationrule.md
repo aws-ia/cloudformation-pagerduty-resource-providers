@@ -1,4 +1,4 @@
-# PagerDuty::EscalationPolicies::EscalationPolicy EscalationRules
+# PagerDuty::EscalationPolicies::EscalationPolicy EscalationRule
 
 ## Syntax
 

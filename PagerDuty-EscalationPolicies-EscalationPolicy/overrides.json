@@ -1,6 +1,6 @@
 {
   "CREATE": {
-    "/PagerDutyAccess": "<PAGER_DUTY_TOKEN>",
+    "/Name": "Escalation Policy – contract test",
     "/NumLoops": 5,
     "/EscalationRules": [
       {
@@ -16,7 +16,7 @@
     "/Teams": null
   },
   "UPDATE": {
-    "/PagerDutyAccess": "<PAGER_DUTY_TOKEN>",
+    "/Name": "Escalation Policy – contract test UPDATED",
     "/NumLoops": 8,
     "/EscalationRules": [
       {

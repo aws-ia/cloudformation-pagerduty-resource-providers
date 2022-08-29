@@ -6,19 +6,27 @@ import {
     HandlerSignatures,
     LoggerProxy,
     OperationStatus,
-    Optional, ProgressEvent,
+    Optional,
+    ProgressEvent,
     ResourceHandlerRequest,
-    SessionProxy
+    SessionProxy,
 } from "@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib";
 import {AbstractBaseResource, RetryableCallbackContext} from "./abstract-base-resource";
 import {jest} from '@jest/globals';
 import {NotStabilized} from "@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib/dist/exceptions";
 import Mock = jest.Mock;
 
-class TestAbstractBaseResource extends AbstractBaseResource<BaseModel, {}, {}, {}, Error> {
+type TypeConfigurationTypeReference = Constructor<BaseModel> & {
+    deserialize: Function
+}
 
-    constructor(typeName: string, modelTypeReference: Constructor<BaseModel>, workerPool?: AwsTaskWorkerPool, handlers?: HandlerSignatures<BaseModel>) {
-        super(typeName, modelTypeReference, workerPool, handlers);
+class BaseTypeConfiguration extends BaseModel {
+}
+
+class TestAbstractBaseResource extends AbstractBaseResource<BaseModel, {}, {}, {}, Error, any> {
+
+    constructor(typeName: string, modelTypeReference: Constructor<BaseModel>, workerPool?: AwsTaskWorkerPool, handlers?: HandlerSignatures<BaseModel, BaseTypeConfiguration>, typeConfigurationTypeReference?: TypeConfigurationTypeReference) {
+        super(typeName, modelTypeReference, workerPool, handlers, typeConfigurationTypeReference);
         this.get = jest.fn<any>().mockResolvedValue({});
         this.list = jest.fn<any>().mockResolvedValue({});
         this.create = jest.fn<any>().mockResolvedValue({});
@@ -27,19 +35,19 @@ class TestAbstractBaseResource extends AbstractBaseResource<BaseModel, {}, {}, {
         this.processRequestException = jest.fn((message) => new Error(message));
     }
 
-    async create(model: BaseModel): Promise<{}> {
+    async create(model: BaseModel, typeConfiguration: TypeConfigurationTypeReference): Promise<{}> {
         return Promise.resolve({});
     }
 
-    async delete(model: BaseModel): Promise<void> {
+    async delete(model: BaseModel, typeConfiguration: TypeConfigurationTypeReference): Promise<void> {
         return Promise.resolve(undefined);
     }
 
-    async get(model: BaseModel): Promise<{}> {
+    async get(model: BaseModel, typeConfiguration: TypeConfigurationTypeReference): Promise<{}> {
         return Promise.resolve({});
     }
 
-    async list(model: BaseModel): Promise<BaseModel[]> {
+    async list(model: BaseModel, typeConfiguration: TypeConfigurationTypeReference): Promise<BaseModel[]> {
         return Promise.resolve([]);
     }
 
@@ -55,7 +63,7 @@ class TestAbstractBaseResource extends AbstractBaseResource<BaseModel, {}, {}, {
         return undefined;
     }
 
-    async update(model: BaseModel): Promise<{}> {
+    async update(model: BaseModel, typeConfiguration: TypeConfigurationTypeReference): Promise<{}> {
         return Promise.resolve({});
     }
 
@@ -70,11 +78,12 @@ class TestAbstractBaseResource extends AbstractBaseResource<BaseModel, {}, {}, {
 
 describe('AbstractBaseResource', () => {
     describe('eventual consistency', () => {
-        let testInstance = new TestAbstractBaseResource('foo', BaseModel);
+        let testInstance = new TestAbstractBaseResource('foo', BaseModel, undefined, undefined, BaseTypeConfiguration);
         let session: Optional<SessionProxy>;
         let request: ResourceHandlerRequest<BaseModel> = {
             logicalResourceIdentifier: 'foo'
         } as ResourceHandlerRequest<BaseModel>;
+        let typeConfiguration = new BaseTypeConfiguration();
         let logger: LoggerProxy = new LoggerProxy();
 
         afterEach(() => {
@@ -82,14 +91,14 @@ describe('AbstractBaseResource', () => {
         });
 
         async function assertEventualConsistency(
-            handleFunctionName: (session: Optional<SessionProxy>, request: ResourceHandlerRequest<BaseModel>, callbackContext: RetryableCallbackContext, logger: LoggerProxy) => Promise<ProgressEvent<BaseModel, any>>,
+            handleFunctionName: (session: Optional<SessionProxy>, request: ResourceHandlerRequest<BaseModel>, callbackContext: RetryableCallbackContext, logger: LoggerProxy, typeConfiguration: BaseTypeConfiguration) => Promise<ProgressEvent<BaseModel, any>>,
             initialSetup: () => any,
             retrySetup: () => any,
             lastSetup: () => any,
             retries: number
         ) {
             initialSetup();
-            let firstProgressEvent = await handleFunctionName(session, request, {}, logger);
+            let firstProgressEvent = await handleFunctionName(session, request, {}, logger,typeConfiguration);
             expect(firstProgressEvent.status).toBe(OperationStatus.InProgress);
             expect(firstProgressEvent.callbackContext).toHaveProperty('retry', 1);
 
@@ -97,14 +106,14 @@ describe('AbstractBaseResource', () => {
 
             for (let i = 0; i < retries; i++) {
                 retrySetup();
-                let intermediateProgressEvent = await handleFunctionName(session, request, callbackContext, logger);
+                let intermediateProgressEvent = await handleFunctionName(session, request, callbackContext, logger,typeConfiguration);
                 expect(intermediateProgressEvent.status).toBe(OperationStatus.InProgress);
                 expect(intermediateProgressEvent.callbackContext).toHaveProperty('retry', i + 2);
                 callbackContext = intermediateProgressEvent.callbackContext;
             }
 
             lastSetup();
-            let lastProgressEvent = await handleFunctionName(session, request, firstProgressEvent.callbackContext, logger);
+            let lastProgressEvent = await handleFunctionName(session, request, firstProgressEvent.callbackContext, logger,typeConfiguration);
             expect(lastProgressEvent.status).toBe(OperationStatus.Success);
             expect(lastProgressEvent.callbackContext).toBeUndefined();
         }
