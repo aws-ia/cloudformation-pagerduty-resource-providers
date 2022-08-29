@@ -2,6 +2,7 @@ import {ResourceModel, TypeConfigurationModel} from './models';
 import {AbstractPagerDutyResource} from "../../PagerDuty-Common/src/abstract-pager-duty-resource";
 import {PagerDutyClient, PaginatedResponseType} from "../../PagerDuty-Common/src/pager-duty-client";
 import {CaseTransformer, Transformer} from "../../PagerDuty-Common/src/util";
+import {version} from '../package.json';
 
 type SchedulePayload = {
     schedule_layers: []
@@ -15,15 +16,17 @@ type SchedulesResponse = {
 
 class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload, SchedulePayload, SchedulePayload, TypeConfigurationModel> {
 
+    private userAgent = `AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation resource ${this.typeName}/${version}`;
+
     async get(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<SchedulePayload> {
-        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token).doRequest<{ schedule: SchedulePayload }>(
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ schedule: SchedulePayload }>(
             'get',
             `/schedules/${model.id}`);
         return response.data.schedule;
     }
 
     async list(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResourceModel[]> {
-        return await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token).paginate<SchedulesResponse, ResourceModel>(
+        return await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).paginate<SchedulesResponse, ResourceModel>(
             'get',
             `/schedules`,
             response => response.data.schedules.map(schedulePayload => this.setModelFrom(model, schedulePayload)),
@@ -31,7 +34,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
     }
 
     async create(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<SchedulePayload> {
-        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token).doRequest<{ schedule: SchedulePayload }>(
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ schedule: SchedulePayload }>(
             'post',
             `/schedules`,
             {},
@@ -44,7 +47,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
     }
 
     async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<SchedulePayload> {
-        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token).doRequest<{ schedule: SchedulePayload }>(
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ schedule: SchedulePayload }>(
             'put',
             `/schedules/${model.id}`,
             {},
@@ -57,7 +60,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
     }
 
     async delete(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<void> {
-        await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token).doRequest(
+        await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest(
             'delete',
             `/schedules/${model.id}`);
     }
