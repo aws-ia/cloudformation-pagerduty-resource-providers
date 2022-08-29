@@ -1,6 +1,5 @@
 {
   "CREATE": {
-    "/PagerDutyAccess": "<PAGER_DUTY_TOKEN>",
     "/Name": "End-to-end schedule",
     "/TimeZone": "Europe/London",
     "/ScheduleLayers": [

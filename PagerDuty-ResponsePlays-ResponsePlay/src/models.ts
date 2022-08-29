@@ -318,3 +318,29 @@ export class PagerDutyAccess extends BaseModel {
 
 }
 
+export class TypeConfigurationModel extends BaseModel {
+    ['constructor']: typeof TypeConfigurationModel;
+
+
+    @Expose({ name: 'PagerDutyAccess' })
+    @Type(() => PagerDutyAccess)
+    pagerDutyAccess?: Optional<PagerDutyAccess>;
+
+}
+
+export class PagerDutyAccess extends BaseModel {
+    ['constructor']: typeof PagerDutyAccess;
+
+
+    @Expose({ name: 'AccessToken' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'accessToken', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    accessToken?: Optional<string>;
+
+}
+

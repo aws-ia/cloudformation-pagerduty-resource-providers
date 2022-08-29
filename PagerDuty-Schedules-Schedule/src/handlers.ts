@@ -1,56 +1,63 @@
-import {ResourceModel, Schedule} from './models';
+import {ResourceModel, TypeConfigurationModel} from './models';
 import {AbstractPagerDutyResource} from "../../PagerDuty-Common/src/abstract-pager-duty-resource";
 import {PagerDutyClient, PaginatedResponseType} from "../../PagerDuty-Common/src/pager-duty-client";
-import {CaseTransformer, transformObjectCase} from "../../PagerDuty-Common/src/util";
+import {CaseTransformer, Transformer} from "../../PagerDuty-Common/src/util";
+
+type SchedulePayload = {
+    schedule_layers: []
+    final_schedule: any
+    overrides_subschedule: any
+};
 
 type SchedulesResponse = {
-    schedules: Schedule[]
+    schedules: SchedulePayload[]
 } & PaginatedResponseType;
 
-class Resource extends AbstractPagerDutyResource<ResourceModel, Schedule, Schedule, Schedule> {
+class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload, SchedulePayload, SchedulePayload, TypeConfigurationModel> {
 
-    async get(model: ResourceModel): Promise<Schedule> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ schedule: Schedule }>(
+    async get(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<SchedulePayload> {
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token).doRequest<{ schedule: SchedulePayload }>(
             'get',
             `/schedules/${model.id}`);
-        return new Schedule(transformObjectCase(response.data.schedule, CaseTransformer.SNAKE_TO_CAMEL));
+        return response.data.schedule;
     }
 
-    async list(model: ResourceModel): Promise<ResourceModel[]> {
-        return await new PagerDutyClient(model.pagerDutyAccess).paginate<SchedulesResponse, ResourceModel>(
+    async list(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResourceModel[]> {
+        return await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token).paginate<SchedulesResponse, ResourceModel>(
             'get',
             `/schedules`,
-            response => response.data.schedules.map(apiSchedule => new ResourceModel({
-                id: apiSchedule.id,
-                schedule: apiSchedule
-            })),
+            response => response.data.schedules.map(schedulePayload => this.setModelFrom(model, schedulePayload)),
             {});
     }
 
-    async create(model: ResourceModel): Promise<Schedule> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ schedule: Schedule }>(
+    async create(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<SchedulePayload> {
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token).doRequest<{ schedule: SchedulePayload }>(
             'post',
             `/schedules`,
             {},
             {
-                schedule: model.toJSON()
+                schedule: Transformer.for(model.toJSON())
+                    .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+                    .transform()
             });
-        return new Schedule(transformObjectCase(response.data.schedule, CaseTransformer.SNAKE_TO_CAMEL));
+        return response.data.schedule;
     }
 
-    async update(model: ResourceModel): Promise<Schedule> {
-        const response = await new PagerDutyClient(model.pagerDutyAccess).doRequest<{ schedule: Schedule }>(
+    async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<SchedulePayload> {
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token).doRequest<{ schedule: SchedulePayload }>(
             'put',
             `/schedules/${model.id}`,
             {},
             {
-                schedule: model.toJSON()
+                schedule: Transformer.for(model.toJSON())
+                    .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+                    .transform()
             });
-        return new Schedule(transformObjectCase(response.data.schedule, CaseTransformer.SNAKE_TO_CAMEL));
+        return response.data.schedule;
     }
 
-    async delete(model: ResourceModel): Promise<void> {
-        await new PagerDutyClient(model.pagerDutyAccess).doRequest(
+    async delete(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<void> {
+        await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token).doRequest(
             'delete',
             `/schedules/${model.id}`);
     }
@@ -59,20 +66,31 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, Schedule, Schedu
         return new ResourceModel(partial);
     }
 
-    setModelFrom(model: ResourceModel, from?: Schedule): ResourceModel {
+    setModelFrom(model: ResourceModel, from?: SchedulePayload): ResourceModel {
         if (!from) {
             return model
         }
-        model.schedule = from;
-        if (!!from.id) {
-            model.id = from.id;
+
+        delete from.schedule_layers;
+        if (from.final_schedule === null || !model.finalSchedule) {
+            delete from.final_schedule;
         }
-        return model;
+        if (from.overrides_subschedule === null || !model.overridesSubschedule) {
+            delete from.overrides_subschedule;
+        }
+
+        return new ResourceModel({
+            ...model,
+            ...Transformer.for(from)
+                .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                .forModelIngestion()
+                .transform()
+        });
     }
 
 }
 
-export const resource = new Resource(ResourceModel.TYPE_NAME, ResourceModel);
+export const resource = new Resource(ResourceModel.TYPE_NAME, ResourceModel, null, null, TypeConfigurationModel);
 
 // Entrypoint for production usage after registered in CloudFormation
 export const entrypoint = resource.entrypoint;

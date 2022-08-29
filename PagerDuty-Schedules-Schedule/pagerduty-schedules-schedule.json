@@ -6,14 +6,14 @@
     "PagerDutyAccess": {
       "type": "object",
       "properties": {
-        "AccessToken": {
+        "Token": {
           "description": "Personal Access Token",
           "type": "string",
           "pattern": "^\\w{20}$"
         }
       },
       "required": [
-        "AccessToken"
+        "Token"
       ],
       "additionalProperties": false
     },
@@ -21,14 +21,13 @@
       "type": "string",
       "minLength": 1
     },
-    "ScheduleLayers": {
-      "description": "A list of schedule layers.",
-      "type": "array",
-      "insertionOrder": false,
-      "items": {
-        "$ref": "#/definitions/ScheduleLayer"
-      },
-      "minItems": 1
+    "Summary": {
+      "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
+      "type": "string"
+    },
+    "HtmlUrl": {
+      "description": "A URL at which the entity is uniquely displayed in the Web app.",
+      "type": "string"
     },
     "ScheduleLayer": {
       "type": "object",
@@ -120,18 +119,6 @@
       ],
       "additionalProperties": false
     },
-    "TimeZone": {
-      "description": "The time zone of the schedule.",
-      "type": "string"
-    },
-    "Name": {
-      "description": "The name of the schedule.",
-      "type": "string"
-    },
-    "Description": {
-      "description": "The description of the schedule",
-      "type": "string"
-    },
     "SubSchedule": {
       "type": "object",
       "properties": {
@@ -184,19 +171,6 @@
       ],
       "additionalProperties": false
     },
-    "HtmlUrl": {
-      "description": "A URL at which the entity is uniquely displayed in the Web app.",
-      "type": "string"
-    },
-    "EscalationPolicies": {
-      "description": "An array of all of the escalation policies that uses this schedule.",
-      "type": "array",
-      "insertionOrder": false,
-      "items": {
-        "$ref": "#/definitions/EscalationPolicy"
-      },
-      "minItems": 1
-    },
     "EscalationPolicy": {
       "type": "object",
       "properties": {
@@ -223,15 +197,6 @@
         "Id"
       ],
       "additionalProperties": false
-    },
-    "Users": {
-      "description": "An array of all of the users on the schedule.",
-      "type": "array",
-      "insertionOrder": false,
-      "items": {
-        "$ref": "#/definitions/User"
-      },
-      "minItems": 1
     },
     "UserWrapper": {
       "type": "object",
@@ -272,15 +237,6 @@
       ],
       "additionalProperties": false
     },
-    "Teams": {
-      "description": "An array of all of the teams on the schedule.",
-      "type": "array",
-      "insertionOrder": false,
-      "items": {
-        "$ref": "#/definitions/Team"
-      },
-      "minItems": 1
-    },
     "Team": {
       "type": "object",
       "properties": {
@@ -307,60 +263,6 @@
         "Id"
       ],
       "additionalProperties": false
-    },
-    "Schedule": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "$ref": "#/definitions/Id"
-        },
-        "Summary": {
-          "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
-          "type": "string"
-        },
-        "Type": {
-          "description": "The type of object being created.",
-          "type": "string",
-          "enum": [
-            "schedule"
-          ]
-        },
-        "HtmlUrl": {
-          "$ref": "#/definitions/HtmlUrl"
-        },
-        "ScheduleLayers": {
-          "$ref": "#/definitions/ScheduleLayers"
-        },
-        "TimeZone": {
-          "$ref": "#/definitions/TimeZone"
-        },
-        "Name": {
-          "$ref": "#/definitions/Name"
-        },
-        "Description": {
-          "$ref": "#/definitions/Description"
-        },
-        "FinalSchedule": {
-          "$ref": "#/definitions/SubSchedule"
-        },
-        "OverridesSubschedule": {
-          "$ref": "#/definitions/SubSchedule"
-        },
-        "EscalationPolicies": {
-          "$ref": "#/definitions/EscalationPolicies"
-        },
-        "Teams": {
-          "$ref": "#/definitions/Teams"
-        },
-        "Users": {
-          "$ref": "#/definitions/Users"
-        }
-      },
-      "required": [
-        "Type",
-        "TimeZone"
-      ],
-      "additionalProperties": false
     }
   },
   "typeConfiguration": {
@@ -375,22 +277,26 @@
     ]
   },
   "properties": {
-    "PagerDutyAccess": {
-      "description": "Personal Access Token",
-      "type": "string",
-      "pattern": "^\\w{20}$"
-    },
     "ScheduleLayers": {
-      "$ref": "#/definitions/ScheduleLayers"
+      "description": "A list of schedule layers.",
+      "type": "array",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/ScheduleLayer"
+      },
+      "minItems": 1
     },
     "TimeZone": {
-      "$ref": "#/definitions/TimeZone"
+      "description": "The time zone of the schedule.",
+      "type": "string"
     },
     "Name": {
-      "$ref": "#/definitions/Name"
+      "description": "The name of the schedule.",
+      "type": "string"
     },
     "Description": {
-      "$ref": "#/definitions/Description"
+      "description": "The description of the schedule",
+      "type": "string"
     },
     "FinalSchedule": {
       "$ref": "#/definitions/SubSchedule"
@@ -401,8 +307,45 @@
     "Id": {
       "$ref": "#/definitions/Id"
     },
-    "Schedule": {
-      "$ref": "#/definitions/Schedule"
+    "Summary": {
+      "$ref": "#/definitions/Summary"
+    },
+    "Type": {
+      "description": "The type of object being created.",
+      "type": "string",
+      "enum": [
+        "schedule"
+      ]
+    },
+    "HtmlUrl": {
+      "$ref": "#/definitions/HtmlUrl"
+    },
+    "EscalationPolicies": {
+      "description": "An array of all of the escalation policies that uses this schedule.",
+      "type": "array",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/EscalationPolicy"
+      },
+      "minItems": 1
+    },
+    "Users": {
+      "description": "An array of all of the users on the schedule.",
+      "type": "array",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/User"
+      },
+      "minItems": 1
+    },
+    "Teams": {
+      "description": "An array of all of the teams on the schedule.",
+      "type": "array",
+      "insertionOrder": false,
+      "items": {
+        "$ref": "#/definitions/Team"
+      },
+      "minItems": 1
     }
   },
   "additionalProperties": false,
@@ -410,12 +353,16 @@
     "taggable": false
   },
   "required": [
-    "PagerDutyAccess",
     "TimeZone"
   ],
   "readOnlyProperties": [
     "/properties/Id",
-    "/properties/Schedule"
+    "/properties/Summary",
+    "/properties/Type",
+    "/properties/HtmlUrl",
+    "/properties/EscalationPolicies",
+    "/properties/Teams",
+    "/properties/Users"
   ],
   "primaryIdentifier": [
     "/properties/Id"

@@ -11,15 +11,6 @@ export class ResourceModel extends BaseModel {
     @Exclude()
     protected readonly IDENTIFIER_KEY_ID: string = '/properties/Id';
 
-    @Expose({ name: 'PagerDutyAccess' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'pagerDutyAccess', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    pagerDutyAccess?: Optional<string>;
     @Expose({ name: 'ScheduleLayers' })
     @Type(() => ScheduleLayer)
     scheduleLayers?: Optional<Array<ScheduleLayer>>;
@@ -65,9 +56,42 @@ export class ResourceModel extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'Schedule' })
-    @Type(() => Schedule)
-    schedule?: Optional<Schedule>;
+    @Expose({ name: 'Summary' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'summary', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    summary?: Optional<string>;
+    @Expose({ name: 'Type' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'type_', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    type_?: Optional<string>;
+    @Expose({ name: 'HtmlUrl' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'htmlUrl', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    htmlUrl?: Optional<string>;
+    @Expose({ name: 'EscalationPolicies' })
+    @Type(() => EscalationPolicy)
+    escalationPolicies?: Optional<Array<EscalationPolicy>>;
+    @Expose({ name: 'Users' })
+    @Type(() => User)
+    users?: Optional<Array<User>>;
+    @Expose({ name: 'Teams' })
+    @Type(() => Team)
+    teams?: Optional<Array<Team>>;
 
     @Exclude()
     public getPrimaryIdentifier(): Dict {
@@ -307,94 +331,6 @@ export class RenderedScheduleEntries extends BaseModel {
 
 }
 
-export class Schedule extends BaseModel {
-    ['constructor']: typeof Schedule;
-
-
-    @Expose({ name: 'Id' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'id', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    id?: Optional<string>;
-    @Expose({ name: 'Summary' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'summary', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    summary?: Optional<string>;
-    @Expose({ name: 'Type' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'type_', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    type_?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
-    @Expose({ name: 'ScheduleLayers' })
-    @Type(() => ScheduleLayer)
-    scheduleLayers?: Optional<Array<ScheduleLayer>>;
-    @Expose({ name: 'TimeZone' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'timeZone', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    timeZone?: Optional<string>;
-    @Expose({ name: 'Name' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'name', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    name?: Optional<string>;
-    @Expose({ name: 'Description' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'description', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    description?: Optional<string>;
-    @Expose({ name: 'FinalSchedule' })
-    @Type(() => SubSchedule)
-    finalSchedule?: Optional<SubSchedule>;
-    @Expose({ name: 'OverridesSubschedule' })
-    @Type(() => SubSchedule)
-    overridesSubschedule?: Optional<SubSchedule>;
-    @Expose({ name: 'EscalationPolicies' })
-    @Type(() => EscalationPolicy)
-    escalationPolicies?: Optional<Array<EscalationPolicy>>;
-    @Expose({ name: 'Teams' })
-    @Type(() => Team)
-    teams?: Optional<Array<Team>>;
-    @Expose({ name: 'Users' })
-    @Type(() => User)
-    users?: Optional<Array<User>>;
-
-}
-
 export class EscalationPolicy extends BaseModel {
     ['constructor']: typeof EscalationPolicy;
 
@@ -478,6 +414,32 @@ export class Team extends BaseModel {
         }
     )
     htmlUrl?: Optional<string>;
+
+}
+
+export class TypeConfigurationModel extends BaseModel {
+    ['constructor']: typeof TypeConfigurationModel;
+
+
+    @Expose({ name: 'PagerDutyAccess' })
+    @Type(() => PagerDutyAccess)
+    pagerDutyAccess?: Optional<PagerDutyAccess>;
+
+}
+
+export class PagerDutyAccess extends BaseModel {
+    ['constructor']: typeof PagerDutyAccess;
+
+
+    @Expose({ name: 'Token' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'token', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    token?: Optional<string>;
 
 }
 
