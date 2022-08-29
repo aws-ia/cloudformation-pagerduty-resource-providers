@@ -12,7 +12,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 {
     "Type" : "PagerDuty::Teams::Team",
     "Properties" : {
-        "<a href="#pagerdutyaccess" title="PagerDutyAccess">PagerDutyAccess</a>" : <i>String</i>,
         "<a href="#name" title="Name">Name</a>" : <i>String</i>,
         "<a href="#description" title="Description">Description</a>" : <i>String</i>,
         "<a href="#parent" title="Parent">Parent</a>" : <i><a href="parent.md">Parent</a></i>,
@@ -25,25 +24,12 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 <pre>
 Type: PagerDuty::Teams::Team
 Properties:
-    <a href="#pagerdutyaccess" title="PagerDutyAccess">PagerDutyAccess</a>: <i>String</i>
     <a href="#name" title="Name">Name</a>: <i>String</i>
     <a href="#description" title="Description">Description</a>: <i>String</i>
     <a href="#parent" title="Parent">Parent</a>: <i><a href="parent.md">Parent</a></i>
 </pre>
 
 ## Properties
-
-#### PagerDutyAccess
-
-Personal Access Token
-
-_Required_: Yes
-
-_Type_: String
-
-_Pattern_: <code>^\w{20}$</code>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### Name
 
@@ -97,7 +83,15 @@ For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::G
 
 Returns the <code>Id</code> value.
 
-#### Team
+#### Summary
 
-Returns the <code>Team</code> value.
+A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.
+
+#### Type
+
+The type of object being created.
+
+#### HtmlUrl
+
+A URL at which the entity is uniquely displayed in the Web app.
 

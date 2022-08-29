@@ -6,14 +6,14 @@
     "PagerDutyAccess": {
       "type": "object",
       "properties": {
-        "AccessToken": {
+        "Token": {
           "description": "Personal Access Token",
           "type": "string",
-          "pattern": "^\\w{20}$"
+          "pattern": "^\\S{20}$"
         }
       },
       "required": [
-        "AccessToken"
+        "Token"
       ],
       "additionalProperties": false
     },
@@ -28,6 +28,9 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 1024
+    },
+    "Id": {
+      "type": "string"
     },
     "Summary": {
       "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
@@ -48,7 +51,7 @@
           ]
         },
         "Id": {
-          "type": "string"
+          "$ref": "#/definitions/Id"
         },
         "Summary": {
           "$ref": "#/definitions/Summary"
@@ -60,44 +63,6 @@
       "required": [
         "Type",
         "Id"
-      ],
-      "additionalProperties": false
-    },
-    "Id": {
-      "type": "string"
-    },
-    "Team": {
-      "type": "object",
-      "properties": {
-        "Id": {
-          "$ref": "#/definitions/Id"
-        },
-        "Summary": {
-          "$ref": "#/definitions/Summary"
-        },
-        "Type": {
-          "description": "The type of object being created.",
-          "type": "string",
-          "enum": [
-            "team"
-          ]
-        },
-        "HtmlUrl": {
-          "$ref": "#/definitions/HtmlUrl"
-        },
-        "Name": {
-          "$ref": "#/definitions/Name"
-        },
-        "Description": {
-          "$ref": "#/definitions/Description"
-        },
-        "Parent": {
-          "$ref": "#/definitions/Parent"
-        }
-      },
-      "required": [
-        "Type",
-        "Name"
       ],
       "additionalProperties": false
     }
@@ -114,11 +79,6 @@
     ]
   },
   "properties": {
-    "PagerDutyAccess": {
-      "description": "Personal Access Token",
-      "type": "string",
-      "pattern": "^\\w{20}$"
-    },
     "Name": {
       "$ref": "#/definitions/Name"
     },
@@ -131,8 +91,18 @@
     "Id": {
       "$ref": "#/definitions/Id"
     },
-    "Team": {
-      "$ref": "#/definitions/Team"
+    "Summary": {
+      "$ref": "#/definitions/Summary"
+    },
+    "Type": {
+      "description": "The type of object being created.",
+      "type": "string",
+      "enum": [
+        "team"
+      ]
+    },
+    "HtmlUrl": {
+      "$ref": "#/definitions/HtmlUrl"
     }
   },
   "additionalProperties": false,
@@ -140,12 +110,13 @@
     "taggable": false
   },
   "required": [
-    "PagerDutyAccess",
     "Name"
   ],
   "readOnlyProperties": [
     "/properties/Id",
-    "/properties/Team"
+    "/properties/Summary",
+    "/properties/Type",
+    "/properties/HtmlUrl"
   ],
   "primaryIdentifier": [
     "/properties/Id"

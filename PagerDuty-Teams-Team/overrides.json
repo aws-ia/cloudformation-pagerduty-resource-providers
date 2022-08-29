@@ -1,10 +1,10 @@
 {
   "CREATE": {
-    "/PagerDutyAccess": "<PAGER_DUTY_TOKEN>",
     "/Name": "End-to-end team (PagerDuty::Teams::Team)",
     "/Parent": null
   },
   "UPDATE": {
-    "/Name": "End-to-end team (PagerDuty::Teams::Team) UPDATED"
+    "/Name": "End-to-end team (PagerDuty::Teams::Team) UPDATED",
+    "/Parent": null
   }
 }
