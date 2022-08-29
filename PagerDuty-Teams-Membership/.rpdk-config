@@ -2,7 +2,7 @@
     "artifact_type": "RESOURCE",
     "typeName": "PagerDuty::Teams::Membership",
     "language": "typescript",
-    "runtime": "nodejs12.x",
+    "runtime": "nodejs14.x",
     "entrypoint": "dist/PagerDuty-Teams-Membership/src/handlers.entrypoint",
     "testEntrypoint": "dist/PagerDuty-Teams-Membership/src/handlers.testEntrypoint",
     "settings": {
