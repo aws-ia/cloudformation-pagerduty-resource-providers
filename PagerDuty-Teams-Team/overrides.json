@@ -1,0 +1,10 @@
+{
+  "CREATE": {
+    "/Name": "End-to-end team (PagerDuty::Teams::Team)",
+    "/Parent": null
+  },
+  "UPDATE": {
+    "/Name": "End-to-end team (PagerDuty::Teams::Team) UPDATED",
+    "/Parent": null
+  }
+}

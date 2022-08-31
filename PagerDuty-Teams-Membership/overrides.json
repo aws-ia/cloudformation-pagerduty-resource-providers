@@ -1,0 +1,6 @@
+{
+  "CREATE": {
+    "/TeamId": "<PAGER_DUTY_TEAM>",
+    "/UserId": "<PAGER_DUTY_USER>"
+  }
+}
