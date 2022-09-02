@@ -1,0 +1,105 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: |
+  The following CloudFormation PagerDuty resource types allow the creation and configuration of 
+  users, teams and memberships, escalation policies and response play for your application.
+  This allows kicking off monitoring of new projects simply, efficiently, and consistently.
+
+Parameters:
+  From:
+    Type: String
+    Description: The email address of a valid user associated with the account making the request.
+
+Resources:
+  # 1. Users and team creation
+  JohnUser:
+    Type: PagerDuty::Users::User
+    Properties:
+      Name: John Doe
+      Email: john-doe@acme.com
+      TimeZone: Europe/Paris
+      Color: blue
+      Role: observer
+      JobTitle: Engineer
+  JamesUser:
+    Type: PagerDuty::Users::User
+    Properties:
+      Name: James Rodes
+      Email: james-rodes@acme.com
+      TimeZone: Europe/London
+      Color: blue
+      Role: admin
+      JobTitle: Lead Engineer
+  OnCallTeam:
+    Type: PagerDuty::Teams::Team
+    Properties:
+      Name: On-call engineering
+      Description: Team that includes engineers for on-call issues
+  JohnUserMembership:
+    Type: PagerDuty::Teams::Membership
+    Properties:
+      TeamId: !Ref OnCallTeam
+      UserId: !Ref JohnUser
+      Role: responder
+  JamesUserMembership:
+    Type: PagerDuty::Teams::Membership
+    Properties:
+      TeamId: !Ref OnCallTeam
+      UserId: !Ref JamesUser
+      Role: manager
+
+  # 2. On-call schedule for the users
+  EngineeringSchedule:
+    Type: PagerDuty::Schedules::Schedule
+    Properties:
+      Name: "Daily Engineering Rotation"
+      Description: "Rotation schedule for engineering"
+      TimeZone: "Europe/London"
+      ScheduleLayers:
+        - Name: "Night Shift"
+          Start: "2023-01-01T20:00:00+00:00"
+          RotationVirtualStart: "2022-12-31T00:00:00+00:00"
+          RotationTurnLengthSeconds: 86400 # 1 day
+          Users:
+            - User:
+                Id: !Ref JohnUser
+                Type: "user_reference"
+            - User:
+                Id: !Ref JamesUser
+                Type: "user_reference"
+          Restrictions:
+            - Type: "daily_restriction"
+              StartTimeOfDay: "20:00:00"
+              DurationSeconds: 32400
+
+  # 3. Escalation policy & response play
+  EscalationPolicy:
+    Type: PagerDuty::EscalationPolicies::EscalationPolicy
+    Properties:
+      Name: "Engineering Escalation Policy"
+      Description: "Escalation policy for the engineering team."
+      NumLoops: 2
+      OnCallHandoffNotifications: "if_has_services"
+      EscalationRules:
+        - EscalationDelayInMinutes: 30
+          Targets:
+            - Id: !Ref EngineeringSchedule
+              Type: "schedule_reference"
+            - Id: !Ref JamesUser
+              Type: "user_reference"
+      Teams:
+        - Id: !Ref OnCallTeam
+          Type: "team_reference"
+  ResponsePlay:
+    Type: PagerDuty::ResponsePlays::ResponsePlay
+    Properties:
+      From: !Ref From
+      Name: "Standard incident response"
+      Team:
+        Id: !Ref OnCallTeam
+        Type: "team_reference"
+      ConferenceType: manual
+      ConferenceUrl: https://chime.aws/engineering.acme
+      ConferenceNumber: "+1 855-552-4463"
+      Runnability: responders
