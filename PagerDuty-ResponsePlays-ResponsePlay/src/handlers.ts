@@ -99,27 +99,6 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlayPayl
             return model;
         }
 
-        if (from.description === null) {
-            delete from.description;
-        }
-        if (from.subscribers_message === null) {
-            delete from.subscribers_message;
-        }
-        if (from.responders_message === null) {
-            delete from.responders_message;
-        }
-        if (from.conference_number === null) {
-            delete from.conference_number;
-        }
-        if (from.conference_url === null) {
-            delete from.conference_url;
-        }
-        if (from.conference_type === null) {
-            delete from.conference_type;
-        }
-        delete from.subscribers;
-        delete from.responders;
-
         return new ResourceModel({
             ...model,
             ...Transformer.for(from)

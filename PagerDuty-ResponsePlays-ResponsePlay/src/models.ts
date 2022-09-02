@@ -185,24 +185,6 @@ export class Team extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'Summary' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'summary', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    summary?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
 
 }
 
@@ -228,24 +210,6 @@ export class Subscriber extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'Summary' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'summary', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    summary?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
 
 }
 
@@ -271,24 +235,6 @@ export class Responder extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'Summary' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'summary', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    summary?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
 
 }
 
@@ -315,32 +261,6 @@ export class PagerDutyAccess extends BaseModel {
         }
     )
     token?: Optional<string>;
-
-}
-
-export class TypeConfigurationModel extends BaseModel {
-    ['constructor']: typeof TypeConfigurationModel;
-
-
-    @Expose({ name: 'PagerDutyAccess' })
-    @Type(() => PagerDutyAccess)
-    pagerDutyAccess?: Optional<PagerDutyAccess>;
-
-}
-
-export class PagerDutyAccess extends BaseModel {
-    ['constructor']: typeof PagerDutyAccess;
-
-
-    @Expose({ name: 'AccessToken' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'accessToken', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    accessToken?: Optional<string>;
 
 }
 

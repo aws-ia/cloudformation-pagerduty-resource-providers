@@ -73,9 +73,6 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, EscalationPolicy
             return model;
         }
 
-        delete from.escalation_rules;
-        delete from.teams;
-
         return new ResourceModel({
             ...model,
             ...Transformer.for(from)
