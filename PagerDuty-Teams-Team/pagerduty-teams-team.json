@@ -8,8 +8,7 @@
       "properties": {
         "Token": {
           "description": "Personal Access Token",
-          "type": "string",
-          "pattern": "^\\S{20}$"
+          "type": "string"
         }
       },
       "required": [

@@ -65,8 +65,6 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, UserPayload, Use
             return model;
         }
 
-        delete from.time_zone;
-
         return new ResourceModel({
             ...model,
             ...Transformer.for(from)

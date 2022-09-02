@@ -162,24 +162,6 @@ export class Target extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'Summary' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'summary', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    summary?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
 
 }
 
@@ -205,24 +187,6 @@ export class Team extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'Summary' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'summary', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    summary?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
 
 }
 
@@ -248,24 +212,6 @@ export class Service extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'Summary' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'summary', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    summary?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
 
 }
 

@@ -8,8 +8,7 @@
       "properties": {
         "Token": {
           "description": "Personal Access Token",
-          "type": "string",
-          "pattern": "^\\S{20}$"
+          "type": "string"
         }
       },
       "required": [
@@ -59,12 +58,6 @@
         },
         "Id": {
           "$ref": "#/definitions/Id"
-        },
-        "Summary": {
-          "$ref": "#/definitions/Summary"
-        },
-        "HtmlUrl": {
-          "$ref": "#/definitions/HtmlUrl"
         }
       },
       "required": [
@@ -85,12 +78,6 @@
         },
         "Id": {
           "$ref": "#/definitions/Id"
-        },
-        "Summary": {
-          "$ref": "#/definitions/Summary"
-        },
-        "HtmlUrl": {
-          "$ref": "#/definitions/HtmlUrl"
         }
       },
       "required": [
@@ -111,12 +98,6 @@
         },
         "Id": {
           "$ref": "#/definitions/Id"
-        },
-        "Summary": {
-          "$ref": "#/definitions/Summary"
-        },
-        "HtmlUrl": {
-          "$ref": "#/definitions/HtmlUrl"
         }
       },
       "required": [

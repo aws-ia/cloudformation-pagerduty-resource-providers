@@ -74,14 +74,6 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
             return model
         }
 
-        delete from.schedule_layers;
-        if (from.final_schedule === null || !model.finalSchedule) {
-            delete from.final_schedule;
-        }
-        if (from.overrides_subschedule === null || !model.overridesSubschedule) {
-            delete from.overrides_subschedule;
-        }
-
         return new ResourceModel({
             ...model,
             ...Transformer.for(from)
