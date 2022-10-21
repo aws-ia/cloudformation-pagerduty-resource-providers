@@ -1,7 +1,7 @@
 {
   "typeName": "PagerDuty::Users::User",
   "description": "Manage a user in PagerDuty.",
-  "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+  "sourceUrl": "https://github.com/aws-ia/cloudformation-pagerduty-resource-providers/tree/main/PagerDuty-Users-User",
   "definitions": {
     "PagerDutyAccess": {
       "type": "object",
