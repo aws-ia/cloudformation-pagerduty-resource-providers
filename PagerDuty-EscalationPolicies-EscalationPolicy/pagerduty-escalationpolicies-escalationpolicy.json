@@ -1,7 +1,7 @@
 {
   "typeName": "PagerDuty::EscalationPolicies::EscalationPolicy",
   "description": "Manage an escalation policy in PagerDuty.",
-  "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+  "sourceUrl": "https://developer.pagerduty.com/api-reference/77515ca391014-create-an-escalation-policy",
   "definitions": {
     "PagerDutyAccess": {
       "type": "object",
@@ -19,9 +19,6 @@
     "EscalationRule": {
       "type": "object",
       "properties": {
-        "Id": {
-          "$ref": "#/definitions/Id"
-        },
         "EscalationDelayInMinutes": {
           "description": "The number of minutes before an unacknowledged incident escalates away from this rule.",
           "type": "integer"

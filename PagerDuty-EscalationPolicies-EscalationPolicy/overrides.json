@@ -1,6 +1,5 @@
 {
   "CREATE": {
-    "/Name": "Escalation Policy – contract test",
     "/NumLoops": 5,
     "/EscalationRules": [
       {
@@ -13,10 +12,9 @@
         ]
       }
     ],
-    "/Teams": null
+    "/Teams": []
   },
   "UPDATE": {
-    "/Name": "Escalation Policy – contract test UPDATED",
     "/NumLoops": 8,
     "/EscalationRules": [
       {

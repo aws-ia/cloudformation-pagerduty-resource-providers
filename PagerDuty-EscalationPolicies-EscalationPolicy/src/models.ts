@@ -116,15 +116,6 @@ export class EscalationRule extends BaseModel {
     ['constructor']: typeof EscalationRule;
 
 
-    @Expose({ name: 'Id' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'id', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    id?: Optional<string>;
     @Expose({ name: 'EscalationDelayInMinutes' })
     @Transform(
         (value: any, obj: any) =>

@@ -3,6 +3,7 @@ import {AbstractPagerDutyResource} from '../../PagerDuty-Common/src/abstract-pag
 import {PagerDutyClient, PaginatedResponseType} from '../../PagerDuty-Common/src/pager-duty-client';
 import {CaseTransformer, Transformer} from "../../PagerDuty-Common/src/util";
 import {version} from '../package.json';
+import {plainToClassFromExist} from "class-transformer";
 
 type EscalationPolicyPayload = {
     escalation_rules: []
@@ -28,7 +29,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, EscalationPolicy
         return await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).paginate<EscalationPoliciesPayload, ResourceModel>(
             'get',
             `/escalation_policies`,
-            response => response.data.escalation_policies.map(escalationPolicyPayload => this.setModelFrom(model, escalationPolicyPayload)),
+            response => response.data.escalation_policies.map(escalationPolicyPayload => this.setModelFrom(this.newModel(), escalationPolicyPayload)),
             {limit: 100});
     }
 
@@ -73,13 +74,12 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, EscalationPolicy
             return model;
         }
 
-        return new ResourceModel({
-            ...model,
-            ...Transformer.for(from)
-                .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
-                .forModelIngestion()
-                .transform()
-        });
+        return plainToClassFromExist(
+            model,
+            Transformer.for(from)
+                .transformKeys(CaseTransformer.SNAKE_TO_PASCAL)
+                .transform(),
+            {excludeExtraneousValues: true});
     }
 
 }
