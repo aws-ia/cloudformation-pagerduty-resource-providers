@@ -1,7 +1,7 @@
 {
   "typeName": "PagerDuty::ResponsePlays::ResponsePlay",
   "description": "Manage a response play in PagerDuty",
-  "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+  "sourceUrl": "https://developer.pagerduty.com/api-reference/e3b37986aff04-create-a-response-play",
   "definitions": {
     "PagerDutyAccess": {
       "type": "object",
