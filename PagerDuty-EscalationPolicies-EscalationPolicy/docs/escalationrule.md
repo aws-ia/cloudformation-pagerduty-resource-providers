@@ -8,7 +8,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 
 <pre>
 {
-    "<a href="#id" title="Id">Id</a>" : <i>String</i>,
     "<a href="#escalationdelayinminutes" title="EscalationDelayInMinutes">EscalationDelayInMinutes</a>" : <i>Integer</i>,
     "<a href="#targets" title="Targets">Targets</a>" : <i>[ <a href="target.md">Target</a>, ... ]</i>
 }
@@ -17,21 +16,12 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 ### YAML
 
 <pre>
-<a href="#id" title="Id">Id</a>: <i>String</i>
 <a href="#escalationdelayinminutes" title="EscalationDelayInMinutes">EscalationDelayInMinutes</a>: <i>Integer</i>
 <a href="#targets" title="Targets">Targets</a>: <i>
       - <a href="target.md">Target</a></i>
 </pre>
 
 ## Properties
-
-#### Id
-
-_Required_: No
-
-_Type_: String
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### EscalationDelayInMinutes
 

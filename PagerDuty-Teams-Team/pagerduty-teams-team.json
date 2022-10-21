@@ -1,7 +1,7 @@
 {
   "typeName": "PagerDuty::Teams::Team",
   "description": "Manage a team in PagerDuty.",
-  "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+  "sourceUrl": "https://github.com/aws-ia/cloudformation-pagerduty-resource-providers",
   "definitions": {
     "PagerDutyAccess": {
       "type": "object",

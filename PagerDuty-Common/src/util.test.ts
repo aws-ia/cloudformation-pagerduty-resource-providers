@@ -148,9 +148,60 @@ describe('Util', () => {
                     }
                 ]
             }]
-        ])('converts payload keys from snake_case to PascalCase', (input, expected) => {
+        ])('converts payload keys from snake_case to camelCase', (input, expected) => {
             expect(Transformer.for(input)
                 .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                .transform()
+            ).toStrictEqual(expected);
+        });
+
+        it.each([
+            [{
+                foo: 'foo',
+                ba_r: 123,
+                hello_world: 'Hi'
+            }, {
+                Foo: 'foo',
+                BaR: 123,
+                HelloWorld: 'Hi'
+            }],
+            [{
+                hello_world: {
+                    foo: 'foo',
+                    ba_r: 123,
+                    hello_world: 'Hi'
+                }
+            }, {
+                HelloWorld: {
+                    Foo: 'foo',
+                    BaR: 123,
+                    HelloWorld: 'Hi'
+                }
+            }],
+            [{
+                hello_world: [
+                    'foo',
+                    ['hello', 'world'],
+                    {
+                        foo: 'foo',
+                        ba_r: 123,
+                        hello_world: 'Hi'
+                    }
+                ]
+            }, {
+                HelloWorld: [
+                    'foo',
+                    ['hello', 'world'],
+                    {
+                        Foo: 'foo',
+                        BaR: 123,
+                        HelloWorld: 'Hi'
+                    }
+                ]
+            }]
+        ])('converts payload keys from snake_case to PascalCase', (input, expected) => {
+            expect(Transformer.for(input)
+                .transformKeys(CaseTransformer.SNAKE_TO_PASCAL)
                 .transform()
             ).toStrictEqual(expected);
         });

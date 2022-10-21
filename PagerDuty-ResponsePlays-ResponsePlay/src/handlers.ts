@@ -3,6 +3,7 @@ import {AbstractPagerDutyResource} from '../../PagerDuty-Common/src/abstract-pag
 import {PagerDutyClient, PaginatedResponseType} from '../../PagerDuty-Common/src/pager-duty-client';
 import {CaseTransformer, Transformer} from '../../PagerDuty-Common/src/util';
 import {version} from '../package.json';
+import {plainToClassFromExist} from "class-transformer";
 
 type ResponsePlayPayload = {
     description: string
@@ -99,13 +100,12 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlayPayl
             return model;
         }
 
-        return new ResourceModel({
-            ...model,
-            ...Transformer.for(from)
-                .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
-                .forModelIngestion()
-                .transform()
-        });
+        return plainToClassFromExist(
+            model,
+            Transformer.for(from)
+                .transformKeys(CaseTransformer.SNAKE_TO_PASCAL)
+                .transform(),
+            {excludeExtraneousValues: true});
     }
 
 }

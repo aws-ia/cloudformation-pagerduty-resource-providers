@@ -4,6 +4,8 @@ import {PagerDutyClient, PaginatedResponseType} from "../../PagerDuty-Common/src
 import {exceptions} from "@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib";
 import {AxiosError} from "axios";
 import {version} from '../package.json';
+import {CaseTransformer, Transformer} from "../../PagerDuty-Common/src/util";
+import {plainToClassFromExist} from "class-transformer";
 
 type MembersResponse = {
     members: Member[]
@@ -71,10 +73,16 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResourceModel, v
     }
 
     setModelFrom(model: ResourceModel, from?: ResourceModel): ResourceModel {
-        return new ResourceModel({
-            ...model,
-            ...(from || {})
-        });
+        if (!from) {
+            return model;
+        }
+
+        return plainToClassFromExist(
+            model,
+            Transformer.for(from)
+                .transformKeys(CaseTransformer.SNAKE_TO_PASCAL)
+                .transform(),
+            {excludeExtraneousValues: true});
     }
 
 }
