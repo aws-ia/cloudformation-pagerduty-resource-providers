@@ -1,7 +1,7 @@
 {
   "typeName": "PagerDuty::EscalationPolicies::EscalationPolicy",
   "description": "Manage an escalation policy in PagerDuty.",
-  "sourceUrl": "https://developer.pagerduty.com/api-reference/77515ca391014-create-an-escalation-policy",
+  "sourceUrl": "https://github.com/aws-ia/cloudformation-pagerduty-resource-providers",
   "definitions": {
     "PagerDutyAccess": {
       "type": "object",

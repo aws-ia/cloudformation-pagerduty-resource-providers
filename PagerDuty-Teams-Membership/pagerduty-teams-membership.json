@@ -1,7 +1,7 @@
 {
   "typeName": "PagerDuty::Teams::Membership",
   "description": "Manage a membership of a user into a team in PagerDuty.",
-  "sourceUrl": "https://developer.pagerduty.com/api-reference/8fff69f2af386-add-a-user-to-a-team",
+  "sourceUrl": "https://github.com/aws-ia/cloudformation-pagerduty-resource-providers",
   "definitions": {
     "PagerDutyAccess": {
       "type": "object",

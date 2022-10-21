@@ -1,7 +1,7 @@
 {
   "typeName": "PagerDuty::Users::User",
   "description": "Manage a user in PagerDuty.",
-  "sourceUrl": "https://developer.pagerduty.com/api-reference/4cb4fd0f5444a-create-a-user",
+  "sourceUrl": "https://github.com/aws-ia/cloudformation-pagerduty-resource-providers",
   "definitions": {
     "PagerDutyAccess": {
       "type": "object",

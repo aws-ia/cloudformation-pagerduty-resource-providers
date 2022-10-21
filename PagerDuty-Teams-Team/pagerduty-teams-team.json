@@ -1,7 +1,7 @@
 {
   "typeName": "PagerDuty::Teams::Team",
   "description": "Manage a team in PagerDuty.",
-  "sourceUrl": "https://developer.pagerduty.com/api-reference/2e80b2c79165e-create-a-team",
+  "sourceUrl": "https://github.com/aws-ia/cloudformation-pagerduty-resource-providers",
   "definitions": {
     "PagerDutyAccess": {
       "type": "object",
