@@ -100,12 +100,15 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlayPayl
             return model;
         }
 
-        return plainToClassFromExist(
+        const fromEmail = model.from_;
+        const resourceModel = plainToClassFromExist(
             model,
             Transformer.for(from)
                 .transformKeys(CaseTransformer.SNAKE_TO_PASCAL)
                 .transform(),
-            {excludeExtraneousValues: true});
+            {excludeExtraneousValues: true, enableImplicitConversion: true});
+        resourceModel.from_ = fromEmail;
+        return resourceModel;
     }
 
 }

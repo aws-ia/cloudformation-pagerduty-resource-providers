@@ -115,6 +115,7 @@
     "Description": {
       "description": "The description of the response play.",
       "type": "string",
+      "minLength": 1,
       "maxLength": 349
     },
     "Team": {
@@ -136,7 +137,8 @@
     },
     "SubscribersMessage": {
       "description": "The content of the notification that will be sent to all incident subscribers upon the running of this response play. Note that this includes any users who may have already been subscribed to the incident prior to the running of this response play. If empty, no notifications will be sent.",
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "Responders": {
       "type": "array",
@@ -147,7 +149,8 @@
     },
     "RespondersMessage": {
       "description": "The content of the notification that will be sent to all incident subscribers upon the running of this response play. Note that this includes any users who may have already been subscribed to the incident prior to the running of this response play. If empty, no notifications will be sent.",
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "Runnability": {
       "description": "String representing how this response play is allowed to be run. Valid options are:\n\n    services: This response play cannot be manually run by any users. It will run automatically for new incidents triggered on any services that are configured with this response play.\n    teams: This response play can be run manually on an incident only by members of its configured team. This option can only be selected when the team property for this response play is not empty.\n    responders: This response play can be run manually on an incident by any responders in this account.",
@@ -161,11 +164,13 @@
     },
     "ConferenceNumber": {
       "description": "The telephone number that will be set as the conference number for any incident on which this response play is run.",
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "ConferenceUrl": {
       "description": "The URL that will be set as the conference URL for any incident on which this response play is run.",
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "ConferenceType": {
       "description": "This field has three possible values and indicates how the response play was created.\n\n    none : The response play had no conference_number or conference_url set at time of creation.\n    manual : The response play had one or both of conference_number and conference_url set at time of creation.\n    zoom : Customers with the Zoom-Integration Entitelment can use this value to dynamicly configure conference number and url for zoom",
