@@ -9,7 +9,9 @@
         "Id": "<PAGER_DUTY_USER>"
       }
     ],
-    "/ConferenceType": "manual"
+    "/ConferenceType": "none",
+    "/ConferenceNumber": null,
+    "/ConferenceUrl": null
   },
   "UPDATE": {
     "/From": "<PAGER_DUTY_EMAIL>",
@@ -34,6 +36,8 @@
         "Id": "<PAGER_DUTY_ESCALATION_POLICY>"
       }
     ],
-    "/ConferenceType": "manual"
+    "/ConferenceType": "none",
+    "/ConferenceNumber": null,
+    "/ConferenceUrl": null
   }
 }
