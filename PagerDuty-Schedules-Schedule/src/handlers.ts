@@ -30,7 +30,9 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
         return await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).paginate<SchedulesResponse, ResourceModel>(
             'get',
             `/schedules`,
-            response => response.data.schedules.map(schedulePayload => this.setModelFrom(this.newModel(), schedulePayload)),
+            response => response.data.schedules
+                .map(schedulePayload => this.setModelFrom(this.newModel(), schedulePayload))
+                .filter(m => m.getPrimaryIdentifier() !== null),
             {});
     }
 
@@ -72,15 +74,19 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
 
     setModelFrom(model: ResourceModel, from?: SchedulePayload): ResourceModel {
         if (!from) {
-            return model
+            return model;
         }
 
-        return plainToClassFromExist(
-            model,
-            Transformer.for(from)
-                .transformKeys(CaseTransformer.SNAKE_TO_PASCAL)
-                .transform(),
-            {excludeExtraneousValues: true});
+        const resourceModel = new ResourceModel({
+            ...model,
+            ...Transformer.for(from)
+                .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                .transform()
+        });
+        delete resourceModel.scheduleLayers;
+        delete resourceModel.finalSchedule;
+        delete resourceModel.overridesSubschedule;
+        return resourceModel;
     }
 
 }
