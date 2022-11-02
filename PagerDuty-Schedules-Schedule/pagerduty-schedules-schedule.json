@@ -342,6 +342,11 @@
     "/properties/Teams",
     "/properties/Users"
   ],
+  "writeOnlyProperties": [
+    "/properties/ScheduleLayers",
+    "/properties/FinalSchedule",
+    "/properties/OverridesSubschedule"
+  ],
   "primaryIdentifier": [
     "/properties/Id"
   ],
