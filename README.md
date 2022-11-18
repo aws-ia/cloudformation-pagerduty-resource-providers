@@ -1,4 +1,4 @@
-# Rollbar CloudFormation Resources
+# PagerDuty CloudFormation Resources
 
 This collection of CloudFormation resource types allow PagerDuty to be controlled using AWS CloudFormation.
 

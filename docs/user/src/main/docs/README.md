@@ -12,13 +12,13 @@ Here is a sample use case this supports:
 
 ### How do I get started?
 
-In the AWS CloudFormation UI, find the Rollbar types in the third-party registry and activate them.
+In the AWS CloudFormation UI, find the PagerDuty types in the third-party registry and activate them.
 Alternatively follow the [Developer](docs/dev) instructions to install them manually.
 
 You will need to set up a [Type Configuration](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudformation/set-type-configuration.html)
-for each of the activated types, containing a Rollbar **[Access Token](https://support.pagerduty.com/docs/api-access-keys)** in order to reach the PagerDuty API correctly.
+for each of the activated types, containing a PagerDuty **[Access Token](https://support.pagerduty.com/docs/api-access-keys)** in order to reach the PagerDuty API correctly.
 It is recommended to set the token into Systems Manager's secure parameter store,
-e.g. as `/path/to/pagerduty/token` and then it can be applied any of the Rollbar types,
+e.g. as `/path/to/pagerduty/token` and then it can be applied any of the PagerDuty types,
 e.g. `PagerDuty::EscalationPolicies::EscalationPolicy`, using:
 
 ```bash
@@ -39,4 +39,4 @@ For many things there just isn't a compelling use case, and of course there are 
 We have focussed on those objects and properties which have seemed most useful.
 If we missed something, open an issue to let us know, or even better, contribute an extension!
 
-The **Full Rollbar CloudFormation Resources Reference** is available [here](resources).
+The **Full PagerDuty CloudFormation Resources Reference** is available [here](resources).
