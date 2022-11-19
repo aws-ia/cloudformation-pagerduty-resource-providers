@@ -81,6 +81,8 @@ _Required_: No
 
 _Type_: String
 
+_Minimum_: <code>1</code>
+
 _Maximum_: <code>349</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
@@ -109,6 +111,8 @@ _Required_: No
 
 _Type_: String
 
+_Minimum_: <code>1</code>
+
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### Responders
@@ -126,6 +130,8 @@ The content of the notification that will be sent to all incident subscribers up
 _Required_: No
 
 _Type_: String
+
+_Minimum_: <code>1</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -153,6 +159,8 @@ _Required_: No
 
 _Type_: String
 
+_Minimum_: <code>1</code>
+
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### ConferenceUrl
@@ -162,6 +170,8 @@ The URL that will be set as the conference URL for any incident on which this re
 _Required_: No
 
 _Type_: String
+
+_Minimum_: <code>1</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
