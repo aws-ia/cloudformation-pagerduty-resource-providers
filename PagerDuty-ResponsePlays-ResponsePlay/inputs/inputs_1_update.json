@@ -1,0 +1,26 @@
+{
+    "FromEmail": "email@example.com",
+    "Name": "CFN_TEST_RESPONSE update",
+    "Description": "Test Response",
+    "RespondersMessage": "Res Message",
+    "Runnability": "responders",
+    "Subscribers": [
+      {
+        "Type": "user_reference",
+        "Id": "<USER_ID>"
+      }],
+    "Team": {
+        "Type": "team_reference",
+        "Id": "<TEAM_ID>"
+    },
+    "SubscribersMessage": "Sub Message",
+    "Responders": [
+      {
+        "Type": "user_reference",
+        "Id": "<USER_ID>"
+      }
+    ],
+    "ConferenceNumber": "5555555555",
+    "ConferenceUrl": "http://example.example.com",
+    "ConferenceType": "manual"
+}

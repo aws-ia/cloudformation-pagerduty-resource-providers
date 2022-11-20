@@ -12,7 +12,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 {
     "Type" : "PagerDuty::ResponsePlays::ResponsePlay",
     "Properties" : {
-        "<a href="#from" title="From">From</a>" : <i>String</i>,
+        "<a href="#fromemail" title="FromEmail">FromEmail</a>" : <i>String</i>,
         "<a href="#name" title="Name">Name</a>" : <i>String</i>,
         "<a href="#description" title="Description">Description</a>" : <i>String</i>,
         "<a href="#team" title="Team">Team</a>" : <i><a href="team.md">Team</a>, Map</i>,
@@ -33,7 +33,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 <pre>
 Type: PagerDuty::ResponsePlays::ResponsePlay
 Properties:
-    <a href="#from" title="From">From</a>: <i>String</i>
+    <a href="#fromemail" title="FromEmail">FromEmail</a>: <i>String</i>
     <a href="#name" title="Name">Name</a>: <i>String</i>
     <a href="#description" title="Description">Description</a>: <i>String</i>
     <a href="#team" title="Team">Team</a>: <i><a href="team.md">Team</a>, Map</i>
@@ -51,7 +51,7 @@ Properties:
 
 ## Properties
 
-#### From
+#### FromEmail
 
 The email address of a valid user associated with the account making the request.
 
@@ -192,10 +192,6 @@ _Allowed Values_: <code>none</code> | <code>manual</code> | <code>zoom</code>
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 ## Return Values
-
-### Ref
-
-When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the Id.
 
 ### Fn::GetAtt
 
