@@ -1,0 +1,28 @@
+{
+  "Name": "End-to-end schedule invalid",
+  "TimeZone": 1234,
+  "ScheduleLayers": [
+    {
+      "Name": "Night Shift",
+      "Start": "2023-12-01T21:00:00+00:00",
+      "End": null,
+      "RotationVirtualStart": "2015-11-06T20:00:00+00:00",
+      "RotationTurnLengthSeconds": 83000,
+      "Users": [
+        {
+          "User": {
+            "Id": "<PAGER_DUTY_USER>",
+            "Type": "user_reference"
+          }
+        }
+      ],
+      "Restrictions": [
+        {
+          "Type": "daily_restriction",
+          "StartTimeOfDay": "09:00:00",
+          "DurationSeconds": 29000
+        }
+      ]
+    }
+  ]
+}
