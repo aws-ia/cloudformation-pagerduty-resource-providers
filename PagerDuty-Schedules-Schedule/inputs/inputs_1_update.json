@@ -1,13 +1,14 @@
 {
   "Name": "End-to-end schedule updated",
-  "TimeZone": "EuropeLondon",
+  "TimeZone": "Europe/London",
+  "Description": "Updated scheduled description",
   "ScheduleLayers": [
     {
       "Name": "Night Shift",
-      "Start": "2023-12-01T21:00:00+00:00",
-      "End": null,
+      "Start": "2023-11-06T20:00:00+00:00",
+      "End": "2024-11-06T20:00:00+00:00",
       "RotationVirtualStart": "2015-11-06T20:00:00+00:00",
-      "RotationTurnLengthSeconds": 83000,
+      "RotationTurnLengthSeconds": 86400,
       "Users": [
         {
           "User": {
@@ -19,8 +20,8 @@
       "Restrictions": [
         {
           "Type": "daily_restriction",
-          "StartTimeOfDay": "09:00:00",
-          "DurationSeconds": 29000
+          "StartTimeOfDay": "08:00:00",
+          "DurationSeconds": 32400
         }
       ]
     }

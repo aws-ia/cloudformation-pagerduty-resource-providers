@@ -304,8 +304,7 @@
       "insertionOrder": false,
       "items": {
         "$ref": "#/definitions/EscalationPolicy"
-      },
-      "minItems": 1
+      }
     },
     "Users": {
       "description": "An array of all of the users on the schedule.",
@@ -322,8 +321,7 @@
       "insertionOrder": false,
       "items": {
         "$ref": "#/definitions/Team"
-      },
-      "minItems": 1
+      }
     }
   },
   "additionalProperties": false,
@@ -338,8 +336,6 @@
     "/properties/Summary",
     "/properties/Type",
     "/properties/HtmlUrl",
-    "/properties/EscalationPolicies",
-    "/properties/Teams",
     "/properties/Users"
   ],
   "writeOnlyProperties": [

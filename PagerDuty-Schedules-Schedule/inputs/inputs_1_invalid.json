@@ -11,7 +11,7 @@
       "Users": [
         {
           "User": {
-            "Id": "<PAGER_DUTY_USER>",
+            "Id": "invalidUserId",
             "Type": "user_reference"
           }
         }
