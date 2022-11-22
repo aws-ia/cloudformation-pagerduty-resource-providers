@@ -1,10 +1,4 @@
 {
   "Name": "End-to-end team (PagerDuty::Teams::Team) UPDATED",
-  "Description": "team description UPDATED",
-  "Parent": {
-    "Type": "team_reference",
-    "Id": "PWWJY78",
-    "Summary": "Parent Team",
-    "HtmlUrl": "url.com"
-  }
+  "Description": "team description UPDATED"
 }
