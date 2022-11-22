@@ -21,9 +21,16 @@
         {
           "Type": "daily_restriction",
           "StartTimeOfDay": "08:00:00",
-          "DurationSeconds": 32400
+          "DurationSeconds": 32400,
+          "StartDayOfWeek": 1
         }
       ]
+    }
+  ],
+  "Teams": [
+    {
+      "Id": "<PAGER_DUTY_TEAM>",
+      "Type": "team_reference"
     }
   ]
 }

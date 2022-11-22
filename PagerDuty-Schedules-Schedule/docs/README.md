@@ -18,7 +18,9 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#description" title="Description">Description</a>" : <i>String</i>,
         "<a href="#finalschedule" title="FinalSchedule">FinalSchedule</a>" : <i><a href="subschedule.md">SubSchedule</a></i>,
         "<a href="#overridessubschedule" title="OverridesSubschedule">OverridesSubschedule</a>" : <i><a href="subschedule.md">SubSchedule</a></i>,
+        "<a href="#self" title="Self">Self</a>" : <i>String</i>,
         "<a href="#users" title="Users">Users</a>" : <i>[ <a href="userwrapper.md">UserWrapper</a>, ... ]</i>,
+        "<a href="#teams" title="Teams">Teams</a>" : <i>[ <a href="team.md">Team</a>, ... ]</i>
     }
 }
 </pre>
@@ -35,8 +37,11 @@ Properties:
     <a href="#description" title="Description">Description</a>: <i>String</i>
     <a href="#finalschedule" title="FinalSchedule">FinalSchedule</a>: <i><a href="subschedule.md">SubSchedule</a></i>
     <a href="#overridessubschedule" title="OverridesSubschedule">OverridesSubschedule</a>: <i><a href="subschedule.md">SubSchedule</a></i>
+    <a href="#self" title="Self">Self</a>: <i>String</i>
     <a href="#users" title="Users">Users</a>: <i>
       - <a href="userwrapper.md">UserWrapper</a></i>
+    <a href="#teams" title="Teams">Teams</a>: <i>
+      - <a href="team.md">Team</a></i>
 </pre>
 
 ## Properties
@@ -97,11 +102,31 @@ _Type_: <a href="subschedule.md">SubSchedule</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
+#### Self
+
+The API show URL at which the object is accessible
+
+_Required_: No
+
+_Type_: String
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
 #### Users
 
 _Required_: No
 
 _Type_: List of <a href="userwrapper.md">UserWrapper</a>
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### Teams
+
+An array of all of the teams on the schedule.
+
+_Required_: No
+
+_Type_: List of <a href="team.md">Team</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -133,15 +158,7 @@ The type of object being created.
 
 A URL at which the entity is uniquely displayed in the Web app.
 
-#### EscalationPolicies
+#### Id
 
-An array of all of the escalation policies that uses this schedule.
-
-#### Teams
-
-An array of all of the teams on the schedule.
-
-#### Users
-
-Returns the <code>Users</code> value.
+Returns the <code>Id</code> value.
 
