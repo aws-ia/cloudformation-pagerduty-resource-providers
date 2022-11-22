@@ -10,16 +10,18 @@ export class ResourceModel extends BaseModel {
 
     @Exclude()
     protected readonly IDENTIFIER_KEY_ID: string = '/properties/Id';
+    @Exclude()
+    protected readonly IDENTIFIER_KEY_FROMEMAIL: string = '/properties/FromEmail';
 
-    @Expose({ name: 'From' })
+    @Expose({ name: 'FromEmail' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'from_', value, obj, []),
+            transformValue(String, 'fromEmail', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    from_?: Optional<string>;
+    fromEmail?: Optional<string>;
     @Expose({ name: 'Name' })
     @Transform(
         (value: any, obj: any) =>
@@ -151,8 +153,12 @@ export class ResourceModel extends BaseModel {
             identifier[this.IDENTIFIER_KEY_ID] = this.id;
         }
 
+        if (this.fromEmail != null) {
+            identifier[this.IDENTIFIER_KEY_FROMEMAIL] = this.fromEmail;
+        }
+
         // only return the identifier if it can be used, i.e. if all components are present
-        return Object.keys(identifier).length === 1 ? identifier : null;
+        return Object.keys(identifier).length === 2 ? identifier : null;
     }
 
     @Exclude()

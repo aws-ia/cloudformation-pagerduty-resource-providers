@@ -103,7 +103,7 @@
     ]
   },
   "properties": {
-    "From": {
+    "FromEmail": {
       "description": "The email address of a valid user associated with the account making the request.",
       "type": "string",
       "format": "email"
@@ -206,7 +206,7 @@
     "taggable": false
   },
   "required": [
-    "From"
+    "FromEmail"
   ],
   "readOnlyProperties": [
     "/properties/Id",
@@ -215,7 +215,8 @@
     "/properties/HtmlUrl"
   ],
   "primaryIdentifier": [
-    "/properties/Id"
+    "/properties/Id",
+    "/properties/FromEmail"
   ],
   "handlers": {
     "create": {

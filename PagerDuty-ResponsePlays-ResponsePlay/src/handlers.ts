@@ -31,7 +31,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlayPayl
             undefined,
             undefined,
             {
-                From: model.from_
+                From: model.fromEmail
             });
         return response.data.response_play;
     }
@@ -44,7 +44,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlayPayl
             undefined,
             undefined,
             {
-                From: model.from_
+                From: model.fromEmail
             });
     }
 
@@ -59,7 +59,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlayPayl
                     .transform()
             },
             {
-                From: model.from_
+                From: model.fromEmail
             });
         return response.data.response_play;
     }
@@ -75,7 +75,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlayPayl
                     .transform()
             },
             {
-                From: model.from_
+                From: model.fromEmail
             });
         return response.data.response_play;
     }
@@ -87,7 +87,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlayPayl
             undefined,
             undefined,
             {
-                From: model.from_
+                From: model.fromEmail
             });
     }
 
@@ -100,14 +100,14 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ResponsePlayPayl
             return model;
         }
 
-        const fromEmail = model.from_;
+        const fromEmail = model.fromEmail;
         const resourceModel = plainToClassFromExist(
             model,
             Transformer.for(from)
                 .transformKeys(CaseTransformer.SNAKE_TO_PASCAL)
                 .transform(),
             {excludeExtraneousValues: true, enableImplicitConversion: true});
-        resourceModel.from_ = fromEmail;
+        resourceModel.fromEmail = fromEmail;
         return resourceModel;
     }
 
