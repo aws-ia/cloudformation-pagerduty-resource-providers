@@ -13,56 +13,56 @@ export class ResourceModel extends BaseModel {
 
     @Expose({ name: 'Name' })
     @Transform(
-      (value: any, obj: any) =>
-        transformValue(String, 'name', value, obj, []),
-      {
-          toClassOnly: true,
-      }
+        (value: any, obj: any) =>
+            transformValue(String, 'name', value, obj, []),
+        {
+            toClassOnly: true,
+        }
     )
     name?: Optional<string>;
     @Expose({ name: 'Description' })
     @Transform(
-      (value: any, obj: any) =>
-        transformValue(String, 'description', value, obj, []),
-      {
-          toClassOnly: true,
-      }
+        (value: any, obj: any) =>
+            transformValue(String, 'description', value, obj, []),
+        {
+            toClassOnly: true,
+        }
     )
     description?: Optional<string>;
     @Expose({ name: 'Id' })
     @Transform(
-      (value: any, obj: any) =>
-        transformValue(String, 'id', value, obj, []),
-      {
-          toClassOnly: true,
-      }
+        (value: any, obj: any) =>
+            transformValue(String, 'id', value, obj, []),
+        {
+            toClassOnly: true,
+        }
     )
     id?: Optional<string>;
     @Expose({ name: 'Summary' })
     @Transform(
-      (value: any, obj: any) =>
-        transformValue(String, 'summary', value, obj, []),
-      {
-          toClassOnly: true,
-      }
+        (value: any, obj: any) =>
+            transformValue(String, 'summary', value, obj, []),
+        {
+            toClassOnly: true,
+        }
     )
     summary?: Optional<string>;
     @Expose({ name: 'Type' })
     @Transform(
-      (value: any, obj: any) =>
-        transformValue(String, 'type_', value, obj, []),
-      {
-          toClassOnly: true,
-      }
+        (value: any, obj: any) =>
+            transformValue(String, 'type_', value, obj, []),
+        {
+            toClassOnly: true,
+        }
     )
     type_?: Optional<string>;
     @Expose({ name: 'HtmlUrl' })
     @Transform(
-      (value: any, obj: any) =>
-        transformValue(String, 'htmlUrl', value, obj, []),
-      {
-          toClassOnly: true,
-      }
+        (value: any, obj: any) =>
+            transformValue(String, 'htmlUrl', value, obj, []),
+        {
+            toClassOnly: true,
+        }
     )
     htmlUrl?: Optional<string>;
 
@@ -101,11 +101,11 @@ export class PagerDutyAccess extends BaseModel {
 
     @Expose({ name: 'Token' })
     @Transform(
-      (value: any, obj: any) =>
-        transformValue(String, 'token', value, obj, []),
-      {
-          toClassOnly: true,
-      }
+        (value: any, obj: any) =>
+            transformValue(String, 'token', value, obj, []),
+        {
+            toClassOnly: true,
+        }
     )
     token?: Optional<string>;
 
