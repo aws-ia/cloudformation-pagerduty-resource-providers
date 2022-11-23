@@ -131,7 +131,15 @@ Resources:
 
 ### Shows how to set User as a Team member in PagerDuty.
 ```yaml
-TODO
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Shows how to set User as a Team member in PagerDuty.
+Resources:
+  SampleTeam:
+    Type: PagerDuty::Teams::Membership
+    Properties:
+      TeamId: 123456
+      UserId: 654321
 ```
 
 ### Shows how to create a Schedule in PagerDuty
@@ -167,7 +175,24 @@ Resources:
 
 ### Shows how to create a ResponsePlay in PagerDuty.
 ```yaml
-TODO
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Shows how to set User as a Team member in PagerDuty.
+Resources:
+  SampleTeam:
+    Type: PagerDuty::ResponsePlays::ResponsePlay
+    Properties:
+      FromEmail: email@example.com
+      Name: CFN_TEST_RESPONSE
+      Description: Test Response
+      RespondersMessage: Res Message
+      Runnability: responders
+      Responders:
+        - Id: 123456
+          Type: user_reference
+      ConferenceNumber: 5555555555
+      ConferenceUrl: http://example.example.com
+      ConferenceType: manual
 ```
 
 [1]: https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/resource-types.html

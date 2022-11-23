@@ -76,7 +76,23 @@ The PagerDuty CloudFormation resources are available on the CloudFormation Publi
 ### Shows how to set ResponsePlay in PagerDuty.
 ```yaml
 ---
-TODO
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Shows how to set User as a Team member in PagerDuty.
+Resources:
+  SampleTeam:
+    Type: PagerDuty::ResponsePlays::ResponsePlay
+    Properties:
+      FromEmail: email@example.com
+      Name: CFN_TEST_RESPONSE
+      Description: Test Response
+      RespondersMessage: Res Message
+      Runnability: responders
+      Responders:
+        - Id: 123456
+          Type: user_reference
+      ConferenceNumber: 5555555555
+      ConferenceUrl: http://example.example.com
+      ConferenceType: manual
 ```
 [1]: https://support.pagerduty.com/docs/response-plays
 [2]: ./docs/README.md

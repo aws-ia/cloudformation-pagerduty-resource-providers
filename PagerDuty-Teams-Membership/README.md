@@ -75,7 +75,15 @@ The PagerDuty CloudFormation resources are available on the CloudFormation Publi
 
 ### Shows how to set User as a Team member in PagerDuty.
 ```yaml
-TODO
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Shows how to set User as a Team member in PagerDuty.
+Resources:
+  SampleTeam:
+    Type: PagerDuty::Teams::Membership
+    Properties:
+      TeamId: 123456
+      UserId: 654321
 ```
 [1]: https://support.pagerduty.com/docs/teams
 [2]: ./docs/README.md
