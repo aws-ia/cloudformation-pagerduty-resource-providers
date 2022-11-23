@@ -29,9 +29,6 @@ export class ResourceModel extends BaseModel {
         }
     )
     description?: Optional<string>;
-    @Expose({ name: 'Parent' })
-    @Type(() => Parent)
-    parent?: Optional<Parent>;
     @Expose({ name: 'Id' })
     @Transform(
         (value: any, obj: any) =>
@@ -86,49 +83,6 @@ export class ResourceModel extends BaseModel {
         // only return the identifiers if any can be used
         return identifiers.length === 0 ? null : identifiers;
     }
-}
-
-export class Parent extends BaseModel {
-    ['constructor']: typeof Parent;
-
-
-    @Expose({ name: 'Type' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'type_', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    type_?: Optional<string>;
-    @Expose({ name: 'Id' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'id', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    id?: Optional<string>;
-    @Expose({ name: 'Summary' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'summary', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    summary?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
-
 }
 
 export class TypeConfigurationModel extends BaseModel {

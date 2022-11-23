@@ -81,9 +81,15 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
             ...model,
             ...Transformer.for(from)
                 .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                .forModelIngestion()
                 .transform()
         });
-        delete resourceModel.scheduleLayers;
+        // Delete a couple of unused fields that are returned by the API
+        resourceModel.scheduleLayers.forEach((layer) => {
+            delete (<any>layer).renderedCoveragePercentage;
+            delete (<any>layer).renderedScheduleEntries;
+        });
+        delete (<any>resourceModel).escalationPolicies;
         delete resourceModel.finalSchedule;
         delete resourceModel.overridesSubschedule;
         return resourceModel;

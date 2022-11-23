@@ -22,30 +22,36 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, TeamPayload, Tea
 
     async list(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResourceModel[]> {
         return await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).paginate<TeamsPayload, ResourceModel>(
-            'get',
-            '/teams',
-            response => response.data.teams.map(teamPayload => this.setModelFrom(model, teamPayload)));
+          'get',
+          '/teams',
+          response => response.data.teams.map(teamPayload => this.setModelFrom(model, teamPayload)));
     }
 
     async create(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<TeamPayload> {
+        const body = Transformer.for(model.toJSON())
+          .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+          .transform();
         const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ team: TeamPayload }>(
-            'post',
-            '/teams',
-            {},
-            Transformer.for(model.toJSON())
-                .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
-                .transform());
+          'post',
+          '/teams',
+          {},
+          {
+              team: body
+          });
         return response.data.team;
     }
 
     async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<TeamPayload> {
+        const team = Transformer.for(model.toJSON())
+          .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+          .transform();
         const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ team: TeamPayload }>(
-            'put',
-            `/teams/${model.id}`,
-            {},
-            Transformer.for(model.toJSON())
-                .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
-                .transform());
+          'put',
+          `/teams/${model.id}`,
+          {},
+          {
+              team: team
+          });
         return response.data.team;
     }
 
@@ -63,11 +69,11 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, TeamPayload, Tea
         }
 
         return plainToClassFromExist(
-            model,
-            Transformer.for(from)
-                .transformKeys(CaseTransformer.SNAKE_TO_PASCAL)
-                .transform(),
-            {excludeExtraneousValues: true});
+          model,
+          Transformer.for(from)
+            .transformKeys(CaseTransformer.SNAKE_TO_PASCAL)
+            .transform(),
+          {excludeExtraneousValues: true});
     }
 
 }

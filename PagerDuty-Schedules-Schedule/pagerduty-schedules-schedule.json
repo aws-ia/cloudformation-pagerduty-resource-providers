@@ -25,9 +25,17 @@
       "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
       "type": "string"
     },
+    "Self": {
+      "description": "The API show URL at which the object is accessible",
+      "type": "string"
+    },
     "HtmlUrl": {
       "description": "A URL at which the entity is uniquely displayed in the Web app.",
       "type": "string"
+    },
+    "RenderedCoveragePercentage": {
+      "description": "The percentage of the time range covered by this layer. Returns null unless since or until are set.",
+      "type": "number"
     },
     "ScheduleLayer": {
       "type": "object",
@@ -139,7 +147,6 @@
           }
         },
         "RenderedCoveragePercentage": {
-          "description": "The percentage of the time range covered by this layer. Returns null unless since or until are set.",
           "type": "number"
         }
       },
@@ -215,6 +222,15 @@
         },
         "Id": {
           "$ref": "#/definitions/Id"
+        },
+        "Summary": {
+          "$ref": "#/definitions/Summary"
+        },
+        "HtmlUrl": {
+          "$ref": "#/definitions/HtmlUrl"
+        },
+        "Self": {
+          "$ref": "#/definitions/HtmlUrl"
         }
       },
       "required": [
@@ -230,11 +246,21 @@
           "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by _reference if the object is a reference./, =, +, and -.",
           "type": "string",
           "enum": [
-            "team_reference"
+            "team_reference",
+            "team"
           ]
         },
         "Id": {
           "$ref": "#/definitions/Id"
+        },
+        "Summary": {
+          "$ref": "#/definitions/Summary"
+        },
+        "HtmlUrl": {
+          "$ref": "#/definitions/HtmlUrl"
+        },
+        "Self": {
+          "$ref": "#/definitions/Self"
         }
       },
       "required": [
@@ -296,17 +322,11 @@
         "schedule"
       ]
     },
+    "Self": {
+      "$ref": "#/definitions/Self"
+    },
     "HtmlUrl": {
       "$ref": "#/definitions/HtmlUrl"
-    },
-    "EscalationPolicies": {
-      "description": "An array of all of the escalation policies that uses this schedule.",
-      "type": "array",
-      "insertionOrder": false,
-      "items": {
-        "$ref": "#/definitions/EscalationPolicy"
-      },
-      "minItems": 1
     },
     "Users": {
       "description": "An array of all of the users on the schedule.",
@@ -323,8 +343,7 @@
       "insertionOrder": false,
       "items": {
         "$ref": "#/definitions/Team"
-      },
-      "minItems": 1
+      }
     }
   },
   "additionalProperties": false,
@@ -339,14 +358,12 @@
     "/properties/Summary",
     "/properties/Type",
     "/properties/HtmlUrl",
-    "/properties/EscalationPolicies",
-    "/properties/Teams",
-    "/properties/Users"
+    "/properties/Users/*/Id"
   ],
   "writeOnlyProperties": [
-    "/properties/ScheduleLayers",
     "/properties/FinalSchedule",
-    "/properties/OverridesSubschedule"
+    "/properties/OverridesSubschedule",
+    "/properties/ScheduleLayers/*/Restrictions/*/StartDayOfWeek"
   ],
   "primaryIdentifier": [
     "/properties/Id"

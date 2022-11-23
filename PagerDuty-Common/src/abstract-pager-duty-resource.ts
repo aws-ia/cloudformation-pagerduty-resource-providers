@@ -11,8 +11,8 @@ export abstract class AbstractPagerDutyResource<ResourceModelType extends BaseMo
 
     processRequestException(e: AxiosError<ApiErrorResponse>, request: ResourceHandlerRequest<ResourceModelType>) {
         const apiErrorResponse = e.response?.data;
-        let errorMessage = apiErrorResponse?.error.message || e.message;
-        if (Array.isArray(apiErrorResponse?.error.errors)) {
+        let errorMessage = apiErrorResponse?.error?.message || e?.message;
+        if (Array.isArray(apiErrorResponse?.error?.errors)) {
             apiErrorResponse?.error.errors.forEach((error: string) => {
                 errorMessage += `\n[X] ${error}`;
             });

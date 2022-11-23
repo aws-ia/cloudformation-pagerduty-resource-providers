@@ -89,9 +89,6 @@ export class ResourceModel extends BaseModel {
         }
     )
     htmlUrl?: Optional<string>;
-    @Expose({ name: 'Services' })
-    @Type(() => Service)
-    services?: Optional<Array<Service>>;
 
     @Exclude()
     public getPrimaryIdentifier(): Dict {
@@ -158,31 +155,6 @@ export class Target extends BaseModel {
 
 export class Team extends BaseModel {
     ['constructor']: typeof Team;
-
-
-    @Expose({ name: 'Type' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'type_', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    type_?: Optional<string>;
-    @Expose({ name: 'Id' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'id', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    id?: Optional<string>;
-
-}
-
-export class Service extends BaseModel {
-    ['constructor']: typeof Service;
 
 
     @Expose({ name: 'Type' })

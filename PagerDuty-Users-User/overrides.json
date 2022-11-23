@@ -1,8 +1,0 @@
-{
-  "CREATE": {
-    "/Email": "info@acme.com",
-    "/Color": "green",
-    "/TimeZone": "Europe/London",
-    "/Role": "user"
-  }
-}
