@@ -1,0 +1,21 @@
+{
+  "NumLoops": 5,
+  "EscalationRules": [
+    {
+      "EscalationDelayInMinutes": 30,
+      "Targets": [
+        {
+          "Id": "<USER_ID>",
+          "Type": "user_reference"
+        }
+      ]
+    }
+  ],
+  "Teams": [
+    {
+      "Id": "<TEAM_ID>",
+      "Type": "team_reference"
+    }
+  ],
+  "Name": "EscalationPolicyTest-1-1"
+}

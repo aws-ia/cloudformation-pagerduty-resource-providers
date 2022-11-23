@@ -39,32 +39,6 @@
     "HtmlUrl": {
       "description": "A URL at which the entity is uniquely displayed in the Web app.",
       "type": "string"
-    },
-    "Parent": {
-      "type": "object",
-      "properties": {
-        "Type": {
-          "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by _reference if the object is a reference.",
-          "type": "string",
-          "enum": [
-            "team_reference"
-          ]
-        },
-        "Id": {
-          "$ref": "#/definitions/Id"
-        },
-        "Summary": {
-          "$ref": "#/definitions/Summary"
-        },
-        "HtmlUrl": {
-          "$ref": "#/definitions/HtmlUrl"
-        }
-      },
-      "required": [
-        "Type",
-        "Id"
-      ],
-      "additionalProperties": false
     }
   },
   "typeConfiguration": {
@@ -84,9 +58,6 @@
     },
     "Description": {
       "$ref": "#/definitions/Description"
-    },
-    "Parent": {
-      "$ref": "#/definitions/Parent"
     },
     "Id": {
       "$ref": "#/definitions/Id"

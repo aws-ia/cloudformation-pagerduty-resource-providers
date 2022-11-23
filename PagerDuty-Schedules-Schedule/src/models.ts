@@ -74,6 +74,15 @@ export class ResourceModel extends BaseModel {
         }
     )
     type_?: Optional<string>;
+    @Expose({ name: 'Self' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'self', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    self?: Optional<string>;
     @Expose({ name: 'HtmlUrl' })
     @Transform(
         (value: any, obj: any) =>
@@ -83,9 +92,6 @@ export class ResourceModel extends BaseModel {
         }
     )
     htmlUrl?: Optional<string>;
-    @Expose({ name: 'EscalationPolicies' })
-    @Type(() => EscalationPolicy)
-    escalationPolicies?: Optional<Array<EscalationPolicy>>;
     @Expose({ name: 'Users' })
     @Type(() => User)
     users?: Optional<Array<User>>;
@@ -211,6 +217,33 @@ export class User extends BaseModel {
         }
     )
     id?: Optional<string>;
+    @Expose({ name: 'Summary' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'summary', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    summary?: Optional<string>;
+    @Expose({ name: 'HtmlUrl' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'htmlUrl', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    htmlUrl?: Optional<string>;
+    @Expose({ name: 'Self' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'self', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    self?: Optional<string>;
 
 }
 
@@ -313,31 +346,6 @@ export class RenderedScheduleEntries extends BaseModel {
 
 }
 
-export class EscalationPolicy extends BaseModel {
-    ['constructor']: typeof EscalationPolicy;
-
-
-    @Expose({ name: 'Type' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'type_', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    type_?: Optional<string>;
-    @Expose({ name: 'Id' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'id', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    id?: Optional<string>;
-
-}
-
 export class Team extends BaseModel {
     ['constructor']: typeof Team;
 
@@ -360,6 +368,33 @@ export class Team extends BaseModel {
         }
     )
     id?: Optional<string>;
+    @Expose({ name: 'Summary' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'summary', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    summary?: Optional<string>;
+    @Expose({ name: 'HtmlUrl' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'htmlUrl', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    htmlUrl?: Optional<string>;
+    @Expose({ name: 'Self' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'self', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    self?: Optional<string>;
 
 }
 

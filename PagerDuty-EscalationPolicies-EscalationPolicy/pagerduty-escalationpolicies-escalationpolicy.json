@@ -84,26 +84,6 @@
       ],
       "additionalProperties": false
     },
-    "Service": {
-      "type": "object",
-      "properties": {
-        "Type": {
-          "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by _reference if the object is a reference./, =, +, and -.",
-          "type": "string",
-          "enum": [
-            "service_reference"
-          ]
-        },
-        "Id": {
-          "$ref": "#/definitions/Id"
-        }
-      },
-      "required": [
-        "Type",
-        "Id"
-      ],
-      "additionalProperties": false
-    },
     "HtmlUrl": {
       "description": "A URL at which the entity is uniquely displayed in the Web app.",
       "type": "string"
@@ -184,13 +164,6 @@
     },
     "HtmlUrl": {
       "$ref": "#/definitions/HtmlUrl"
-    },
-    "Services": {
-      "type": "array",
-      "insertionOrder": false,
-      "items": {
-        "$ref": "#/definitions/Service"
-      }
     }
   },
   "additionalProperties": false,
@@ -205,8 +178,7 @@
     "/properties/Id",
     "/properties/Type",
     "/properties/Summary",
-    "/properties/HtmlUrl",
-    "/properties/Services"
+    "/properties/HtmlUrl"
   ],
   "primaryIdentifier": [
     "/properties/Id"

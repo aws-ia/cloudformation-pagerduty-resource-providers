@@ -5,7 +5,7 @@ export type ApiErrorResponse = {
 }
 export type ApiError = {
     code: number
-    message: string
+    message?: string
     errors?: string[]
 }
 export type PaginatedResponseType = {
