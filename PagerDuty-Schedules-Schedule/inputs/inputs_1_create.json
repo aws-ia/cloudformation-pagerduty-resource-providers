@@ -1,6 +1,7 @@
 {
   "Name": "End-to-end schedule",
-  "TimeZone": "America/New_York",
+  "Description": "Schedule description",
+  "TimeZone": "Europe/London",
   "ScheduleLayers": [
     {
       "Name": "Night Shift",
@@ -11,7 +12,7 @@
       "Users": [
         {
           "User": {
-            "Id": "PJUI34Y",
+            "Id": "<PAGER_DUTY_USER>",
             "Type": "user_reference"
           }
         }
@@ -20,9 +21,16 @@
         {
           "Type": "daily_restriction",
           "StartTimeOfDay": "08:00:00",
-          "DurationSeconds": 32400
+          "DurationSeconds": 32400,
+          "StartDayOfWeek": 1
         }
       ]
+    }
+  ],
+  "Teams": [
+    {
+      "Id": "<PAGER_DUTY_TEAM>",
+      "Type": "team_reference"
     }
   ]
 }
