@@ -1,0 +1,7 @@
+Resources:
+
+  TestRepo:
+    Type: PagerDuty::Users::User
+    Properties:
+      Name: CEP Test Account
+      Email: kddejong+cep@amazon.com
