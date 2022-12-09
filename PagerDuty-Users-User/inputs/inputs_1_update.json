@@ -5,28 +5,5 @@
   "TimeZone": "Europe/London",
   "Role": "user",
   "Description": "testDescription",
-  "JobTitle": "boss",
-  "ContactMethods": [
-    {
-      "Type": "email_contact_method_reference",
-      "Id": "PVX9OJB",
-      "Summary": "Default",
-      "HtmlUrl": ""
-    }
-  ],
-  "NotificationRules": [
-    {
-      "Type": "assignment_notification_rule_reference",
-      "Id": "P92A15P",
-      "Summary": "0 minutes: channel PVX9OJB",
-      "HtmlUrl": ""
-    },
-    {
-      "Type": "assignment_notification_rule_reference",
-      "Id": "PPBL1HC",
-      "Summary": "0 minutes: channel PVX9OJB",
-      "HtmlUrl": ""
-    }
-  ]
-
+  "JobTitle": "boss"
 }

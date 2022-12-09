@@ -185,3 +185,7 @@ The URL of the user's avatar.
 
 If true, the user has an outstanding invitation.
 
+#### ContactMethod
+
+Returns the <code>ContactMethod</code> value.
+

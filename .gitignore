@@ -80,3 +80,7 @@ $RECYCLE.BIN/
 
 # Intellij directory
 .idea
+
+# Virtual Env
+.venv
+.env

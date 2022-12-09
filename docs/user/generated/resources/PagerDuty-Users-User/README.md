@@ -19,6 +19,8 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#role" title="Role">Role</a>" : <i>String</i>,
         "<a href="#description" title="Description">Description</a>" : <i>String</i>,
         "<a href="#jobtitle" title="JobTitle">JobTitle</a>" : <i>String</i>,
+        "<a href="#contactmethods" title="ContactMethods">ContactMethods</a>" : <i>[ <a href="contactmethod.md">ContactMethod</a>, ... ]</i>,
+        "<a href="#notificationrules" title="NotificationRules">NotificationRules</a>" : <i>[ <a href="notificationrule.md">NotificationRule</a>, ... ]</i>
     }
 }
 </pre>
@@ -35,6 +37,10 @@ Properties:
     <a href="#role" title="Role">Role</a>: <i>String</i>
     <a href="#description" title="Description">Description</a>: <i>String</i>
     <a href="#jobtitle" title="JobTitle">JobTitle</a>: <i>String</i>
+    <a href="#contactmethods" title="ContactMethods">ContactMethods</a>: <i>
+      - <a href="contactmethod.md">ContactMethod</a></i>
+    <a href="#notificationrules" title="NotificationRules">NotificationRules</a>: <i>
+      - <a href="notificationrule.md">NotificationRule</a></i>
 </pre>
 
 ## Properties
@@ -47,9 +53,9 @@ _Required_: Yes
 
 _Type_: String
 
-_Minimum_: <code>1</code>
+_Minimum Length_: <code>1</code>
 
-_Maximum_: <code>100</code>
+_Maximum Length_: <code>100</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -61,9 +67,9 @@ _Required_: Yes
 
 _Type_: String
 
-_Minimum_: <code>6</code>
+_Minimum Length_: <code>6</code>
 
-_Maximum_: <code>100</code>
+_Maximum Length_: <code>100</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -117,9 +123,29 @@ _Required_: No
 
 _Type_: String
 
-_Minimum_: <code>1</code>
+_Minimum Length_: <code>1</code>
 
-_Maximum_: <code>100</code>
+_Maximum Length_: <code>100</code>
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### ContactMethods
+
+The list of contact methods for the user.
+
+_Required_: No
+
+_Type_: List of <a href="contactmethod.md">ContactMethod</a>
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### NotificationRules
+
+The list of notification rules for the user.
+
+_Required_: No
+
+_Type_: List of <a href="notificationrule.md">NotificationRule</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -158,16 +184,4 @@ The URL of the user's avatar.
 #### InvitationSent
 
 If true, the user has an outstanding invitation.
-
-#### Teams
-
-The list of teams to which the user belongs. Account must have the teams ability to set this.
-
-#### ContactMethods
-
-The list of contact methods for the user.
-
-#### NotificationRules
-
-The list of notification rules for the user.
 
