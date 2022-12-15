@@ -185,15 +185,6 @@ export class ContactMethod extends BaseModel {
         }
     )
     summary?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
 
 }
 
@@ -228,15 +219,6 @@ export class NotificationRule extends BaseModel {
         }
     )
     summary?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
 
 }
 
