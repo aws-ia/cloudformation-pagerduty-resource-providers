@@ -185,3 +185,11 @@ The URL of the user's avatar.
 
 If true, the user has an outstanding invitation.
 
+#### Id
+
+Returns the <code>Id</code> value.
+
+#### Id
+
+Returns the <code>Id</code> value.
+

@@ -183,7 +183,9 @@
     "/properties/Type",
     "/properties/HtmlUrl",
     "/properties/AvatarUrl",
-    "/properties/InvitationSent"
+    "/properties/InvitationSent",
+    "/properties/ContactMethods/*/Id",
+    "/properties/NotificationRules/*/Id"
   ],
   "primaryIdentifier": [
     "/properties/Id"
