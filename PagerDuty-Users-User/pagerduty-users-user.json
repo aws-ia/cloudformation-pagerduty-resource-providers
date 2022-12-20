@@ -36,10 +36,6 @@
         "Summary": {
           "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
           "type": "string"
-        },
-        "HtmlUrl": {
-          "description": "A URL at which the entity is uniquely displayed in the Web app",
-          "type": "string"
         }
       },
       "required": [
@@ -63,10 +59,6 @@
         },
         "Summary": {
           "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
-          "type": "string"
-        },
-        "HtmlUrl": {
-          "description": "A URL at which the entity is uniquely displayed in the Web app",
           "type": "string"
         }
       },
@@ -191,7 +183,9 @@
     "/properties/Type",
     "/properties/HtmlUrl",
     "/properties/AvatarUrl",
-    "/properties/InvitationSent"
+    "/properties/InvitationSent",
+    "/properties/ContactMethods/*/Id",
+    "/properties/NotificationRules/*/Id"
   ],
   "primaryIdentifier": [
     "/properties/Id"
