@@ -38,10 +38,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "Type",
-        "Id"
-      ],
       "additionalProperties": false
     },
     "NotificationRule": {
@@ -62,10 +58,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "Type",
-        "Id"
-      ],
       "additionalProperties": false
     }
   },
@@ -185,7 +177,11 @@
     "/properties/AvatarUrl",
     "/properties/InvitationSent",
     "/properties/ContactMethods/*/Id",
-    "/properties/NotificationRules/*/Id"
+    "/properties/ContactMethods/*/Type",
+    "/properties/ContactMethods/*/Summary",
+    "/properties/NotificationRules/*/Id",
+    "/properties/NotificationRules/*/Type",
+    "/properties/NotificationRules/*/Summary"
   ],
   "primaryIdentifier": [
     "/properties/Id"
