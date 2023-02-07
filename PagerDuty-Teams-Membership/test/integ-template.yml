@@ -1,0 +1,6 @@
+Resources:
+  SampleTeam:
+    Type: PagerDuty::Teams::Membership
+    Properties:
+      TeamId: PZJ7T2G
+      UserId: P3SMYTJ
