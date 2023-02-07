@@ -1,0 +1,14 @@
+Resources:
+  SampleEscalationPolicy:
+    Type: PagerDuty::EscalationPolicies::EscalationPolicy
+    Properties:
+      NumLoops: 5
+      Name: TestEscalationPolicy
+      Teams:
+        - Id: 123456
+          Type: team_reference
+      EscalationRules:
+        - EscalationDelayInMinutes: 30
+        - Targets:
+            - Id: 654321
+              Type: user_reference
