@@ -8,7 +8,7 @@
     "Responders": [
       {
         "Type": "user_reference",
-        "Id": "<USER_ID>"
+        "Id": "PAGER_DUTY_USER_ID"
       }
     ],
     "ConferenceNumber": "5555555555",

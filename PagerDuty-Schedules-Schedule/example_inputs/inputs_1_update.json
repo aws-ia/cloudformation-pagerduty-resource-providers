@@ -1,7 +1,7 @@
 {
-  "Name": "End-to-end schedule",
-  "Description": "Schedule description",
+  "Name": "End-to-end schedule updated",
   "TimeZone": "Europe/London",
+  "Description": "Updated scheduled description",
   "ScheduleLayers": [
     {
       "Name": "Night Shift",
@@ -12,7 +12,7 @@
       "Users": [
         {
           "User": {
-            "Id": "<PAGER_DUTY_USER>",
+            "Id": "PAGER_DUTY_USER_ID",
             "Type": "user_reference"
           }
         }
@@ -29,7 +29,7 @@
   ],
   "Teams": [
     {
-      "Id": "<PAGER_DUTY_TEAM>",
+      "Id": "PAGER_DUTY_TEAM_ID",
       "Type": "team_reference"
     }
   ]

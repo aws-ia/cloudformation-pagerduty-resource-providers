@@ -5,7 +5,7 @@
       "EscalationDelayInMinutes": 20,
       "Targets": [
         {
-          "Id": "<USER_ID>",
+          "Id": "PAGER_DUTY_USER_ID",
           "Type": "user_reference"
         }
       ]
@@ -13,7 +13,7 @@
   ],
   "Teams": [
     {
-      "Id": "<TEAM_ID>",
+      "Id": "PAGER_DUTY_TEAM_ID",
       "Type": "team_reference"
     }
   ],

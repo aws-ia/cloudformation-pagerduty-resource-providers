@@ -4,7 +4,7 @@
 #
 # Does not un-publish any published versions.
 #
-# Run this from the resource directory, for example `GitHub-Repositories-Repository/`
+# Run this from the resource directory, for example `PagerDuty-ResponsePlays-ResponsePlay/`
 #
 # Args
 #
