@@ -21,4 +21,3 @@ aws cloudformation --region $AWS_REGION list-type-versions --type RESOURCE --typ
 
 # The above will fail for the default version
 aws cloudformation --region $AWS_REGION deregister-type --type RESOURCE --type-name $TYPE_NAME || true
-
