@@ -1,0 +1,6 @@
+Resources:
+  SampleTeam:
+    Type: PagerDuty::Teams::Team
+    Properties:
+      Name: TestTeam
+      Description: Description for TestTeam
