@@ -37,6 +37,17 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
     }
 
     async create(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<SchedulePayload> {
+        let body = {
+            schedule: Transformer.for(model.toJSON())
+                .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+                .transform()
+        }
+        console.log(
+            "%s\n%o",
+            "`body` object is",
+            JSON.stringify(body),
+        );
+        console.log("\n","\n\n\nend of body json\n")
         const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ schedule: SchedulePayload }>(
             'post',
             `/schedules`,
@@ -63,6 +74,8 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
     }
 
     async delete(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<void> {
+        console.log('model id is ')
+        console.log(model.id)
         await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest(
             'delete',
             `/schedules/${model.id}`);
