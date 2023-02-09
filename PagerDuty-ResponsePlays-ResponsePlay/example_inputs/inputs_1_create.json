@@ -1,5 +1,5 @@
 {
-    "FromEmail": "email@example.com",
+    "FromEmail": "PAGER_DUTY_FROM_EMAIL",
     "Name": "CFN_TEST_RESPONSE",
     "Description": "Test Response",
     "RespondersMessage": "Res Message",
