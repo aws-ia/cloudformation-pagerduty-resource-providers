@@ -1,0 +1,15 @@
+Resources:
+  PagerDutyResponsePlaysResponsePlaySample:
+    Type: PagerDuty::ResponsePlays::ResponsePlay
+    Properties:
+      FromEmail: PAGER_DUTY_FROM_EMAIL
+      Name: CFN_TEST_RESPONSE
+      Description: Test Response
+      RespondersMessage: Res Message
+      Runnability: responders
+      Responders:
+        - Id: PAGER_DUTY_USER_ID
+          Type: user_reference
+      ConferenceNumber: 5555555555
+      ConferenceUrl: http://example.example.com
+      ConferenceType: manual

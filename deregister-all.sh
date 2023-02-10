@@ -4,7 +4,7 @@
 #
 # Does not un-publish any published versions.
 #
-# Run this from the resource directory, for example `GitHub-Repositories-Repository/`
+# Run this from the resource directory, for example `PagerDuty-ResponsePlays-ResponsePlay/`
 #
 # Args
 #
@@ -21,4 +21,3 @@ aws cloudformation --region $AWS_REGION list-type-versions --type RESOURCE --typ
 
 # The above will fail for the default version
 aws cloudformation --region $AWS_REGION deregister-type --type RESOURCE --type-name $TYPE_NAME || true
-
