@@ -1,17 +1,18 @@
 {
-  "Name": "End-to-end schedule invalid",
-  "TimeZone": 1234,
+  "Name": "End-to-end schedule updated",
+  "TimeZone": "Europe/London",
+  "Description": "Updated scheduled description",
   "ScheduleLayers": [
     {
       "Name": "Night Shift",
-      "Start": "2023-12-01T21:00:00+00:00",
-      "End": null,
+      "Start": "2023-11-06T20:00:00+00:00",
+      "End": "2024-11-06T20:00:00+00:00",
       "RotationVirtualStart": "2015-11-06T20:00:00+00:00",
-      "RotationTurnLengthSeconds": 83000,
+      "RotationTurnLengthSeconds": 86400,
       "Users": [
         {
           "User": {
-            "Id": "invalidUserId",
+            "Id": "<PAGER_DUTY_USER>",
             "Type": "user_reference"
           }
         }
@@ -19,10 +20,17 @@
       "Restrictions": [
         {
           "Type": "daily_restriction",
-          "StartTimeOfDay": "09:00:00",
-          "DurationSeconds": 29000
+          "StartTimeOfDay": "08:00:00",
+          "DurationSeconds": 32400,
+          "StartDayOfWeek": 1
         }
       ]
+    }
+  ],
+  "Teams": [
+    {
+      "Id": "<PAGER_DUTY_TEAM>",
+      "Type": "team_reference"
     }
   ]
 }
