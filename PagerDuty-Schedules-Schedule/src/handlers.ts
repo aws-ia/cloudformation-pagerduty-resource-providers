@@ -60,17 +60,23 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
         return response.data.schedule;
     }
 
-    async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<SchedulePayload> {
-        console.log(`In Handler Code : update request: ${JSON.stringify(model)}`);
+    async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel,previousState?:ResourceModel): Promise<SchedulePayload> {
+        let body = {
+            schedule: Transformer.for(model.toJSON())
+                .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+                .transform()
+        }
+        if(previousState && previousState.scheduleLayers && previousState.scheduleLayers.length >0){
+            for (let i = 0; i < body.schedule.schedule_layers.length && i < previousState.scheduleLayers.length ; i++) {
+                body.schedule.schedule_layers[i].id = previousState.scheduleLayers[i].id;
+            }
+        }
+
         const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ schedule: SchedulePayload }>(
             'put',
             `/schedules/${model.id}`,
             {},
-            {
-                schedule: Transformer.for(model.toJSON())
-                    .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
-                    .transform()
-            });
+            body);
         return response.data.schedule;
     }
 
