@@ -1,5 +1,5 @@
 {
-    "FromEmail": "email@example.com",
+    "FromEmail": "PAGER_DUTY_FROM_EMAIL",
     "Name": "CFN_TEST_RESPONSE update",
     "Description": "Test Response",
     "RespondersMessage": "Res Message",
@@ -7,17 +7,17 @@
     "Subscribers": [
       {
         "Type": "user_reference",
-        "Id": "<USER_ID>"
+        "Id": "PAGER_DUTY_USER_ID"
       }],
     "Team": {
         "Type": "team_reference",
-        "Id": "<TEAM_ID>"
+        "Id": "PAGER_DUTY_TEAM_ID"
     },
     "SubscribersMessage": "Sub Message",
     "Responders": [
       {
         "Type": "user_reference",
-        "Id": "<USER_ID>"
+        "Id": "PAGER_DUTY_USER_ID"
       }
     ],
     "ConferenceNumber": "5555555555",
