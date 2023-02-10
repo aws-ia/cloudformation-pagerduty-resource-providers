@@ -4,7 +4,8 @@
   "Description": "Updated scheduled description",
   "ScheduleLayers": [
     {
-      "Name": "Night Shift",
+      "Id" : "PGEJWHA",
+      "Name": "Night Shift Update",
       "Start": "2023-11-06T20:00:00+00:00",
       "End": "2024-11-06T20:00:00+00:00",
       "RotationVirtualStart": "2015-11-06T20:00:00+00:00",

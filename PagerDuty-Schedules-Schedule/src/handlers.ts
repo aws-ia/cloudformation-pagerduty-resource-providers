@@ -61,6 +61,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
     }
 
     async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<SchedulePayload> {
+        console.log(`In Handler Code : update request: ${JSON.stringify(model)}`);
         const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ schedule: SchedulePayload }>(
             'put',
             `/schedules/${model.id}`,

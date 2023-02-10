@@ -358,12 +358,20 @@
     "/properties/Summary",
     "/properties/Type",
     "/properties/HtmlUrl",
-    "/properties/Users/*/Id"
+    "/properties/Self",
+    "/properties/Users",
+    "/properties/ScheduleLayers/*/Id",
+    "/properties/ScheduleLayers/*/Users/*/Id",
+    "/properties/ScheduleLayers/*/Users/*/Self",
+    "/properties/ScheduleLayers/*/Users/*/Summary",
+    "/properties/ScheduleLayers/*/Users/*/HtmlUrl",
+    "/properties/Teams/*/Summary",
+    "/properties/Teams/*/Self",
+    "/properties/Teams/*/HtmlUrl"
   ],
   "writeOnlyProperties": [
     "/properties/FinalSchedule",
-    "/properties/OverridesSubschedule",
-    "/properties/ScheduleLayers/*/Restrictions/*/StartDayOfWeek"
+    "/properties/OverridesSubschedule"
   ],
   "primaryIdentifier": [
     "/properties/Id"
