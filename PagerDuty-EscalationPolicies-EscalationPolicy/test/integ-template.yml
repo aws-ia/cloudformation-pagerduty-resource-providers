@@ -9,6 +9,6 @@ Resources:
           Type: team_reference
       EscalationRules:
         - EscalationDelayInMinutes: 30
-        - Targets:
+          Targets:
             - Id: PAGER_DUTY_USER_ID
               Type: user_reference

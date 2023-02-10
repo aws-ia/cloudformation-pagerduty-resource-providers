@@ -1,5 +1,5 @@
 Resources:
-  SampleTeam:
+  PagerDutyTeamsTeamSampleTeam:
     Type: PagerDuty::Teams::Team
     Properties:
       Name: TestTeam

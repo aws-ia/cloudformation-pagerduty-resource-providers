@@ -1,5 +1,5 @@
 Resources:
-  SampleTeam:
+  PagerDutyResponsePlaysResponsePlaySample:
     Type: PagerDuty::ResponsePlays::ResponsePlay
     Properties:
       FromEmail: PAGER_DUTY_FROM_EMAIL
