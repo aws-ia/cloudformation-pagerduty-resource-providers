@@ -126,7 +126,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
                 model = this.setModelFrom(model, data);
                 const retry = 1;
                 const maxDelay = Math.pow(2, retry) * Math.random();
-                const result= ProgressEvent.builder<ProgressEvent<ResourceModelType, RetryableCallbackContext>>()
+                return ProgressEvent.builder<ProgressEvent<ResourceModelType, RetryableCallbackContext>>()
                     .status(OperationStatus.InProgress)
                     .resourceModel(model)
                     .callbackContext({
@@ -134,7 +134,6 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
                     })
                     .callbackDelaySeconds(maxDelay * Math.random())
                     .build();
-                return result;
             } catch (e) {
                 logger.log(`Error ${e}`);
                 this.processRequestException(e, request);
@@ -145,8 +144,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
             const data = await this.get(model, typeConfiguration);
 
             model = this.setModelFrom(model, data);
-            const result =  ProgressEvent.success<ProgressEvent<ResourceModelType, RetryableCallbackContext>>(model);
-            return result;
+            return ProgressEvent.success<ProgressEvent<ResourceModelType, RetryableCallbackContext>>(model);
         } catch (e) {
             try {
                 this.processRequestException(e, request);
@@ -191,6 +189,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         typeConfiguration: TypeConfigurationType
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
         let model = this.newModel(request.desiredResourceState);
+
         if (!(await this.assertExists(model, typeConfiguration))) {
             throw new exceptions.NotFound(this.typeName, request.logicalResourceIdentifier);
         }
