@@ -124,8 +124,6 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
             try {
                 let data = await this.create(model, typeConfiguration);
                 model = this.setModelFrom(model, data);
-                console.log(`model: ${JSON.stringify(model)}`);
-                console.log(`data: ${JSON.stringify(data)}`);
                 const retry = 1;
                 const maxDelay = Math.pow(2, retry) * Math.random();
                 const result= ProgressEvent.builder<ProgressEvent<ResourceModelType, RetryableCallbackContext>>()
@@ -136,7 +134,6 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
                     })
                     .callbackDelaySeconds(maxDelay * Math.random())
                     .build();
-                console.log(`stablization result: ${JSON.stringify(result)}`);
                 return result;
             } catch (e) {
                 logger.log(`Error ${e}`);
@@ -148,10 +145,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
             const data = await this.get(model, typeConfiguration);
 
             model = this.setModelFrom(model, data);
-            console.log(`stablization model: ${JSON.stringify(model)}`);
-            console.log(`stablization data: ${JSON.stringify(data)}`);
             const result =  ProgressEvent.success<ProgressEvent<ResourceModelType, RetryableCallbackContext>>(model);
-            console.log(`stablization result: ${JSON.stringify(result)}`);
             return result;
         } catch (e) {
             try {
@@ -196,9 +190,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         logger: LoggerProxy,
         typeConfiguration: TypeConfigurationType
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
-        console.log(`update request: ${JSON.stringify(request)}`);
         let model = this.newModel(request.desiredResourceState);
-        console.log(`update model: ${JSON.stringify(model)}`);
         if (!(await this.assertExists(model, typeConfiguration))) {
             throw new exceptions.NotFound(this.typeName, request.logicalResourceIdentifier);
         }
@@ -235,9 +227,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         logger: LoggerProxy,
         typeConfiguration: TypeConfigurationType
     ): Promise<ProgressEvent<ResourceModelType, RetryableCallbackContext>> {
-        console.log(`request: ${JSON.stringify(request)}`);
         let model = this.newModel(request.desiredResourceState);
-        console.log(`model: ${JSON.stringify(model)}`);
 
         if (!callbackContext.retry) {
             if (!(await this.assertExists(model, typeConfiguration))) {
