@@ -31,7 +31,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
             'get',
             `/schedules`,
             response => response.data.schedules
-                .map(schedulePayload => this.setModelFrom(this.newModel(), schedulePayload))
+                .map(schedulePayload => this.setModelFromList(this.newModel(), schedulePayload))
                 .filter(m => m.getPrimaryIdentifier() !== null),
             {});
     }
@@ -90,6 +90,26 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
 
     newModel(partial?: any): ResourceModel {
         return new ResourceModel(partial);
+    }
+
+    setModelFromList(model: ResourceModel, from?: SchedulePayload): ResourceModel {
+        if (!from) {
+            return model;
+        }
+        try{
+            const resourceModel = new ResourceModel({
+                ...model,
+                ...Transformer.for(from)
+                    .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                    .forModelIngestion()
+                    .transform()
+            });
+            return resourceModel;
+        }
+        catch(e){
+            console.log(`Error: ${e.message}`);
+        }
+
     }
 
     setModelFrom(model: ResourceModel, from?: SchedulePayload): ResourceModel {

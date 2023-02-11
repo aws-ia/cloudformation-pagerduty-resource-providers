@@ -58,7 +58,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
      * output already set by previous handler which returned an IN_PROGRESS event.
      */
     abstract update(model: ResourceModelType, typeConfiguration?: TypeConfigurationType): Promise<UpdateResponseData>;
-
+    abstract update(model: ResourceModelType, typeConfiguration?: TypeConfigurationType, previousState?:ResourceModelType): Promise<UpdateResponseData>;
     /**
      * This method is invoked to delete a resource from a vendor API, that should correspond to the given the CloudFormation model input.
      *
@@ -204,7 +204,7 @@ export abstract class AbstractBaseResource<ResourceModelType extends BaseModel, 
         }
 
         try {
-            await this.update(model, typeConfiguration);
+            await this.update(model, typeConfiguration,request.previousResourceState);
             const data = await this.get(model, typeConfiguration);
             model = this.setModelFrom(model, data);
         } catch (e) {
