@@ -25,6 +25,18 @@ export class PagerDutyClient {
     }
 
     public async doRequest<ResponseType>(method: 'get' | 'put' | 'post' | 'delete', path: string, params: any = {}, body?: {}, headers?: {[key: string]: string}): Promise<AxiosResponse<ResponseType>> {
+        console.log(
+            "%s\n%o",
+            "`path` object is",
+            path);
+        console.log(
+            "%s\n%o",
+            "`params` object is",
+            params);
+        console.log(
+            "%s\n%o",
+            "`body` object is",
+            body);
         return await axios.request<ResponseType>({
             url: `https://api.pagerduty.com${path}`,
             params: params,
