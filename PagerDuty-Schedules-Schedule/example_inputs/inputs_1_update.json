@@ -12,7 +12,7 @@
       "Users": [
         {
           "User": {
-            "Id": "P3SMYTJ",
+            "Id": "PAGER_DUTY_USER_ID",
             "Type": "user_reference"
           }
         }
@@ -29,7 +29,7 @@
   ],
   "Teams": [
     {
-      "Id": "PZJ7T2G",
+      "Id": "PAGER_DUTY_TEAM_ID",
       "Type": "team_reference"
     }
   ]
