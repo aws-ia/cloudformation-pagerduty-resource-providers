@@ -2,21 +2,22 @@ Resources:
   SampleSchedule:
     Type: PagerDuty::Schedules::Schedule
     Properties:
-      Name: TestSchedule
-      Description: Description for TestSchedule
+      Name: Test End-to-end schedule
+      Description: Schedule description
       TimeZone: Europe/London
       ScheduleLayers:
         - Name: Night Shift
-          Start: 2023-11-06T20:00:00+00:00
-          End: 2024-11-06T20:00:00+00:00
-          RotationVirtualStart: 2015-11-06T20:00:00+00:00
+          Start: '2023-11-06T20:00:00+00:00'
+          End: '2024-11-06T20:00:00+00:00'
+          RotationVirtualStart: '2015-11-06T20:00:00+00:00'
           RotationTurnLengthSeconds: 86400
           Users:
-            - Id: PAGER_DUTY_USER_ID
-              Type: user_reference
+            - User:
+                Id: PAGER_DUTY_USER_ID
+                Type: user_reference
           Restrictions:
             - Type: daily_restriction
-              StartTimeOfDay: 08:00:00
+              StartTimeOfDay: '08:00:00'
               DurationSeconds: 32400
               StartDayOfWeek: 1
       Teams:
