@@ -42,12 +42,6 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
                 .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
                 .transform()
         }
-        console.log(
-            "%s\n%o",
-            "`body` object is",
-            JSON.stringify(body),
-        );
-        console.log("\n","\n\n\nend of body json\n")
         const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ schedule: SchedulePayload }>(
             'post',
             `/schedules`,
@@ -81,8 +75,6 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
     }
 
     async delete(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<void> {
-        console.log('model id is ')
-        console.log(model.id)
         await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest(
             'delete',
             `/schedules/${model.id}`);
@@ -96,20 +88,14 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
         if (!from) {
             return model;
         }
-        try{
-            const resourceModel = new ResourceModel({
-                ...model,
-                ...Transformer.for(from)
-                    .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
-                    .forModelIngestion()
-                    .transform()
-            });
-            return resourceModel;
-        }
-        catch(e){
-            console.log(`Error: ${e.message}`);
-        }
-
+        const resourceModel = new ResourceModel({
+            ...model,
+            ...Transformer.for(from)
+                .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                .forModelIngestion()
+                .transform()
+        });
+        return resourceModel;
     }
 
     setModelFrom(model: ResourceModel, from?: SchedulePayload): ResourceModel {
