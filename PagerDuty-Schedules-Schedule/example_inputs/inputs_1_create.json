@@ -1,5 +1,5 @@
 {
-  "Name": "End-to-end schedule",
+  "Name": "Test End-to-end schedule",
   "Description": "Schedule description",
   "TimeZone": "Europe/London",
   "ScheduleLayers": [
@@ -12,7 +12,7 @@
       "Users": [
         {
           "User": {
-            "Id": "<PAGER_DUTY_USER>",
+            "Id": "P3SMYTJ",
             "Type": "user_reference"
           }
         }
@@ -29,7 +29,7 @@
   ],
   "Teams": [
     {
-      "Id": "<PAGER_DUTY_TEAM>",
+      "Id": "PZJ7T2G",
       "Type": "team_reference"
     }
   ]
