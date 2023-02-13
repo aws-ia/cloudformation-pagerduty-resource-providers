@@ -31,7 +31,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
             'get',
             `/schedules`,
             response => response.data.schedules
-                .map(schedulePayload => this.setModelFrom(this.newModel(), schedulePayload))
+                .map(schedulePayload => this.setModelFromList(this.newModel(), schedulePayload))
                 .filter(m => m.getPrimaryIdentifier() !== null),
             {});
     }
@@ -49,16 +49,23 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
         return response.data.schedule;
     }
 
-    async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<SchedulePayload> {
+    async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel,previousState?:ResourceModel): Promise<SchedulePayload> {
+        let body = {
+            schedule: Transformer.for(model.toJSON())
+                .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+                .transform()
+        }
+        if(previousState && previousState.scheduleLayers && previousState.scheduleLayers.length >0){
+            for (let i = 0; i < body.schedule.schedule_layers.length && i < previousState.scheduleLayers.length ; i++) {
+                body.schedule.schedule_layers[i].id = previousState.scheduleLayers[i].id;
+            }
+        }
+
         const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ schedule: SchedulePayload }>(
             'put',
             `/schedules/${model.id}`,
             {},
-            {
-                schedule: Transformer.for(model.toJSON())
-                    .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
-                    .transform()
-            });
+            body);
         return response.data.schedule;
     }
 
@@ -70,6 +77,20 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, SchedulePayload,
 
     newModel(partial?: any): ResourceModel {
         return new ResourceModel(partial);
+    }
+
+    setModelFromList(model: ResourceModel, from?: SchedulePayload): ResourceModel {
+        if (!from) {
+            return model;
+        }
+        const resourceModel = new ResourceModel({
+            ...model,
+            ...Transformer.for(from)
+                .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                .forModelIngestion()
+                .transform()
+        });
+        return resourceModel;
     }
 
     setModelFrom(model: ResourceModel, from?: SchedulePayload): ResourceModel {
