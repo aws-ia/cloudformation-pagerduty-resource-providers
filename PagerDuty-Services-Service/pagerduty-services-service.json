@@ -1,0 +1,284 @@
+{
+    "typeName": "PagerDuty::Services::Service",
+    "description": "Manage a Service in PagerDuty.",
+    "sourceUrl": "https://github.com/aws-ia/cloudformation-pagerduty-resource-providers.git",
+    "documentationUrl": "https://github.com/aws-ia/cloudformation-pagerduty-resource-providers",
+    "definitions": {
+        "PagerDutyAccess": {
+            "type": "object",
+            "properties": {
+                "Token": {
+                    "description": "Personal Access Token",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "Token"
+            ],
+            "additionalProperties": false
+        },
+        "UrgencyType": {
+            "description": "String representing the type of incident urgency: whether it's constant, or it's dependent on the support hours.",
+            "type": "string",
+            "default": "constant",
+            "enum": [
+                "constant",
+                "use_support_hours"
+            ]
+        },
+        "Urgency": {
+            "description": "String representing the incidents' urgency, if type is constant.",
+            "type": "string",
+            "default": "high",
+            "enum": [
+                "low",
+                "high",
+                "severity_based"
+            ]
+        },
+        "ScheduledAction": {
+            "description": "Object representing a Scheduled Action for the Service.",
+            "type": "object",
+            "properties": {
+                "At": {
+                    "description": "Represents when scheduled action will occur",
+                    "type": "string",
+                    "enum": [
+                        "support_hours_start",
+                        "support_hours_end"
+                    ]
+                }
+            }
+        },
+        "HtmlUrl": {
+            "description": "A URL at which the entity is uniquely displayed in the Web app.",
+            "type": "string"
+        },
+        "Id": {
+            "type": "string"
+        },
+        "Summary": {
+            "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
+            "type": "string"
+        }
+    },
+    "typeConfiguration": {
+        "properties": {
+            "PagerDutyAccess": {
+                "$ref": "#/definitions/PagerDutyAccess"
+            }
+        },
+        "additionalProperties": false,
+        "required": [
+            "PagerDutyAccess"
+        ]
+    },
+    "properties": {
+        "Name": {
+            "description": "The name of the service.",
+            "type": "string",
+            "minLength": 1
+        },
+        "Description": {
+            "description": "Service description.",
+            "type": "string"
+        },
+        "AutoResolveTimeout": {
+            "description": "A number that determines time in seconds that an incident is automatically resolved if left open for that long.",
+            "type": "integer",
+            "default": 14400,
+            "minimum": 0
+        },
+        "AcknowledgementTimeout": {
+            "description": "A number that determines time in seconds that an incident changes to the Triggered State after being Acknowledged.",
+            "type": "integer",
+            "default": 1800,
+            "minimum": 0
+        },
+        "Status": {
+            "description": "A string that represent the current state of the Service.",
+            "type": "string",
+            "default": "active",
+            "enum": [
+                "active",
+                "warning",
+                "critical",
+                "maintenance",
+                "disabled"
+            ]
+        },
+        "EscalationPolicyId": {
+            "description": "The ID of the Escalation Policy.",
+            "type": "string"
+        },
+        "IncidentUrgencyRule": {
+            "description": "Object representing the Incident Urgency Rule.",
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "$ref": "#/definitions/UrgencyType"
+                },
+                "Urgency": {
+                    "$ref": "#/definitions/Urgency"
+                },
+                "DuringSupportHours": {
+                    "description": "Object representing the Incident Urgency Rule during support hours.",
+                    "type": "object",
+                    "properties": {
+                        "Type": {
+                            "$ref": "#/definitions/UrgencyType"
+                        },
+                        "Urgency": {
+                            "$ref": "#/definitions/Urgency"
+                        }
+                    }
+                },
+                "OutsideSupportHours": {
+                    "description": "Object representing the Incident Urgency Rule outside support hours.",
+                    "type": "object",
+                    "properties": {
+                        "Type": {
+                            "$ref": "#/definitions/UrgencyType"
+                        },
+                        "Urgency": {
+                            "$ref": "#/definitions/Urgency"
+                        }
+                    }
+                }
+            }
+        },
+        "SupportHours": {
+            "description": "Object representing Support Hours.",
+            "type": "object",
+            "properties": {
+                "TimeZone": {
+                    "description": "TODO",
+                    "type": "string"
+                },
+                "StartTime": {
+                    "description": "TODO",
+                    "type": "string"
+                },
+                "EndTime": {
+                    "description": "TODO",
+                    "type": "string"
+                }
+            }
+        },
+        "ScheduledActions": {
+            "description": "The list of scheduled actions for the service.",
+            "type": "array",
+            "insertionOrder": false,
+            "items": {
+                "$ref": "#/definitions/ScheduledAction"
+            }
+        },
+        "AlertCreation": {
+            "description": "String representing whether a service creates only incidents, or both alerts and incidents.",
+            "type": "string",
+            "enum": [
+                "create_incidents",
+                "create_alerts_and_incidents"
+            ]
+        },
+        "AlertGroupingParameters": {
+            "description": "Object that defines how alerts on this service will be automatically grouped into incidents.",
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "type": "string",
+                    "enum": [
+                        "time",
+                        "intelligent",
+                        "content_based"
+                    ]
+                },
+                "Config": {
+                    "type": "object",
+                    "properties": {
+                        "Timeout": {
+                            "type": "integer",
+                            "minimum": 300,
+                            "maximum": 3600
+                        }
+                    }
+                }
+            }
+        },
+        "AlertGrouping": {
+            "description": "String that defines how alerts on this service will be automatically grouped into incidents.",
+            "type": "string",
+            "enum": [
+                "time",
+                "intelligent"
+            ]
+        },
+        "AlertGroupingTimeout": {
+            "description": "Integer representing the duration in minutes within which to automatically group incoming alerts.",
+            "type": "integer"
+        },
+        "AlertPauseNotificationsParameters": {
+            "description": "Object that defines how alerts on this service are automatically suspended for a period of time before triggering, when identified as likely being transient.",
+            "type": "object",
+            "properties": {
+                "Enabled": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "Timeout": {
+                    "type": "integer",
+                    "enum": [
+                        120,
+                        180,
+                        300,
+                        600,
+                        900
+                    ]
+                }
+
+            }
+        },
+        "Id": {
+            "$ref": "#/definitions/Id"
+        },
+        "Summary": {
+            "$ref": "#/definitions/Summary"
+        },
+        "HtmlUrl": {
+            "$ref": "#/definitions/HtmlUrl"
+        }
+    },
+    "additionalProperties": false,
+    "tagging": {
+        "taggable": false
+    },
+    "required": [
+        "Name",
+        "EscalationPolicy"
+    ],
+    "readOnlyProperties": [
+        "/properties/Id",
+        "/properties/Summary",
+        "/properties/HtmlUrl"
+    ],
+    "primaryIdentifier": [
+        "/properties/Id"
+    ],
+    "handlers": {
+        "create": {
+            "permissions": []
+        },
+        "read": {
+            "permissions": []
+        },
+        "update": {
+            "permissions": []
+        },
+        "delete": {
+            "permissions": []
+        },
+        "list": {
+            "permissions": []
+        }
+    }
+}
