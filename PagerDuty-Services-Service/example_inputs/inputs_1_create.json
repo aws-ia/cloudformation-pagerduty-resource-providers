@@ -1,12 +1,36 @@
 {
-    "TPSCode": "...",
-    "Title": "...",
-    "CoverSheetIncluded": "...",
-    "DueDate": "...",
-    "ApprovalDate": "...",
-    "Memo": "...",
-    "SecondCopyOfMemo": "...",
-    "TestCode": "...",
-    "Authors": "...",
-    "Tags": "..."
+    "Name":"Test Service 1",
+    "Description":"Test Description",
+    "AutoResolveTimeout":4,
+    "AcknowledgementTimeout":26557,
+    "Status":"active",
+    "EscalationPolicyId":"PWIP6CQ",
+    "IncidentUrgencyRule":{
+        "Type":"constant",
+        "Urgency":"low"
+    },
+    "SupportHours":{
+        "TimeZone":"America/Lima",
+        "StartTime":"09:00:00",
+        "EndTime":"17:00:00"
+    },
+    "ScheduledActions":[
+        {
+            "At":"support_hours_end"
+        },
+        {
+            "At":"support_hours_start"
+        }
+    ],
+    "AlertCreation":"create_incidents",
+    "AlertGroupingParameters":{
+        "Type":"intelligent",
+        "Config":{
+            "Timeout":921
+        }
+    },
+    "AlertPauseNotificationsParameters":{
+        "Enabled":false,
+        "Timeout":300
+    }
 }

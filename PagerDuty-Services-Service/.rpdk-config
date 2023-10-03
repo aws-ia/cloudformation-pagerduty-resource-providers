@@ -3,8 +3,8 @@
     "typeName": "PagerDuty::Services::Service",
     "language": "typescript",
     "runtime": "nodejs14.x",
-    "entrypoint": "dist/handlers.entrypoint",
-    "testEntrypoint": "dist/handlers.testEntrypoint",
+    "entrypoint": "dist/PagerDuty-Services-Service/src/handlers.entrypoint",
+    "testEntrypoint": "dist/PagerDuty-Services-Service/src/handlers.testEntrypoint",
     "settings": {
         "version": false,
         "subparser_name": null,
@@ -19,5 +19,15 @@
         "use_docker": true,
         "no_docker": false,
         "protocolVersion": "2.0.0"
+    },
+    "contractSettings":{
+        "typeConfiguration": {
+            "configuration": {
+                "PagerDutyAccess": {
+                    "Token": "{{resolve:ssm-secure:/cfn/pagerduty/token:1}}"
+                }
+            },
+         "configurationAlias": "default"
+        }
     }
 }

@@ -86,27 +86,9 @@ export class ResourceModel extends BaseModel {
     @Expose({ name: 'AlertGroupingParameters' })
     @Type(() => AlertGroupingParameters)
     alertGroupingParameters?: Optional<AlertGroupingParameters>;
-    @Expose({ name: 'AlertGrouping' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'alertGrouping', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    alertGrouping?: Optional<string>;
-    @Expose({ name: 'AlertGroupingTimeout' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Integer, 'alertGroupingTimeout', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    alertGroupingTimeout?: Optional<integer>;
-    @Expose({ name: 'AlertPauseNotificationsParameters' })
-    @Type(() => AlertPauseNotificationsParameters)
-    alertPauseNotificationsParameters?: Optional<AlertPauseNotificationsParameters>;
+    @Expose({ name: 'AutoPauseNotificationsParameters' })
+    @Type(() => AutoPauseNotificationsParameters)
+    autoPauseNotificationsParameters?: Optional<AutoPauseNotificationsParameters>;
     @Expose({ name: 'Id' })
     @Transform(
         (value: any, obj: any) =>
@@ -320,8 +302,8 @@ export class Config extends BaseModel {
 
 }
 
-export class AlertPauseNotificationsParameters extends BaseModel {
-    ['constructor']: typeof AlertPauseNotificationsParameters;
+export class AutoPauseNotificationsParameters extends BaseModel {
+    ['constructor']: typeof AutoPauseNotificationsParameters;
 
 
     @Expose({ name: 'Enabled' })

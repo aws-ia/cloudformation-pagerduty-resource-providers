@@ -205,19 +205,7 @@
                 }
             }
         },
-        "AlertGrouping": {
-            "description": "String that defines how alerts on this service will be automatically grouped into incidents.",
-            "type": "string",
-            "enum": [
-                "time",
-                "intelligent"
-            ]
-        },
-        "AlertGroupingTimeout": {
-            "description": "Integer representing the duration in minutes within which to automatically group incoming alerts.",
-            "type": "integer"
-        },
-        "AlertPauseNotificationsParameters": {
+        "AutoPauseNotificationsParameters": {
             "description": "Object that defines how alerts on this service are automatically suspended for a period of time before triggering, when identified as likely being transient.",
             "type": "object",
             "properties": {
@@ -260,6 +248,9 @@
         "/properties/Id",
         "/properties/Summary",
         "/properties/HtmlUrl"
+    ],
+    "writeOnlyProperties": [
+        "/properties/AutoPauseNotificationsParameters"
     ],
     "primaryIdentifier": [
         "/properties/Id"

@@ -23,9 +23,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#scheduledactions" title="ScheduledActions">ScheduledActions</a>" : <i>[ <a href="scheduledaction.md">ScheduledAction</a>, ... ]</i>,
         "<a href="#alertcreation" title="AlertCreation">AlertCreation</a>" : <i>String</i>,
         "<a href="#alertgroupingparameters" title="AlertGroupingParameters">AlertGroupingParameters</a>" : <i><a href="alertgroupingparameters.md">AlertGroupingParameters</a></i>,
-        "<a href="#alertgrouping" title="AlertGrouping">AlertGrouping</a>" : <i>String</i>,
-        "<a href="#alertgroupingtimeout" title="AlertGroupingTimeout">AlertGroupingTimeout</a>" : <i>Integer</i>,
-        "<a href="#alertpausenotificationsparameters" title="AlertPauseNotificationsParameters">AlertPauseNotificationsParameters</a>" : <i><a href="alertpausenotificationsparameters.md">AlertPauseNotificationsParameters</a></i>,
+        "<a href="#autopausenotificationsparameters" title="AutoPauseNotificationsParameters">AutoPauseNotificationsParameters</a>" : <i><a href="autopausenotificationsparameters.md">AutoPauseNotificationsParameters</a></i>,
     }
 }
 </pre>
@@ -47,9 +45,7 @@ Properties:
       - <a href="scheduledaction.md">ScheduledAction</a></i>
     <a href="#alertcreation" title="AlertCreation">AlertCreation</a>: <i>String</i>
     <a href="#alertgroupingparameters" title="AlertGroupingParameters">AlertGroupingParameters</a>: <i><a href="alertgroupingparameters.md">AlertGroupingParameters</a></i>
-    <a href="#alertgrouping" title="AlertGrouping">AlertGrouping</a>: <i>String</i>
-    <a href="#alertgroupingtimeout" title="AlertGroupingTimeout">AlertGroupingTimeout</a>: <i>Integer</i>
-    <a href="#alertpausenotificationsparameters" title="AlertPauseNotificationsParameters">AlertPauseNotificationsParameters</a>: <i><a href="alertpausenotificationsparameters.md">AlertPauseNotificationsParameters</a></i>
+    <a href="#autopausenotificationsparameters" title="AutoPauseNotificationsParameters">AutoPauseNotificationsParameters</a>: <i><a href="autopausenotificationsparameters.md">AutoPauseNotificationsParameters</a></i>
 </pre>
 
 ## Properties
@@ -170,35 +166,13 @@ _Type_: <a href="alertgroupingparameters.md">AlertGroupingParameters</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
-#### AlertGrouping
-
-String that defines how alerts on this service will be automatically grouped into incidents.
-
-_Required_: No
-
-_Type_: String
-
-_Allowed Values_: <code>time</code> | <code>intelligent</code>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### AlertGroupingTimeout
-
-Integer representing the duration in minutes within which to automatically group incoming alerts.
-
-_Required_: No
-
-_Type_: Integer
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### AlertPauseNotificationsParameters
+#### AutoPauseNotificationsParameters
 
 Object that defines how alerts on this service are automatically suspended for a period of time before triggering, when identified as likely being transient.
 
 _Required_: No
 
-_Type_: <a href="alertpausenotificationsparameters.md">AlertPauseNotificationsParameters</a>
+_Type_: <a href="autopausenotificationsparameters.md">AutoPauseNotificationsParameters</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 

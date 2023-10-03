@@ -1,4 +1,4 @@
-# PagerDuty::Services::Service AlertPauseNotificationsParameters
+# PagerDuty::Services::Service AutoPauseNotificationsParameters
 
 Object that defines how alerts on this service are automatically suspended for a period of time before triggering, when identified as likely being transient.
 
