@@ -26,6 +26,8 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 
 #### Enabled
 
+Boolean indicating if the Auto Pause Notification is enabled.
+
 _Required_: No
 
 _Type_: Boolean
@@ -33,6 +35,8 @@ _Type_: Boolean
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### Timeout
+
+Number representing the timeout for Auto Pause Notification, valid values are: 120, 180, 300, 600, 900.
 
 _Required_: No
 

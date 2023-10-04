@@ -1,6 +1,6 @@
 # PagerDuty::Services::Service Team
 
-TODO
+Object representing a team associated with a service.
 
 ## Syntax
 
@@ -32,7 +32,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 
 #### Id
 
-TODO
+String representing the ID of the team.
 
 _Required_: No
 
@@ -42,7 +42,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### Type
 
-TODO
+A string that determines the schema of the object, value must be team_reference.
 
 _Required_: No
 
@@ -54,7 +54,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### Summary
 
-TODO
+A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.
 
 _Required_: No
 
@@ -64,7 +64,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### Self
 
-TODO
+String showing URL at which the object is accessible.
 
 _Required_: No
 
@@ -74,7 +74,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### HtmlUrl
 
-TODO
+String representing a URL at which the entity is uniquely displayed in the Web app.
 
 _Required_: No
 

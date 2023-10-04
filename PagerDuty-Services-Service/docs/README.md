@@ -64,7 +64,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### Description
 
-Service description.
+The user-provided description of the service.
 
 _Required_: No
 
@@ -94,7 +94,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### Status
 
-A string that represent the current state of the Service.
+A string that represent the current state of the Service, allowed values are: active, warning, critical, maintenance, disabled.
 
 _Required_: No
 
@@ -190,7 +190,7 @@ For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::G
 
 #### Id
 
-Returns the <code>Id</code> value.
+The ID of the service.
 
 #### Summary
 
@@ -202,15 +202,17 @@ A URL at which the entity is uniquely displayed in the Web app.
 
 #### Teams
 
-TODO
+The array storing teams associated with the service.
 
 #### Integrations
 
-TODO
+The array storing integrations associated with the service.
 
 #### Self
 
+String showing the URL at which the object is accessible.
+
 #### Type
 
-Type
+A string that determines the schema of the object, value must be: service.
 

@@ -27,7 +27,7 @@
             ]
         },
         "Urgency": {
-            "description": "String representing the incidents' urgency, if type is constant.",
+            "description": "String representing the incidents' urgency, if type is constant, allowed values are: low, high, severity_based.",
             "type": "string",
             "default": "high",
             "enum": [
@@ -37,7 +37,7 @@
             ]
         },
         "ScheduledActionAt": {
-            "description": "Represents when scheduled action will occur",
+            "description": "Represents when scheduled action will occur, allowed values are: support_hours_start, support_hours_end.",
             "type": "string",
             "enum": [
                 "support_hours_start",
@@ -49,6 +49,7 @@
             "type": "string"
         },
         "Id": {
+            "description": "The ID of the service.",
             "type": "string"
         },
         "Summary": {
@@ -56,15 +57,15 @@
             "type": "string"
         },
         "Team": {
-            "description": "TODO",
+            "description": "Object representing a team associated with a service.",
             "type": "object",
             "properties": {
                 "Id": {
-                    "description": "TODO",
+                    "description": "String representing the ID of the team.",
                     "type": "string"
                 },
                 "Type": {
-                    "description": "TODO",
+                    "description": "A string that determines the schema of the object, value must be team_reference.",
                     "type": "string",
                     "default": "team_reference",
                     "enum": [
@@ -72,30 +73,30 @@
                     ]
                 },
                 "Summary": {
-                    "description": "TODO",
+                    "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
                     "type": "string"
                 },
                 "Self": {
-                    "description": "TODO",
+                    "description": "String showing URL at which the object is accessible.",
                     "type": "string"
                 },
                 "HtmlUrl": {
-                    "description": "TODO",
+                    "description": "String representing a URL at which the entity is uniquely displayed in the Web app.",
                     "type": "string"
                 }
             },
             "additionalProperties": false
         },
         "Integration": {
-            "description": "TODO",
+            "description": "Object representing an integration associated with the service.",
             "type": "object",
             "properties": {
                 "Id": {
-                    "description": "TODO",
+                    "description": "ID of the integration.",
                     "type": "string"
                 },
                 "Type": {
-                    "description": "TODO",
+                    "description": "A string that determines the schema of the object. Refer to the documentation for allowed values.",
                     "type": "string",
                     "enum": [
                         "aws_cloudwatch_inbound_integration",
@@ -111,15 +112,15 @@
                     ]
                 },
                 "Summary": {
-                    "description": "TODO",
+                    "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
                     "type": "string"
                 },
                 "Self": {
-                    "description": "TODO",
+                    "description": "String showing the URL at which the object is accessible.",
                     "type": "string"
                 },
                 "HtmlUrl": {
-                    "description": "TODO",
+                    "description": "String representing a URL at which the entity is uniquely displayed in the Web app.",
                     "type": "string"
                 }
             },
@@ -145,7 +146,7 @@
             "$ref": "#/definitions/Summary"
         },
         "Type": {
-            "description": "Type",
+            "description": "A string that determines the schema of the object, value must be: service.",
             "type": "string",
             "default": "service",
             "enum": [
@@ -153,7 +154,7 @@
             ]
         },
         "Self": {
-            "description": "",
+            "description": "String showing the URL at which the object is accessible.",
             "type": "string"
         },
         "HtmlUrl": {
@@ -165,7 +166,7 @@
             "minLength": 1
         },
         "Description": {
-            "description": "Service description.",
+            "description": "The user-provided description of the service.",
             "type": "string"
         },
         "AutoResolveTimeout": {
@@ -181,7 +182,7 @@
             "minimum": 0
         },
         "Status": {
-            "description": "A string that represent the current state of the Service.",
+            "description": "A string that represent the current state of the Service, allowed values are: active, warning, critical, maintenance, disabled.",
             "type": "string",
             "default": "active",
             "enum": [
@@ -216,7 +217,8 @@
                         "Urgency": {
                             "$ref": "#/definitions/Urgency"
                         }
-                    }
+                    },
+                    "additionalProperties": false
                 },
                 "OutsideSupportHours": {
                     "description": "Object representing the Incident Urgency Rule outside support hours.",
@@ -228,7 +230,8 @@
                         "Urgency": {
                             "$ref": "#/definitions/Urgency"
                         }
-                    }
+                    },
+                    "additionalProperties": false
                 }
             },
             "additionalProperties": false
@@ -238,19 +241,19 @@
             "type": "object",
             "properties": {
                 "TimeZone": {
-                    "description": "TODO",
+                    "description": "String representing the time zone for the support hours.",
                     "type": "string"
                 },
                 "StartTime": {
-                    "description": "TODO",
+                    "description": "String representing the support hours' starting time of day (date portion is ignored).",
                     "type": "string"
                 },
                 "EndTime": {
-                    "description": "TODO",
+                    "description": "String representing the support hours' ending time of day (date portion is ignored).",
                     "type": "string"
                 },
                 "Type": {
-                    "description": "TODO",
+                    "description": "String representing the type of support hours, value must be fixed_time_per_day.",
                     "type": "string",
                     "default": "fixed_time_per_day",
                     "enum": [
@@ -258,10 +261,9 @@
                     ]
                 },
                 "DaysOfWeek": {
-                    "description": "TODO",
+                    "description": "Array representing the days of the week for support hours.",
                     "type": "array",
                     "items": {
-                        "description": "TODO",
                         "type": "integer"
                     },
                     "insertionOrder": false,
@@ -291,6 +293,7 @@
             "type": "object",
             "properties": {
                 "Type": {
+                    "description": "String representing the type of alert grouping, allowed values are: time, intelligent, content_based.",
                     "type": "string",
                     "enum": [
                         "time",
@@ -299,14 +302,17 @@
                     ]
                 },
                 "Config": {
+                    "description": "Object representing configuration of the Alert Grouping.",
                     "type": "object",
                     "properties": {
                         "Timeout": {
+                            "description": "Number representing the timeout of timeout for the Alert Grouping.",
                             "type": "integer",
                             "minimum": 300,
                             "maximum": 3600
                         }
-                    }
+                    },
+                    "additionalProperties": false
                 }
             },
             "additionalProperties": false
@@ -316,10 +322,12 @@
             "type": "object",
             "properties": {
                 "Enabled": {
+                    "description": "Boolean indicating if the Auto Pause Notification is enabled.",
                     "type": "boolean",
                     "default": false
                 },
                 "Timeout": {
+                    "description": "Number representing the timeout for Auto Pause Notification, valid values are: 120, 180, 300, 600, 900.",
                     "type": "integer",
                     "enum": [
                         120,
@@ -334,7 +342,7 @@
             "additionalProperties": false
         },
         "Teams": {
-            "description": "TODO",
+            "description": "The array storing teams associated with the service.",
             "type": "array",
             "insertionOrder": false,
             "items": {
@@ -342,7 +350,7 @@
             }
         },
         "Integrations": {
-            "description": "TODO",
+            "description": "The array storing integrations associated with the service.",
             "type": "array",
             "insertionOrder": false,
             "items": {

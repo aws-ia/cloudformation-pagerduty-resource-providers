@@ -33,7 +33,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 
 #### TimeZone
 
-TODO
+String representing the time zone for the support hours.
 
 _Required_: No
 
@@ -43,7 +43,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### StartTime
 
-TODO
+String representing the support hours' starting time of day (date portion is ignored).
 
 _Required_: No
 
@@ -53,7 +53,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### EndTime
 
-TODO
+String representing the support hours' ending time of day (date portion is ignored).
 
 _Required_: No
 
@@ -63,7 +63,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### Type
 
-TODO
+String representing the type of support hours, value must be fixed_time_per_day.
 
 _Required_: No
 
@@ -75,7 +75,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### DaysOfWeek
 
-TODO
+Array representing the days of the week for support hours.
 
 _Required_: No
 
