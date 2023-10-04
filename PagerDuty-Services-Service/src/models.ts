@@ -372,7 +372,7 @@ export class Team extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'type' })
+    @Expose({ name: 'Type' })
     @Transform(
         (value: any, obj: any) =>
             transformValue(String, 'type_', value, obj, []),
@@ -424,7 +424,7 @@ export class Integration extends BaseModel {
         }
     )
     id?: Optional<string>;
-    @Expose({ name: 'type' })
+    @Expose({ name: 'Type' })
     @Transform(
         (value: any, obj: any) =>
             transformValue(String, 'type_', value, obj, []),

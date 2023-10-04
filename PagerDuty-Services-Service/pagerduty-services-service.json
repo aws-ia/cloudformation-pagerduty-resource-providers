@@ -63,7 +63,7 @@
                     "description": "TODO",
                     "type": "string"
                 },
-                "type": {
+                "Type": {
                     "description": "TODO",
                     "type": "string",
                     "default": "team_reference",
@@ -83,7 +83,8 @@
                     "description": "TODO",
                     "type": "string"
                 }
-            }
+            },
+            "additionalProperties": false
         },
         "Integration": {
             "description": "TODO",
@@ -93,7 +94,7 @@
                     "description": "TODO",
                     "type": "string"
                 },
-                "type": {
+                "Type": {
                     "description": "TODO",
                     "type": "string",
                     "enum": [
@@ -121,7 +122,8 @@
                     "description": "TODO",
                     "type": "string"
                 }
-            }
+            },
+            "additionalProperties": false
         }
     },
     "typeConfiguration": {
@@ -228,7 +230,8 @@
                         }
                     }
                 }
-            }
+            },
+            "additionalProperties": false
         },
         "SupportHours": {
             "description": "Object representing Support Hours.",
@@ -261,9 +264,11 @@
                         "description": "TODO",
                         "type": "integer"
                     },
+                    "insertionOrder": false,
                     "default": [1,2,3,4,5]
                 }
-            }
+            },
+            "additionalProperties": false
         },
         "ScheduledActions": {
             "description": "The list of scheduled actions for the service.",
@@ -303,7 +308,8 @@
                         }
                     }
                 }
-            }
+            },
+            "additionalProperties": false
         },
         "AutoPauseNotificationsParameters": {
             "description": "Object that defines how alerts on this service are automatically suspended for a period of time before triggering, when identified as likely being transient.",
@@ -324,7 +330,8 @@
                     ]
                 }
 
-            }
+            },
+            "additionalProperties": false
         },
         "Teams": {
             "description": "TODO",

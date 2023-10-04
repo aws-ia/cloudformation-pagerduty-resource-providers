@@ -11,7 +11,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 <pre>
 {
     "<a href="#id" title="Id">Id</a>" : <i>String</i>,
-    "<a href="#type" title="type">type</a>" : <i>String</i>,
+    "<a href="#type" title="Type">Type</a>" : <i>String</i>,
     "<a href="#summary" title="Summary">Summary</a>" : <i>String</i>,
     "<a href="#self" title="Self">Self</a>" : <i>String</i>,
     "<a href="#htmlurl" title="HtmlUrl">HtmlUrl</a>" : <i>String</i>
@@ -22,7 +22,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 
 <pre>
 <a href="#id" title="Id">Id</a>: <i>String</i>
-<a href="#type" title="type">type</a>: <i>String</i>
+<a href="#type" title="Type">Type</a>: <i>String</i>
 <a href="#summary" title="Summary">Summary</a>: <i>String</i>
 <a href="#self" title="Self">Self</a>: <i>String</i>
 <a href="#htmlurl" title="HtmlUrl">HtmlUrl</a>: <i>String</i>
@@ -40,7 +40,7 @@ _Type_: String
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
-#### type
+#### Type
 
 TODO
 
