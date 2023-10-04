@@ -36,19 +36,13 @@
                 "severity_based"
             ]
         },
-        "ScheduledAction": {
-            "description": "Object representing a Scheduled Action for the Service.",
-            "type": "object",
-            "properties": {
-                "At": {
-                    "description": "Represents when scheduled action will occur",
-                    "type": "string",
-                    "enum": [
-                        "support_hours_start",
-                        "support_hours_end"
-                    ]
-                }
-            }
+        "ScheduledActionAt": {
+            "description": "Represents when scheduled action will occur",
+            "type": "string",
+            "enum": [
+                "support_hours_start",
+                "support_hours_end"
+            ]
         },
         "HtmlUrl": {
             "description": "A URL at which the entity is uniquely displayed in the Web app.",
@@ -60,6 +54,74 @@
         "Summary": {
             "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
             "type": "string"
+        },
+        "Team": {
+            "description": "TODO",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "description": "TODO",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "TODO",
+                    "type": "string",
+                    "default": "team_reference",
+                    "enum": [
+                        "team_reference"
+                    ]
+                },
+                "Summary": {
+                    "description": "TODO",
+                    "type": "string"
+                },
+                "Self": {
+                    "description": "TODO",
+                    "type": "string"
+                },
+                "HtmlUrl": {
+                    "description": "TODO",
+                    "type": "string"
+                }
+            }
+        },
+        "Integration": {
+            "description": "TODO",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "description": "TODO",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "TODO",
+                    "type": "string",
+                    "enum": [
+                        "aws_cloudwatch_inbound_integration",
+                        "cloudkick_inbound_integration",
+                        "event_transformer_api_inbound_integration",
+                        "generic_email_inbound_integration",
+                        "generic_events_api_inbound_integration",
+                        "keynote_inbound_integration",
+                        "nagios_inbound_integration",
+                        "pingdom_inbound_integration",
+                        "sql_monitor_inbound_integration",
+                        "events_api_v2_inbound_integration"
+                    ]
+                },
+                "Summary": {
+                    "description": "TODO",
+                    "type": "string"
+                },
+                "Self": {
+                    "description": "TODO",
+                    "type": "string"
+                },
+                "HtmlUrl": {
+                    "description": "TODO",
+                    "type": "string"
+                }
+            }
         }
     },
     "typeConfiguration": {
@@ -74,6 +136,27 @@
         ]
     },
     "properties": {
+        "Id": {
+            "$ref": "#/definitions/Id"
+        },
+        "Summary": {
+            "$ref": "#/definitions/Summary"
+        },
+        "Type": {
+            "description": "Type",
+            "type": "string",
+            "default": "service",
+            "enum": [
+                "service"
+            ]
+        },
+        "Self": {
+            "description": "",
+            "type": "string"
+        },
+        "HtmlUrl": {
+            "$ref": "#/definitions/HtmlUrl"
+        },
         "Name": {
             "description": "The name of the service.",
             "type": "string",
@@ -162,6 +245,23 @@
                 "EndTime": {
                     "description": "TODO",
                     "type": "string"
+                },
+                "Type": {
+                    "description": "TODO",
+                    "type": "string",
+                    "default": "fixed_time_per_day",
+                    "enum": [
+                        "fixed_time_per_day"
+                    ]
+                },
+                "DaysOfWeek": {
+                    "description": "TODO",
+                    "type": "array",
+                    "items": {
+                        "description": "TODO",
+                        "type": "integer"
+                    },
+                    "default": [1,2,3,4,5]
                 }
             }
         },
@@ -170,7 +270,7 @@
             "type": "array",
             "insertionOrder": false,
             "items": {
-                "$ref": "#/definitions/ScheduledAction"
+                "$ref": "#/definitions/ScheduledActionAt"
             }
         },
         "AlertCreation": {
@@ -226,15 +326,23 @@
 
             }
         },
-        "Id": {
-            "$ref": "#/definitions/Id"
+        "Teams": {
+            "description": "TODO",
+            "type": "array",
+            "insertionOrder": false,
+            "items": {
+                "$ref": "#/definitions/Team"
+            }
         },
-        "Summary": {
-            "$ref": "#/definitions/Summary"
-        },
-        "HtmlUrl": {
-            "$ref": "#/definitions/HtmlUrl"
+        "Integrations": {
+            "description": "TODO",
+            "type": "array",
+            "insertionOrder": false,
+            "items": {
+                "$ref": "#/definitions/Integration"
+            }
         }
+
     },
     "additionalProperties": false,
     "tagging": {
@@ -247,7 +355,11 @@
     "readOnlyProperties": [
         "/properties/Id",
         "/properties/Summary",
-        "/properties/HtmlUrl"
+        "/properties/HtmlUrl",
+        "/properties/Teams",
+        "/properties/Integrations",
+        "/properties/Self",
+        "/properties/Type"
     ],
     "writeOnlyProperties": [
         "/properties/AutoPauseNotificationsParameters"

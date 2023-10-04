@@ -1,6 +1,6 @@
-# PagerDuty::Services::Service SupportHours
+# PagerDuty::Services::Service Team
 
-Object representing Support Hours.
+TODO
 
 ## Syntax
 
@@ -10,28 +10,27 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 
 <pre>
 {
-    "<a href="#timezone" title="TimeZone">TimeZone</a>" : <i>String</i>,
-    "<a href="#starttime" title="StartTime">StartTime</a>" : <i>String</i>,
-    "<a href="#endtime" title="EndTime">EndTime</a>" : <i>String</i>,
-    "<a href="#type" title="Type">Type</a>" : <i>String</i>,
-    "<a href="#daysofweek" title="DaysOfWeek">DaysOfWeek</a>" : <i>[ Integer, ... ]</i>
+    "<a href="#id" title="Id">Id</a>" : <i>String</i>,
+    "<a href="#type" title="type">type</a>" : <i>String</i>,
+    "<a href="#summary" title="Summary">Summary</a>" : <i>String</i>,
+    "<a href="#self" title="Self">Self</a>" : <i>String</i>,
+    "<a href="#htmlurl" title="HtmlUrl">HtmlUrl</a>" : <i>String</i>
 }
 </pre>
 
 ### YAML
 
 <pre>
-<a href="#timezone" title="TimeZone">TimeZone</a>: <i>String</i>
-<a href="#starttime" title="StartTime">StartTime</a>: <i>String</i>
-<a href="#endtime" title="EndTime">EndTime</a>: <i>String</i>
-<a href="#type" title="Type">Type</a>: <i>String</i>
-<a href="#daysofweek" title="DaysOfWeek">DaysOfWeek</a>: <i>
-      - Integer</i>
+<a href="#id" title="Id">Id</a>: <i>String</i>
+<a href="#type" title="type">type</a>: <i>String</i>
+<a href="#summary" title="Summary">Summary</a>: <i>String</i>
+<a href="#self" title="Self">Self</a>: <i>String</i>
+<a href="#htmlurl" title="HtmlUrl">HtmlUrl</a>: <i>String</i>
 </pre>
 
 ## Properties
 
-#### TimeZone
+#### Id
 
 TODO
 
@@ -41,7 +40,19 @@ _Type_: String
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
-#### StartTime
+#### type
+
+TODO
+
+_Required_: No
+
+_Type_: String
+
+_Allowed Values_: <code>team_reference</code>
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### Summary
 
 TODO
 
@@ -51,7 +62,7 @@ _Type_: String
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
-#### EndTime
+#### Self
 
 TODO
 
@@ -61,25 +72,13 @@ _Type_: String
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
-#### Type
+#### HtmlUrl
 
 TODO
 
 _Required_: No
 
 _Type_: String
-
-_Allowed Values_: <code>fixed_time_per_day</code>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### DaysOfWeek
-
-TODO
-
-_Required_: No
-
-_Type_: List of Integer
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 

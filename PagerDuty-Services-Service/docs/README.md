@@ -20,7 +20,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#escalationpolicyid" title="EscalationPolicyId">EscalationPolicyId</a>" : <i>String</i>,
         "<a href="#incidenturgencyrule" title="IncidentUrgencyRule">IncidentUrgencyRule</a>" : <i><a href="incidenturgencyrule.md">IncidentUrgencyRule</a></i>,
         "<a href="#supporthours" title="SupportHours">SupportHours</a>" : <i><a href="supporthours.md">SupportHours</a></i>,
-        "<a href="#scheduledactions" title="ScheduledActions">ScheduledActions</a>" : <i>[ <a href="scheduledaction.md">ScheduledAction</a>, ... ]</i>,
+        "<a href="#scheduledactions" title="ScheduledActions">ScheduledActions</a>" : <i>[ String, ... ]</i>,
         "<a href="#alertcreation" title="AlertCreation">AlertCreation</a>" : <i>String</i>,
         "<a href="#alertgroupingparameters" title="AlertGroupingParameters">AlertGroupingParameters</a>" : <i><a href="alertgroupingparameters.md">AlertGroupingParameters</a></i>,
         "<a href="#autopausenotificationsparameters" title="AutoPauseNotificationsParameters">AutoPauseNotificationsParameters</a>" : <i><a href="autopausenotificationsparameters.md">AutoPauseNotificationsParameters</a></i>,
@@ -42,7 +42,7 @@ Properties:
     <a href="#incidenturgencyrule" title="IncidentUrgencyRule">IncidentUrgencyRule</a>: <i><a href="incidenturgencyrule.md">IncidentUrgencyRule</a></i>
     <a href="#supporthours" title="SupportHours">SupportHours</a>: <i><a href="supporthours.md">SupportHours</a></i>
     <a href="#scheduledactions" title="ScheduledActions">ScheduledActions</a>: <i>
-      - <a href="scheduledaction.md">ScheduledAction</a></i>
+      - String</i>
     <a href="#alertcreation" title="AlertCreation">AlertCreation</a>: <i>String</i>
     <a href="#alertgroupingparameters" title="AlertGroupingParameters">AlertGroupingParameters</a>: <i><a href="alertgroupingparameters.md">AlertGroupingParameters</a></i>
     <a href="#autopausenotificationsparameters" title="AutoPauseNotificationsParameters">AutoPauseNotificationsParameters</a>: <i><a href="autopausenotificationsparameters.md">AutoPauseNotificationsParameters</a></i>
@@ -140,7 +140,7 @@ The list of scheduled actions for the service.
 
 _Required_: No
 
-_Type_: List of <a href="scheduledaction.md">ScheduledAction</a>
+_Type_: List of String
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -199,4 +199,18 @@ A short-form, server-generated string that provides succinct, important informat
 #### HtmlUrl
 
 A URL at which the entity is uniquely displayed in the Web app.
+
+#### Teams
+
+TODO
+
+#### Integrations
+
+TODO
+
+#### Self
+
+#### Type
+
+Type
 
