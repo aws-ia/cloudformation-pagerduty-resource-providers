@@ -102,40 +102,47 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ServicePayload, 
           .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
           .transform();
 
+        // required
         service.escalation_policy = {
             id: model.escalationPolicyId,
             type: 'escalation_policy_reference'
         };
-        service.incident_urgency_rule = (model.incidentUrgencyRule.type_ === 'constant' ? {
-            type: model.incidentUrgencyRule.type_,
-            urgency: model.incidentUrgencyRule.urgency
-        } : {
-            type: model.incidentUrgencyRule.type_,
-            during_support_hours: {
-                type: 'constant',
-                urgency: model.incidentUrgencyRule.duringSupportHours.urgency
-            },
-            outside_support_hours: {
-                type: 'constant',
-                urgency: model.incidentUrgencyRule.outsideSupportHours.urgency
-            },
-        });
-        service.scheduled_actions = model.scheduledActions.map(scheduledActionAt => {
-            return {
-                type: 'urgency_change',
-                at: {
-                    type: 'named_time',
-                    name: scheduledActionAt
+        if (model.incidentUrgencyRule) {
+            service.incident_urgency_rule = (model.incidentUrgencyRule.type_ === 'constant' ? {
+                type: model.incidentUrgencyRule.type_,
+                urgency: model.incidentUrgencyRule.urgency
+            } : {
+                type: model.incidentUrgencyRule.type_,
+                during_support_hours: {
+                    type: 'constant',
+                    urgency: model.incidentUrgencyRule.duringSupportHours.urgency
                 },
-                to_urgency: 'high'
-            }
-        });
-        service.alert_grouping_parameters = {
-            type: model.alertGroupingParameters.type_,
-              config: {
-                timeout: model.alertGroupingParameters.config.timeout
-            }
-        };
+                outside_support_hours: {
+                    type: 'constant',
+                    urgency: model.incidentUrgencyRule.outsideSupportHours.urgency
+                },
+            });
+        }
+        if (model.scheduledActions) {
+            service.scheduled_actions = model.scheduledActions.map(scheduledActionAt => {
+                return {
+                    type: 'urgency_change',
+                    at: {
+                        type: 'named_time',
+                        name: scheduledActionAt
+                    },
+                    to_urgency: 'high'
+                }
+            });
+        }
+        if (model.alertGroupingParameters) {
+            service.alert_grouping_parameters = {
+                type: model.alertGroupingParameters.type_,
+                config: {
+                    timeout: model.alertGroupingParameters.config.timeout
+                }
+            };
+        }
 
         return service;
     }
