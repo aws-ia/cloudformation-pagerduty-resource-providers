@@ -140,12 +140,6 @@ export class ResourceModel extends BaseModel {
     @Expose({ name: 'AutoPauseNotificationsParameters' })
     @Type(() => AutoPauseNotificationsParameters)
     autoPauseNotificationsParameters?: Optional<AutoPauseNotificationsParameters>;
-    @Expose({ name: 'Teams' })
-    @Type(() => Team)
-    teams?: Optional<Array<Team>>;
-    @Expose({ name: 'Integrations' })
-    @Type(() => Integration)
-    integrations?: Optional<Array<Integration>>;
 
     @Exclude()
     public getPrimaryIdentifier(): Dict {
@@ -356,110 +350,6 @@ export class AutoPauseNotificationsParameters extends BaseModel {
         }
     )
     timeout?: Optional<integer>;
-
-}
-
-export class Team extends BaseModel {
-    ['constructor']: typeof Team;
-
-
-    @Expose({ name: 'Id' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'id', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    id?: Optional<string>;
-    @Expose({ name: 'Type' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'type_', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    type_?: Optional<string>;
-    @Expose({ name: 'Summary' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'summary', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    summary?: Optional<string>;
-    @Expose({ name: 'Self' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'self', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    self?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
-
-}
-
-export class Integration extends BaseModel {
-    ['constructor']: typeof Integration;
-
-
-    @Expose({ name: 'Id' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'id', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    id?: Optional<string>;
-    @Expose({ name: 'Type' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'type_', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    type_?: Optional<string>;
-    @Expose({ name: 'Summary' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'summary', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    summary?: Optional<string>;
-    @Expose({ name: 'Self' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'self', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    self?: Optional<string>;
-    @Expose({ name: 'HtmlUrl' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'htmlUrl', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    htmlUrl?: Optional<string>;
 
 }
 

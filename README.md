@@ -2,24 +2,25 @@
 
 This collection of [AWS CloudFormation resource types][1] allow PagerDuty to be controlled using [AWS CloudFormation][2].
 
-| Resource | Description | Documentation |
-| --- | --- | --- |
-| PagerDuty::EscalationPolicies::EscalationPolicy | This resource type manages a [PagerDuty EscalationPolicy][3] | [/PagerDuty-EscalationPolicies-EscalationPolicy][4] |
-| PagerDuty::Users::User | This resource type manages a [PagerDuty User][5] | [/PagerDuty-Users-User][6] |
-| PagerDuty::Teams::Team | This resource type manages a [PagerDuty Team][7] | [/PagerDuty-Teams-Team][8] |
-| PagerDuty::Teams::Membership | This resource type manages a [PagerDuty membership of a User in a Team][7] | [/PagerDuty-Teams-Membership][9] |
-| PagerDuty::Schedules::Schedule | This resource type manages a [PagerDuty Schedule ][10] | [/PagerDuty-Schedules-Schedule][11] |
-| PagerDuty::ResponsePlays::ResponsePlay | This resource type manages a [PagerDuty ResponsePlay ][12] | [/PagerDuty-ResponsePlays-ResponsePlay][13] |
+| Resource                                        | Description                                                                | Documentation                                       |
+|-------------------------------------------------|----------------------------------------------------------------------------|-----------------------------------------------------|
+| PagerDuty::EscalationPolicies::EscalationPolicy | This resource type manages a [PagerDuty EscalationPolicy][3]               | [/PagerDuty-EscalationPolicies-EscalationPolicy][4] |
+| PagerDuty::Users::User                          | This resource type manages a [PagerDuty User][5]                           | [/PagerDuty-Users-User][6]                          |
+| PagerDuty::Teams::Team                          | This resource type manages a [PagerDuty Team][7]                           | [/PagerDuty-Teams-Team][8]                          |
+| PagerDuty::Teams::Membership                    | This resource type manages a [PagerDuty membership of a User in a Team][7] | [/PagerDuty-Teams-Membership][9]                    |
+| PagerDuty::Schedules::Schedule                  | This resource type manages a [PagerDuty Schedule ][10]                     | [/PagerDuty-Schedules-Schedule][11]                 |
+| PagerDuty::ResponsePlays::ResponsePlay          | This resource type manages a [PagerDuty ResponsePlay ][12]                 | [/PagerDuty-ResponsePlays-ResponsePlay][13]         |
+| PagerDuty::Services::Service                    | This resource type manages a [PagerDuty ResponsePlay ][14]                 | [/PagerDuty-ResponsePlays-ResponsePlay][15]         |
 
 ## Prerequisites
-* [AWS Account][16]
-* [AWS CLI][17]
-* [PagerDuty account][18] and [API key][19]
+* [AWS Account][18]
+* [AWS CLI][19]
+* [PagerDuty account][20] and [API key][21]
 ## AWS Management Console
 
 To get started:
 
-1. Sign in to the [AWS Management Console][20] with your account and navigate to CloudFormation.
+1. Sign in to the [AWS Management Console][22] with your account and navigate to CloudFormation.
 
 2. Select "Public extensions" from the left hand pane and filter Publisher by "Third Party".
 
@@ -48,9 +49,9 @@ For example:
   --configuration "{ \"PagerDutyAccess\":{\"Token\":\"YOURAPIKEY\"}}"
   ```
 
-7. After you have your resource configured, [create your AWS stack][14] that includes any of the activated PagerDuty resources.
+7. After you have your resource configured, [create your AWS stack][16] that includes any of the activated PagerDuty resources.
 
-For more information about available commands and workflows, see the official [AWS documentation][15].
+For more information about available commands and workflows, see the official [AWS documentation][17].
 
 ## Supported regions
 
@@ -195,6 +196,47 @@ Resources:
       ConferenceType: manual
 ```
 
+### Service example using the Cloudformation PagerDuty resources
+```yaml
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Shows how to create a Service in PagerDuty
+Resources:
+  SampleService:
+    Type: PagerDuty::Services::Service
+    Properties:
+      Name: Test Service
+      Description: Service Description
+      AutoResolveTimeout: 14400
+      AcknowledgementTimeout: 1800
+      Status: active
+      EscalationPolicyId: PVGTVOM
+      IncidentUrgencyRule:
+        Type: use_support_hours,
+        DuringSupportHours:
+          Type: constant
+          Urgency: high
+        OutsideSupportHours:
+          Type: constant
+          Urgency: low
+    SupportHours:
+      Type: fixed_time_per_day
+      TimeZone: America/Lima
+      StartTime: 09:00:00
+      EndTime: 17:00:00
+      DaysOfWeek: [1,2,3,4,5]
+    ScheduledActions:
+      - support_hours_start
+    AlertCreation: create_alerts_and_incidents
+    AlertGroupingParameters:
+      Type: time
+      Config:
+        Timeout: 921
+    AutoPauseNotificationsParameters:
+      Enabled: true
+      Timeout: 300
+```
+
 [1]: https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/resource-types.html
 [2]: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html
 [3]: https://support.pagerduty.com/docs/escalation-policies
@@ -208,10 +250,12 @@ Resources:
 [11]: ./PagerDuty-Schedules-Schedule
 [12]: https://support.pagerduty.com/docs/response-plays
 [13]: ./PagerDuty-ResponsePlays-ResponsePlay
-[14]: https://console.aws.amazon.com/cloudformation/home
-[15]: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html
-[16]: https://aws.amazon.com/account/
-[17]: https://aws.amazon.com/cli/
-[18]: https://www.pagerduty.com/
-[19]: https://support.pagerduty.com/docs/api-access-keys
-[20]: https://aws.amazon.com/console/
+[14]: https://support.pagerduty.com/docs/services-and-integrations
+[15]: ./PagerDuty-Services-Service
+[16]: https://console.aws.amazon.com/cloudformation/home
+[17]: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html
+[18]: https://aws.amazon.com/account/
+[19]: https://aws.amazon.com/cli/
+[20]: https://www.pagerduty.com/
+[21]: https://support.pagerduty.com/docs/api-access-keys
+[22]: https://aws.amazon.com/console/

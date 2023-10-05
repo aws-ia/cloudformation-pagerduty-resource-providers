@@ -1,5 +1,5 @@
 {
-  "Name":"Test Service 73",
+  "Name":"Test Service",
   "Description":"Test Description",
   "AutoResolveTimeout":14400,
   "AcknowledgementTimeout":1800,

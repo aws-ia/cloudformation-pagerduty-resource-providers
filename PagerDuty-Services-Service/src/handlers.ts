@@ -3,13 +3,40 @@ import {AbstractPagerDutyResource} from '../../PagerDuty-Common/src/abstract-pag
 import {PagerDutyClient, PaginatedResponseType} from '../../PagerDuty-Common/src/pager-duty-client';
 import {CaseTransformer, Transformer} from "../../PagerDuty-Common/src/util";
 import {version} from '../package.json';
-import {plainToClassFromExist} from "class-transformer";
 
 type ServicePayload = {
-    scheduled_actions: any,
-    escalation_policy: any,
-    escalation_policy_id: any,
+    scheduled_actions: ScheduledAction[],
+    escalation_policy: {
+        id: string,
+        type: string
+    },
+    incident_urgency_rule: {
+        type: string,
+        urgency?: string,
+        during_support_hours?: UrgencyDefinition,
+        outside_support_hours?: UrgencyDefinition
+    },
+    alert_grouping_parameters: {
+        type: string,
+        config?: {
+            timeout: bigint
+        }
+    }
 };
+
+type ScheduledAction = {
+    type: string,
+    at: {
+        type: string,
+        name: string
+    },
+    to_urgency: string
+}
+
+type UrgencyDefinition = {
+    type: string,
+    urgency: string
+}
 
 type ServicesResponse = {
     services: ServicePayload[]
@@ -71,44 +98,40 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ServicePayload, 
             return model;
         }
 
-        // transform some object to conform between model <-> api structure
-        from.scheduled_actions = from.scheduled_actions.map((sa: { at: { name: any; }; }) => sa.at.name);
-        from.escalation_policy_id = from.escalation_policy.id;
-        delete (<any>from).escalation_policy; // we only the ID for the model
+        const escalationPolicyId = from.escalation_policy.id;
+        const scheduledActions = from.scheduled_actions.map((sa: ScheduledAction) => sa.at.name)
+
+        // delete properties that are read only and unlikely to be needed/may cause drift
+        delete (<any>from).created_at;
+        delete (<any>from).updated_at;
+        delete (<any>from).addons;
+        delete (<any>from).last_incident_timestamp;
+        delete (<any>from).teams;
+        delete (<any>from).integrations;
+
+        // delete properties where api docs report this as deprecated, but it returned in the api
+        delete (<any>from).response_play;
+        delete (<any>from).alert_grouping;
+        delete (<any>from).alert_grouping_timeout;
 
         const resourceModel = new ResourceModel({
             ...Transformer.for(from)
               .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
               .forModelIngestion()
-              .transform()
+              .transform(),
+            scheduledActions: scheduledActions,
+            escalationPolicyId: escalationPolicyId
         });
-
-        // delete properties that are read only and unlikely to be needed
-        delete (<any>resourceModel).createdAt;
-        delete (<any>resourceModel).updatedAt;
-        delete (<any>resourceModel).addons;
-        delete (<any>resourceModel).lastIncidentTimestamp;
-
-        // delete properties where api docs report this as deprecated, but it returned in the api
-        delete (<any>resourceModel).responsePlay;
-        delete (<any>resourceModel).alertGrouping;
-        delete (<any>resourceModel).alertGroupingTimeout;
 
         return resourceModel;
     }
 
-    buildServiceFromModel(model: ResourceModel) : any {
-        const service = Transformer.for(model.toJSON())
-          .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
-          .transform();
+    buildServiceFromModel(model: ResourceModel) : ServicePayload {
 
-        // required
-        service.escalation_policy = {
-            id: model.escalationPolicyId,
-            type: 'escalation_policy_reference'
-        };
+        const additionalParams : Partial<ServicePayload> = {};
+
         if (model.incidentUrgencyRule) {
-            service.incident_urgency_rule = (model.incidentUrgencyRule.type_ === 'constant' ? {
+            additionalParams.incident_urgency_rule = (model.incidentUrgencyRule.type_ === 'constant' ? {
                 type: model.incidentUrgencyRule.type_,
                 urgency: model.incidentUrgencyRule.urgency
             } : {
@@ -124,7 +147,7 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ServicePayload, 
             });
         }
         if (model.scheduledActions) {
-            service.scheduled_actions = model.scheduledActions.map(scheduledActionAt => {
+            additionalParams.scheduled_actions = model.scheduledActions.map(scheduledActionAt => {
                 return {
                     type: 'urgency_change',
                     at: {
@@ -136,13 +159,24 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ServicePayload, 
             });
         }
         if (model.alertGroupingParameters) {
-            service.alert_grouping_parameters = {
+            additionalParams.alert_grouping_parameters = {
                 type: model.alertGroupingParameters.type_,
                 config: {
                     timeout: model.alertGroupingParameters.config.timeout
                 }
             };
         }
+
+        const service : ServicePayload = {
+            escalation_policy: {
+                id: model.escalationPolicyId,
+                type: 'escalation_policy_reference'
+            },
+            ...Transformer.for(model.toJSON())
+              .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+              .transform(),
+            ...additionalParams
+        } as ServicePayload;
 
         return service;
     }

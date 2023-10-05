@@ -23,7 +23,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#scheduledactions" title="ScheduledActions">ScheduledActions</a>" : <i>[ String, ... ]</i>,
         "<a href="#alertcreation" title="AlertCreation">AlertCreation</a>" : <i>String</i>,
         "<a href="#alertgroupingparameters" title="AlertGroupingParameters">AlertGroupingParameters</a>" : <i><a href="alertgroupingparameters.md">AlertGroupingParameters</a></i>,
-        "<a href="#autopausenotificationsparameters" title="AutoPauseNotificationsParameters">AutoPauseNotificationsParameters</a>" : <i><a href="autopausenotificationsparameters.md">AutoPauseNotificationsParameters</a></i>,
+        "<a href="#autopausenotificationsparameters" title="AutoPauseNotificationsParameters">AutoPauseNotificationsParameters</a>" : <i><a href="autopausenotificationsparameters.md">AutoPauseNotificationsParameters</a></i>
     }
 }
 </pre>
@@ -108,7 +108,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 The ID of the Escalation Policy.
 
-_Required_: No
+_Required_: Yes
 
 _Type_: String
 
@@ -199,14 +199,6 @@ A short-form, server-generated string that provides succinct, important informat
 #### HtmlUrl
 
 A URL at which the entity is uniquely displayed in the Web app.
-
-#### Teams
-
-The array storing teams associated with the service.
-
-#### Integrations
-
-The array storing integrations associated with the service.
 
 #### Self
 

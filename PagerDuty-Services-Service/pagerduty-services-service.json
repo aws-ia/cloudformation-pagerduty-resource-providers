@@ -340,24 +340,7 @@
 
             },
             "additionalProperties": false
-        },
-        "Teams": {
-            "description": "The array storing teams associated with the service.",
-            "type": "array",
-            "insertionOrder": false,
-            "items": {
-                "$ref": "#/definitions/Team"
-            }
-        },
-        "Integrations": {
-            "description": "The array storing integrations associated with the service.",
-            "type": "array",
-            "insertionOrder": false,
-            "items": {
-                "$ref": "#/definitions/Integration"
-            }
         }
-
     },
     "additionalProperties": false,
     "tagging": {
@@ -365,14 +348,12 @@
     },
     "required": [
         "Name",
-        "EscalationPolicy"
+        "EscalationPolicyId"
     ],
     "readOnlyProperties": [
         "/properties/Id",
         "/properties/Summary",
         "/properties/HtmlUrl",
-        "/properties/Teams",
-        "/properties/Integrations",
         "/properties/Self",
         "/properties/Type"
     ],
