@@ -1,4 +1,4 @@
-# PagerDuty::Schedules::Schedule User
+# PagerDuty::Schedules::Schedule EscalationPolicy
 
 ## Syntax
 
@@ -30,7 +30,7 @@ _Required_: Yes
 
 _Type_: String
 
-_Allowed Values_: <code>user_reference</code>
+_Allowed Values_: <code>escalation_policy_reference</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 

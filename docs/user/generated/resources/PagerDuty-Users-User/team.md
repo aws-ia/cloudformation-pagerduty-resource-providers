@@ -1,4 +1,4 @@
-# PagerDuty::Users::User NotificationRule
+# PagerDuty::Users::User Team
 
 ## Syntax
 
@@ -34,7 +34,7 @@ _Required_: Yes
 
 _Type_: String
 
-_Allowed Values_: <code>assignment_notification_rule_reference</code>
+_Allowed Values_: <code>team_reference</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 

@@ -50,6 +50,8 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### RenderedCoveragePercentage
 
+The percentage of the time range covered by this layer. Returns null unless since or until are set.
+
 _Required_: No
 
 _Type_: Double

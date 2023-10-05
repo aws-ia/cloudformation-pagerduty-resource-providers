@@ -47,7 +47,7 @@ _Required_: Yes
 
 _Type_: String
 
-_Minimum Length_: <code>1</code>
+_Minimum_: <code>1</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -128,4 +128,8 @@ A short-form, server-generated string that provides succinct, important informat
 #### HtmlUrl
 
 A URL at which the entity is uniquely displayed in the Web app.
+
+#### Services
+
+Returns the <code>Services</code> value.
 

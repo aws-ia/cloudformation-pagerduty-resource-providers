@@ -189,23 +189,7 @@ If true, the user has an outstanding invitation.
 
 Returns the <code>Id</code> value.
 
-#### Type
-
-Returns the <code>Type</code> value.
-
-#### Summary
-
-Returns the <code>Summary</code> value.
-
 #### Id
 
 Returns the <code>Id</code> value.
-
-#### Type
-
-Returns the <code>Type</code> value.
-
-#### Summary
-
-Returns the <code>Summary</code> value.
 
