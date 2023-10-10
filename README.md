@@ -10,17 +10,18 @@ This collection of [AWS CloudFormation resource types][1] allow PagerDuty to be 
 | PagerDuty::Teams::Membership                    | This resource type manages a [PagerDuty membership of a User in a Team][7] | [/PagerDuty-Teams-Membership][9]                    |
 | PagerDuty::Schedules::Schedule                  | This resource type manages a [PagerDuty Schedule ][10]                     | [/PagerDuty-Schedules-Schedule][11]                 |
 | PagerDuty::ResponsePlays::ResponsePlay          | This resource type manages a [PagerDuty ResponsePlay ][12]                 | [/PagerDuty-ResponsePlays-ResponsePlay][13]         |
-| PagerDuty::Services::Service                    | This resource type manages a [PagerDuty ResponsePlay ][14]                 | [/PagerDuty-ResponsePlays-ResponsePlay][15]         |
+| PagerDuty::Services::Service                    | This resource type manages a [PagerDuty Service ][14]                      | [/PagerDuty-Services-Service][15]                   |
+| PagerDuty::Services::Integration                | This resource type manages a [PagerDuty Integration ][14]                  | [/PagerDuty-Services-Integration][16]               |
 
 ## Prerequisites
-* [AWS Account][18]
-* [AWS CLI][19]
-* [PagerDuty account][20] and [API key][21]
+* [AWS Account][19]
+* [AWS CLI][20]
+* [PagerDuty account][21] and [API key][22]
 ## AWS Management Console
 
 To get started:
 
-1. Sign in to the [AWS Management Console][22] with your account and navigate to CloudFormation.
+1. Sign in to the [AWS Management Console][23] with your account and navigate to CloudFormation.
 
 2. Select "Public extensions" from the left hand pane and filter Publisher by "Third Party".
 
@@ -49,9 +50,9 @@ For example:
   --configuration "{ \"PagerDutyAccess\":{\"Token\":\"YOURAPIKEY\"}}"
   ```
 
-7. After you have your resource configured, [create your AWS stack][16] that includes any of the activated PagerDuty resources.
+7. After you have your resource configured, [create your AWS stack][17] that includes any of the activated PagerDuty resources.
 
-For more information about available commands and workflows, see the official [AWS documentation][17].
+For more information about available commands and workflows, see the official [AWS documentation][18].
 
 ## Supported regions
 
@@ -196,7 +197,7 @@ Resources:
       ConferenceType: manual
 ```
 
-### Service example using the Cloudformation PagerDuty resources
+### Shows how to create a Service in PagerDuty with Cloudformation resource.
 ```yaml
 ---
 AWSTemplateFormatVersion: '2010-09-09'
@@ -237,6 +238,22 @@ Resources:
       Timeout: 300
 ```
 
+
+### Shows how to create a Integration in PagerDuty with Cloudformation resource.
+```yaml
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Shows how to create an Integration (AWS Cloudwatch) in PagerDuty
+Resources:
+  SampleService:
+    Type: PagerDuty::Services::Integration
+    Properties:
+      Name: Test Integration for Service
+      Type: event_transformer_api_inbound_integration
+      ServiceId: P4KW27I
+      VendorId: PZQ6AUS
+```
+
 [1]: https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/resource-types.html
 [2]: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html
 [3]: https://support.pagerduty.com/docs/escalation-policies
@@ -252,10 +269,11 @@ Resources:
 [13]: ./PagerDuty-ResponsePlays-ResponsePlay
 [14]: https://support.pagerduty.com/docs/services-and-integrations
 [15]: ./PagerDuty-Services-Service
-[16]: https://console.aws.amazon.com/cloudformation/home
-[17]: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html
-[18]: https://aws.amazon.com/account/
-[19]: https://aws.amazon.com/cli/
-[20]: https://www.pagerduty.com/
-[21]: https://support.pagerduty.com/docs/api-access-keys
-[22]: https://aws.amazon.com/console/
+[16]: ./PagerDuty-Services-Integration
+[17]: https://console.aws.amazon.com/cloudformation/home
+[18]: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/registry.html
+[19]: https://aws.amazon.com/account/
+[20]: https://aws.amazon.com/cli/
+[21]: https://www.pagerduty.com/
+[22]: https://support.pagerduty.com/docs/api-access-keys
+[23]: https://aws.amazon.com/console/

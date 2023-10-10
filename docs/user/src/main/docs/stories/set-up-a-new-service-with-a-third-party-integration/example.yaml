@@ -75,5 +75,9 @@ Resources:
   # 4. Integration
   PagerDutyIntegration:
     Type: PagerDuty::Services::Integration
-    # TODO
+    Properties:
+      Name: Test Integration for Test Service
+      Type: event_transformer_api_inbound_integration
+      ServiceId: !GetAtt PagerDutyService.Id
+      VendorId: PZQ6AUS
 

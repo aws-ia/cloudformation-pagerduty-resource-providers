@@ -1,7 +1,5 @@
 # Set up a new service with a third party integration
 
-(Note!!!: WIP - to be finalised when the PagerDuty::Services::Integration resource is complete)
-
 With the PagerDuty resources for CloudFormation, you can manage your services and corresponding integrations, 
 in an efficient and consistent manner.
 
@@ -10,7 +8,7 @@ This demo will use the following types:
 * `PagerDuty::Users::User` - to manage a PagerDuty user.
 * `PagerDuty::EscalationPolicies::EscalationPolicy` - escalation policy is a requirement for creating a service.
 * `PagerDuty::Services::Service` - a new service in PagerDuty to be created and managed with CloudFormation.
-* `PagerDuty::Services::Integration` - to create a new / use existing integration that will be attached to the service.
+* `PagerDuty::Services::Integration` - to create a new integration that will be attached to the service.
 
 See the [full CloudFormation template](example.yaml) for an overview of the stack.
 
@@ -99,8 +97,36 @@ but additionally user is able to specify more parameters to configure alerts, su
 ```
 
 ## Integration associated with the Service
-TODO
+
+With the Service created, we can now use the Integration resource to create a PagerDuty integration attached to the new Service.
+In order to create the integration, we need to know the `Type` and the `VendorId`, which are available for popular providers,
+such as AWS services, Datadog, or New Relic. For full suite of integrations please refer to: https://www.pagerduty.com/integrations/
+
+For this example we will be using the integration for `AWS CloudWatch` which has a `Type` of `event_transformer_api_inbound_integration` 
+and `VendrId` value: `PZQ6AUS`.
+```yaml
+  # 4. Integration
+  PagerDutyIntegration:
+    Type: PagerDuty::Services::Integration
+    Properties:
+      Name: Test Integration for Test Service
+      Type: event_transformer_api_inbound_integration
+      ServiceId: !GetAtt PagerDutyService.Id
+      VendorId: PZQ6AUS
+```
 
 ## Conclusion
 
-TODO
+As a result, we have created a new user in PagerDuty, as well as an EscalationPolicy targting that user.
+
+With the Escalation Policy in place, we were able to create a new service using Cloudformation
+
+![Service created](service.png)
+
+With the service created, we can also use the Cloudformation resource to create a new integration for the service.
+In this case we have created an integration with AWS Cloudwatch:
+
+![Integration created](integration.png)
+
+The integration can now be used within the new service and should users have further infrastructure in the Cloudformation template,
+e.g. an SNS topic, they can use the `PagerDutyIntegration.IntegrationUrl` to automatically provide the integration URL to the SNS topic.
