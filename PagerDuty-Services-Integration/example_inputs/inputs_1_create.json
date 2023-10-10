@@ -1,12 +1,6 @@
 {
-    "TPSCode": "...",
-    "Title": "...",
-    "CoverSheetIncluded": "...",
-    "DueDate": "...",
-    "ApprovalDate": "...",
-    "Memo": "...",
-    "SecondCopyOfMemo": "...",
-    "TestCode": "...",
-    "Authors": "...",
-    "Tags": "..."
+    "Type": "event_transformer_api_inbound_integration",
+    "Name":"Test Integration For Service",
+    "ServiceId": "P4KW27I",
+    "VendorId": "PZQ6AUS"
 }
