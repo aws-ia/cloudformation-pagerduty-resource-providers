@@ -9,92 +9,137 @@ export class ResourceModel extends BaseModel {
     public static readonly TYPE_NAME: string = 'PagerDuty::Services::Integration';
 
     @Exclude()
-    protected readonly IDENTIFIER_KEY_TPSCODE: string = '/properties/TPSCode';
+    protected readonly IDENTIFIER_KEY_ID: string = '/properties/Id';
 
-    @Expose({ name: 'TPSCode' })
+    @Expose({ name: 'Id' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'tPSCode', value, obj, []),
+            transformValue(String, 'id', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    tPSCode?: Optional<string>;
-    @Expose({ name: 'Title' })
+    id?: Optional<string>;
+    @Expose({ name: 'Summary' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'title', value, obj, []),
+            transformValue(String, 'summary', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    title?: Optional<string>;
-    @Expose({ name: 'CoverSheetIncluded' })
+    summary?: Optional<string>;
+    @Expose({ name: 'Type' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(Boolean, 'coverSheetIncluded', value, obj, []),
+            transformValue(String, 'type_', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    coverSheetIncluded?: Optional<boolean>;
-    @Expose({ name: 'DueDate' })
+    type_?: Optional<string>;
+    @Expose({ name: 'Self' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'dueDate', value, obj, []),
+            transformValue(String, 'self', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    dueDate?: Optional<string>;
-    @Expose({ name: 'ApprovalDate' })
+    self?: Optional<string>;
+    @Expose({ name: 'HtmlUrl' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'approvalDate', value, obj, []),
+            transformValue(String, 'htmlUrl', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    approvalDate?: Optional<string>;
-    @Expose({ name: 'Memo' })
-    @Type(() => Memo)
-    memo?: Optional<Memo>;
-    @Expose({ name: 'SecondCopyOfMemo' })
-    @Type(() => Memo)
-    secondCopyOfMemo?: Optional<Memo>;
-    @Expose({ name: 'TestCode' })
+    htmlUrl?: Optional<string>;
+    @Expose({ name: 'Name' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'testCode', value, obj, []),
+            transformValue(String, 'name', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    testCode?: Optional<string>;
-    @Expose({ name: 'Authors' })
+    name?: Optional<string>;
+    @Expose({ name: 'ServiceId' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'authors', value, obj, [Array]),
+            transformValue(String, 'serviceId', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    authors?: Optional<Array<string>>;
-    @Expose({ name: 'Tags' })
+    serviceId?: Optional<string>;
+    @Expose({ name: 'VendorId' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(Tag, 'tags', value, obj, [Set]),
+            transformValue(String, 'vendorId', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    tags?: Optional<Set<Tag>>;
+    vendorId?: Optional<string>;
+    @Expose({ name: 'IntegrationEmail' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'integrationEmail', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    integrationEmail?: Optional<string>;
+    @Expose({ name: 'EmailIncidentCreation' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'emailIncidentCreation', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    emailIncidentCreation?: Optional<string>;
+    @Expose({ name: 'EmailFilterMode' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'emailFilterMode', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    emailFilterMode?: Optional<string>;
+    @Expose({ name: 'EmailParsers' })
+    @Type(() => EmailParser)
+    emailParsers?: Optional<Array<EmailParser>>;
+    @Expose({ name: 'EmailParsingFallback' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'emailParsingFallback', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    emailParsingFallback?: Optional<string>;
+    @Expose({ name: 'EmailFilters' })
+    @Type(() => EmailFilter)
+    emailFilters?: Optional<Array<EmailFilter>>;
+    @Expose({ name: 'IntegrationUrl' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'integrationUrl', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    integrationUrl?: Optional<string>;
 
     @Exclude()
     public getPrimaryIdentifier(): Dict {
         const identifier: Dict = {};
-        if (this.tPSCode != null) {
-            identifier[this.IDENTIFIER_KEY_TPSCODE] = this.tPSCode;
+        if (this.id != null) {
+            identifier[this.IDENTIFIER_KEY_ID] = this.id;
         }
 
         // only return the identifier if it can be used, i.e. if all components are present
@@ -109,53 +154,126 @@ export class ResourceModel extends BaseModel {
     }
 }
 
-export class Memo extends BaseModel {
-    ['constructor']: typeof Memo;
+export class EmailParser extends BaseModel {
+    ['constructor']: typeof EmailParser;
 
 
-    @Expose({ name: 'Heading' })
+    @Expose({ name: 'Action' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'heading', value, obj, []),
+            transformValue(String, 'action', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    heading?: Optional<string>;
-    @Expose({ name: 'Body' })
+    action?: Optional<string>;
+    @Expose({ name: 'MatchPredicate' })
+    @Type(() => MatchPredicate)
+    matchPredicate?: Optional<MatchPredicate>;
+    @Expose({ name: 'ValueExtractors' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'body', value, obj, []),
+            transformValue(String, 'valueExtractors', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    body?: Optional<string>;
+    valueExtractors?: Optional<string>;
 
 }
 
-export class Tag extends BaseModel {
-    ['constructor']: typeof Tag;
+export class MatchPredicate extends BaseModel {
+    ['constructor']: typeof MatchPredicate;
 
 
-    @Expose({ name: 'Key' })
+    @Expose({ name: 'Type' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'key', value, obj, []),
+            transformValue(String, 'type_', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    key?: Optional<string>;
-    @Expose({ name: 'Value' })
+    type_?: Optional<string>;
+    @Expose({ name: 'Matcher' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'value_', value, obj, []),
+            transformValue(String, 'matcher', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    value_?: Optional<string>;
+    matcher?: Optional<string>;
+    @Expose({ name: 'Part' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'part', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    part?: Optional<string>;
+
+}
+
+export class EmailFilter extends BaseModel {
+    ['constructor']: typeof EmailFilter;
+
+
+    @Expose({ name: 'SubjectMode' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'subjectMode', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    subjectMode?: Optional<string>;
+    @Expose({ name: 'SubjectRegex' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'subjectRegex', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    subjectRegex?: Optional<string>;
+    @Expose({ name: 'BodyMode' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'bodyMode', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    bodyMode?: Optional<string>;
+    @Expose({ name: 'BodyRegex' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'bodyRegex', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    bodyRegex?: Optional<string>;
+    @Expose({ name: 'FromEmailMode' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'fromEmailMode', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    fromEmailMode?: Optional<string>;
+    @Expose({ name: 'FromEmailRegex' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'fromEmailRegex', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    fromEmailRegex?: Optional<string>;
 
 }
 
@@ -163,6 +281,25 @@ export class TypeConfigurationModel extends BaseModel {
     ['constructor']: typeof TypeConfigurationModel;
 
 
+    @Expose({ name: 'PagerDutyAccess' })
+    @Type(() => PagerDutyAccess)
+    pagerDutyAccess?: Optional<PagerDutyAccess>;
+
+}
+
+export class PagerDutyAccess extends BaseModel {
+    ['constructor']: typeof PagerDutyAccess;
+
+
+    @Expose({ name: 'Token' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'token', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    token?: Optional<string>;
 
 }
 

@@ -1,6 +1,6 @@
 # PagerDuty::Services::Integration
 
-An example resource schema demonstrating some basic constructs and validation rules.
+A resource schema representing a PagerDuty Integration belonging to a Service.
 
 ## Syntax
 
@@ -12,15 +12,16 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 {
     "Type" : "PagerDuty::Services::Integration",
     "Properties" : {
-        "<a href="#title" title="Title">Title</a>" : <i>String</i>,
-        "<a href="#coversheetincluded" title="CoverSheetIncluded">CoverSheetIncluded</a>" : <i>Boolean</i>,
-        "<a href="#duedate" title="DueDate">DueDate</a>" : <i>String</i>,
-        "<a href="#approvaldate" title="ApprovalDate">ApprovalDate</a>" : <i>String</i>,
-        "<a href="#memo" title="Memo">Memo</a>" : <i><a href="memo.md">Memo</a></i>,
-        "<a href="#secondcopyofmemo" title="SecondCopyOfMemo">SecondCopyOfMemo</a>" : <i><a href="memo.md">Memo</a></i>,
-        "<a href="#testcode" title="TestCode">TestCode</a>" : <i>String</i>,
-        "<a href="#authors" title="Authors">Authors</a>" : <i>[ String, ... ]</i>,
-        "<a href="#tags" title="Tags">Tags</a>" : <i>[ <a href="tag.md">Tag</a>, ... ]</i>
+        "<a href="#type" title="Type">Type</a>" : <i>String</i>,
+        "<a href="#name" title="Name">Name</a>" : <i>String</i>,
+        "<a href="#serviceid" title="ServiceId">ServiceId</a>" : <i>String</i>,
+        "<a href="#vendorid" title="VendorId">VendorId</a>" : <i>String</i>,
+        "<a href="#integrationemail" title="IntegrationEmail">IntegrationEmail</a>" : <i>String</i>,
+        "<a href="#emailincidentcreation" title="EmailIncidentCreation">EmailIncidentCreation</a>" : <i>String</i>,
+        "<a href="#emailfiltermode" title="EmailFilterMode">EmailFilterMode</a>" : <i>String</i>,
+        "<a href="#emailparsers" title="EmailParsers">EmailParsers</a>" : <i>[ <a href="emailparser.md">EmailParser</a>, ... ]</i>,
+        "<a href="#emailparsingfallback" title="EmailParsingFallback">EmailParsingFallback</a>" : <i>String</i>,
+        "<a href="#emailfilters" title="EmailFilters">EmailFilters</a>" : <i>[ <a href="emailfilter.md">EmailFilter</a>, ... ]</i>,
     }
 }
 </pre>
@@ -30,102 +31,127 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 <pre>
 Type: PagerDuty::Services::Integration
 Properties:
-    <a href="#title" title="Title">Title</a>: <i>String</i>
-    <a href="#coversheetincluded" title="CoverSheetIncluded">CoverSheetIncluded</a>: <i>Boolean</i>
-    <a href="#duedate" title="DueDate">DueDate</a>: <i>String</i>
-    <a href="#approvaldate" title="ApprovalDate">ApprovalDate</a>: <i>String</i>
-    <a href="#memo" title="Memo">Memo</a>: <i><a href="memo.md">Memo</a></i>
-    <a href="#secondcopyofmemo" title="SecondCopyOfMemo">SecondCopyOfMemo</a>: <i><a href="memo.md">Memo</a></i>
-    <a href="#testcode" title="TestCode">TestCode</a>: <i>String</i>
-    <a href="#authors" title="Authors">Authors</a>: <i>
-      - String</i>
-    <a href="#tags" title="Tags">Tags</a>: <i>
-      - <a href="tag.md">Tag</a></i>
+    <a href="#type" title="Type">Type</a>: <i>String</i>
+    <a href="#name" title="Name">Name</a>: <i>String</i>
+    <a href="#serviceid" title="ServiceId">ServiceId</a>: <i>String</i>
+    <a href="#vendorid" title="VendorId">VendorId</a>: <i>String</i>
+    <a href="#integrationemail" title="IntegrationEmail">IntegrationEmail</a>: <i>String</i>
+    <a href="#emailincidentcreation" title="EmailIncidentCreation">EmailIncidentCreation</a>: <i>String</i>
+    <a href="#emailfiltermode" title="EmailFilterMode">EmailFilterMode</a>: <i>String</i>
+    <a href="#emailparsers" title="EmailParsers">EmailParsers</a>: <i>
+      - <a href="emailparser.md">EmailParser</a></i>
+    <a href="#emailparsingfallback" title="EmailParsingFallback">EmailParsingFallback</a>: <i>String</i>
+    <a href="#emailfilters" title="EmailFilters">EmailFilters</a>: <i>
+      - <a href="emailfilter.md">EmailFilter</a></i>
 </pre>
 
 ## Properties
 
-#### Title
+#### Type
 
-The title of the TPS report is a mandatory element.
-
-_Required_: Yes
-
-_Type_: String
-
-_Minimum Length_: <code>20</code>
-
-_Maximum Length_: <code>250</code>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### CoverSheetIncluded
-
-Required for all TPS Reports submitted after 2/19/1999
-
-_Required_: No
-
-_Type_: Boolean
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### DueDate
-
-_Required_: No
-
-_Type_: String
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### ApprovalDate
-
-_Required_: No
-
-_Type_: String
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### Memo
-
-_Required_: No
-
-_Type_: <a href="memo.md">Memo</a>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### SecondCopyOfMemo
-
-_Required_: No
-
-_Type_: <a href="memo.md">Memo</a>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### TestCode
+The type of integration to be created. Refer to the API documentation for list of allowed values.
 
 _Required_: Yes
 
 _Type_: String
 
-_Allowed Values_: <code>NOT_STARTED</code> | <code>CANCELLED</code>
+_Allowed Values_: <code>aws_cloudwatch_inbound_integration</code> | <code>cloudkick_inbound_integration</code> | <code>event_transformer_api_inbound_integration</code> | <code>generic_email_inbound_integration</code> | <code>generic_events_api_inbound_integration</code> | <code>keynote_inbound_integration</code> | <code>nagios_inbound_integration</code> | <code>pingdom_inbound_integration</code> | <code>sql_monitor_inbound_integration</code> | <code>events_api_v2_inbound_integration</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
-#### Authors
+#### Name
+
+The name of integration to be created.
 
 _Required_: No
 
-_Type_: List of String
+_Type_: String
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
-#### Tags
+#### ServiceId
 
-An array of key-value pairs to apply to this resource.
+The ID of the service integration should be associated with.
+
+_Required_: Yes
+
+_Type_: String
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### VendorId
+
+The ID of a third party vendor integration. Used for existing integrations.
 
 _Required_: No
 
-_Type_: List of <a href="tag.md">Tag</a>
+_Type_: String
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### IntegrationEmail
+
+Email address for the integration - must be set to an email address @your-subdomain.pagerduty.com. Specified only for generic_email_inbound_integration integrations.
+
+_Required_: No
+
+_Type_: String
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### EmailIncidentCreation
+
+Email incident creation. Specified only for generic_email_inbound_integration integrations.
+
+_Required_: No
+
+_Type_: String
+
+_Allowed Values_: <code>on_new_email</code> | <code>on_new_email_subject</code> | <code>only_if_no_open_incidents</code> | <code>use_rules</code>
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### EmailFilterMode
+
+Email filter mode. Specified only for generic_email_inbound_integration integrations.
+
+_Required_: No
+
+_Type_: String
+
+_Allowed Values_: <code>email</code> | <code>or-rules-email</code> | <code>and-rules-email</code>
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### EmailParsers
+
+Email parsers. Specified only for generic_email_inbound_integration integrations.
+
+_Required_: No
+
+_Type_: List of <a href="emailparser.md">EmailParser</a>
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### EmailParsingFallback
+
+Email Parsing Fallback. Specified only for generic_email_inbound_integration integrations.
+
+_Required_: No
+
+_Type_: String
+
+_Allowed Values_: <code>open_new_incident</code> | <code>discard</code>
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### EmailFilters
+
+Email filters. Specified only for generic_email_inbound_integration integrations.
+
+_Required_: No
+
+_Type_: List of <a href="emailfilter.md">EmailFilter</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -133,7 +159,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 ### Ref
 
-When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the TPSCode.
+When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the Id.
 
 ### Fn::GetAtt
 
@@ -141,7 +167,23 @@ The `Fn::GetAtt` intrinsic function returns a value for a specified attribute of
 
 For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::GetAtt](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-getatt.html).
 
-#### TPSCode
+#### Id
 
-A TPS Code is automatically generated on creation and assigned as the unique identifier.
+Returns the <code>Id</code> value.
+
+#### Summary
+
+A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.
+
+#### HtmlUrl
+
+A URL at which the entity is uniquely displayed in the Web app.
+
+#### Self
+
+The API show URL at which the object is accessible
+
+#### IntegrationUrl
+
+The URL of the Integration.
 

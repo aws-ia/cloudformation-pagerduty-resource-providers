@@ -11,14 +11,14 @@ Resources:
   TestEntrypoint:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: dist/handlers.testEntrypoint
+      Handler: dist/PagerDuty-Services-Integration/src/handlers.testEntrypoint
       Runtime: nodejs14.x
       CodeUri: ./
 
   TypeFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: dist/handlers.entrypoint
+      Handler: dist/PagerDuty-Services-Integration/src/handlers.entrypoint
       Runtime: nodejs14.x
       CodeUri: ./
 

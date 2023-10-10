@@ -1,176 +1,146 @@
-import {
-    Action,
-    BaseResource,
-    exceptions,
-    handlerEvent,
-    HandlerErrorCode,
-    LoggerProxy,
-    OperationStatus,
-    Optional,
-    ProgressEvent,
-    ResourceHandlerRequest,
-    SessionProxy,
-} from '@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib';
-import { ResourceModel, TypeConfigurationModel } from './models';
+import {ResourceModel, TypeConfigurationModel} from './models';
+import {AbstractPagerDutyResource} from "../../PagerDuty-Common/src/abstract-pager-duty-resource";
+import {PagerDutyClient } from "../../PagerDuty-Common/src/pager-duty-client";
+import {CaseTransformer, Transformer} from "../../PagerDuty-Common/src/util";
+import {InvalidRequest} from "@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib/dist/exceptions";
+import {version} from '../package.json';
 
-interface CallbackContext extends Record<string, any> {}
+type IntegrationPayload = {
+    name: string;
+    type: string,
+    service: {
+        id: string,
+        type: string
+    },
+    vendor?: {
+        id: string,
+        type: string
+    },
+    integration_email?: string,
+    email_incident_creation?: string,
+    email_filter_mode?: string,
+    email_parsers?: any,
+    email_parsing_fallback?: string,
+    email_filters?: any,
+    integration_key?: string,
+    html_url?: string
+};
 
-class Resource extends BaseResource<ResourceModel> {
+class Resource extends AbstractPagerDutyResource<ResourceModel, IntegrationPayload, IntegrationPayload, IntegrationPayload, TypeConfigurationModel> {
 
-    /**
-     * CloudFormation invokes this handler when the resource is initially created
-     * during stack create operations.
-     *
-     * @param session Current AWS session passed through from caller
-     * @param request The request object for the provisioning request passed to the implementor
-     * @param callbackContext Custom context object to allow the passing through of additional
-     * state or metadata between subsequent retries
-     * @param typeConfiguration Configuration data for this resource type, in the given account
-     * and region
-     * @param logger Logger to proxy requests to default publishers
-     */
-    @handlerEvent(Action.Create)
-    public async create(
-        session: Optional<SessionProxy>,
-        request: ResourceHandlerRequest<ResourceModel>,
-        callbackContext: CallbackContext,
-        logger: LoggerProxy,
-        typeConfiguration: TypeConfigurationModel,
-    ): Promise<ProgressEvent<ResourceModel, CallbackContext>> {
-        const model = new ResourceModel(request.desiredResourceState);
-        const progress = ProgressEvent.progress<ProgressEvent<ResourceModel, CallbackContext>>(model);
-        // TODO: put code here
+    private userAgent = `AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation resource ${this.typeName}/${version}`;
 
-        // Example:
-        try {
-            if (session instanceof SessionProxy) {
-                const client = session.client('S3');
-            }
-            // Setting Status to success will signal to CloudFormation that the operation is complete
-            progress.status = OperationStatus.Success;
-        } catch(err) {
-            logger.log(err);
-            // exceptions module lets CloudFormation know the type of failure that occurred
-            throw new exceptions.InternalFailure(err.message);
-            // this can also be done by returning a failed progress event
-            // return ProgressEvent.failed(HandlerErrorCode.InternalFailure, err.message);
+    async get(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<IntegrationPayload> {
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ integration: IntegrationPayload }>(
+          'get',
+          `/services/${model.serviceId}/integrations/${model.id}`);
+        return response.data.integration;
+    }
+
+    async list(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResourceModel[]> {
+        // no api to list integrations
+        throw new InvalidRequest();
+    }
+
+    async create(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<IntegrationPayload> {
+        const integration = this.buildIntegrationFromModel(model);
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ integration: IntegrationPayload }>(
+          'post',
+          `/services/${model.serviceId}/integrations`,
+          {},
+          { integration });
+        return response.data.integration;
+    }
+
+    async update(model: ResourceModel, typeConfiguration?: TypeConfigurationModel,previousState?:ResourceModel): Promise<IntegrationPayload> {
+        const integration = this.buildIntegrationFromModel(model);
+        const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ schedule: IntegrationPayload }>(
+          'put',
+          `/services/${model.serviceId}/integrations/${model.id}`,
+          {},
+          { integration });
+        return response.data.schedule;
+    }
+
+    async delete(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<void> {
+        await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest(
+          'delete',
+          `/services/${model.serviceId}/integrations/${model.id}`);
+    }
+
+    newModel(partial?: any): ResourceModel {
+        return new ResourceModel(partial);
+    }
+
+    setModelFrom(model: ResourceModel, from?: IntegrationPayload): ResourceModel {
+        if (!from) {
+            return model;
         }
-        return progress;
+
+        const params : Partial<ResourceModel> = {};
+
+        params.serviceId = from.service.id;
+        if (from.vendor){
+            params.vendorId = from.vendor.id;
+        }
+
+        if (from.integration_key && from.html_url) {
+            const region = from.html_url.indexOf('eu.pagerduty.com') > -1 ? 'eu' : 'us';
+            params.integrationUrl = `https://events.${region}.pagerduty.com/integration/${from.integration_key}/enqueue`;
+        }
+
+        // delete properties that are read only and unlikely to be needed/may cause drift
+        delete (<any>from).created_at;
+        delete (<any>from).integration_key;
+        delete (<any>from).config;
+
+        // delete service and vendor since the Resource Model only uses serviceId and vendorId
+        delete (<any>from).service;
+        delete (<any>from).vendor;
+
+        const resourceModel = new ResourceModel({
+            ...Transformer.for(from)
+              .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+              .forModelIngestion()
+              .transform(),
+            ...params
+        });
+        return resourceModel;
     }
 
-    /**
-     * CloudFormation invokes this handler when the resource is updated
-     * as part of a stack update operation.
-     *
-     * @param session Current AWS session passed through from caller
-     * @param request The request object for the provisioning request passed to the implementor
-     * @param callbackContext Custom context object to allow the passing through of additional
-     * state or metadata between subsequent retries
-     * @param typeConfiguration Configuration data for this resource type, in the given account
-     * and region
-     * @param logger Logger to proxy requests to default publishers
-     */
-    @handlerEvent(Action.Update)
-    public async update(
-        session: Optional<SessionProxy>,
-        request: ResourceHandlerRequest<ResourceModel>,
-        callbackContext: CallbackContext,
-        logger: LoggerProxy,
-        typeConfiguration: TypeConfigurationModel,
-    ): Promise<ProgressEvent<ResourceModel, CallbackContext>> {
-        const model = new ResourceModel(request.desiredResourceState);
-        const progress = ProgressEvent.progress<ProgressEvent<ResourceModel, CallbackContext>>(model);
-        // TODO: put code here
-        progress.status = OperationStatus.Success;
-        return progress;
+
+    buildIntegrationFromModel(model: ResourceModel) : IntegrationPayload {
+        const integration : IntegrationPayload = {
+            name: model.name,
+            type: model.type_,
+            service: {
+                id: model.serviceId,
+                type: 'service_reference'
+            }
+        };
+
+        if (model.vendorId) {
+            integration.vendor = {
+                id: model.vendorId,
+                type: 'vendor_reference'
+            }
+        }
+
+        if ((model.type_ === 'generic_email_inbound_integration')){
+            integration.integration_email = model.integrationEmail;
+            integration.email_incident_creation = model.emailIncidentCreation;
+            integration.email_filter_mode = model.emailFilterMode;
+            integration.email_parsers = model.emailParsers;
+            integration.email_parsing_fallback = model.emailParsingFallback;
+            integration.email_filters = model.emailFilters;
+        }
+
+        return integration;
     }
 
-    /**
-     * CloudFormation invokes this handler when the resource is deleted, either when
-     * the resource is deleted from the stack as part of a stack update operation,
-     * or the stack itself is deleted.
-     *
-     * @param session Current AWS session passed through from caller
-     * @param request The request object for the provisioning request passed to the implementor
-     * @param callbackContext Custom context object to allow the passing through of additional
-     * state or metadata between subsequent retries
-     * @param typeConfiguration Configuration data for this resource type, in the given account
-     * and region
-     * @param logger Logger to proxy requests to default publishers
-     */
-    @handlerEvent(Action.Delete)
-    public async delete(
-        session: Optional<SessionProxy>,
-        request: ResourceHandlerRequest<ResourceModel>,
-        callbackContext: CallbackContext,
-        logger: LoggerProxy,
-        typeConfiguration: TypeConfigurationModel,
-    ): Promise<ProgressEvent<ResourceModel, CallbackContext>> {
-        const model = new ResourceModel(request.desiredResourceState);
-        const progress = ProgressEvent.progress<ProgressEvent<ResourceModel, CallbackContext>>();
-        // TODO: put code here
-        progress.status = OperationStatus.Success;
-        return progress;
-    }
-
-    /**
-     * CloudFormation invokes this handler as part of a stack update operation when
-     * detailed information about the resource's current state is required.
-     *
-     * @param session Current AWS session passed through from caller
-     * @param request The request object for the provisioning request passed to the implementor
-     * @param callbackContext Custom context object to allow the passing through of additional
-     * state or metadata between subsequent retries
-     * @param typeConfiguration Configuration data for this resource type, in the given account
-     * and region
-     * @param logger Logger to proxy requests to default publishers
-     */
-    @handlerEvent(Action.Read)
-    public async read(
-        session: Optional<SessionProxy>,
-        request: ResourceHandlerRequest<ResourceModel>,
-        callbackContext: CallbackContext,
-        logger: LoggerProxy,
-        typeConfiguration: TypeConfigurationModel,
-    ): Promise<ProgressEvent<ResourceModel, CallbackContext>> {
-        const model = new ResourceModel(request.desiredResourceState);
-        // TODO: put code here
-        const progress = ProgressEvent.success<ProgressEvent<ResourceModel, CallbackContext>>(model);
-        return progress;
-    }
-
-    /**
-     * CloudFormation invokes this handler when summary information about multiple
-     * resources of this resource provider is required.
-     *
-     * @param session Current AWS session passed through from caller
-     * @param request The request object for the provisioning request passed to the implementor
-     * @param callbackContext Custom context object to allow the passing through of additional
-     * state or metadata between subsequent retries
-     * @param typeConfiguration Configuration data for this resource type, in the given account
-     * and region
-     * @param logger Logger to proxy requests to default publishers
-     */
-    @handlerEvent(Action.List)
-    public async list(
-        session: Optional<SessionProxy>,
-        request: ResourceHandlerRequest<ResourceModel>,
-        callbackContext: CallbackContext,
-        logger: LoggerProxy,
-        typeConfiguration: TypeConfigurationModel,
-    ): Promise<ProgressEvent<ResourceModel, CallbackContext>> {
-        const model = new ResourceModel(request.desiredResourceState);
-        // TODO: put code here
-        const progress = ProgressEvent.builder<ProgressEvent<ResourceModel, CallbackContext>>()
-            .status(OperationStatus.Success)
-            .resourceModels([model])
-            .build();
-        return progress;
-    }
 }
 
-// @ts-ignore // if running against v1.0.1 or earlier of plugin the 5th argument is not known but best to ignored (runtime code may warn)
-export const resource = new Resource(ResourceModel.TYPE_NAME, ResourceModel, null, null, TypeConfigurationModel)!;
+export const resource = new Resource(ResourceModel.TYPE_NAME, ResourceModel, null, null, TypeConfigurationModel);
 
 // Entrypoint for production usage after registered in CloudFormation
 export const entrypoint = resource.entrypoint;
