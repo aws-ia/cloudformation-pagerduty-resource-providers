@@ -104,6 +104,12 @@ such as AWS services, Datadog, or New Relic. For full suite of integrations plea
 
 For this example we will be using the integration for `AWS CloudWatch` which has a `Type` of `event_transformer_api_inbound_integration` 
 and `VendrId` value: `PZQ6AUS`.
+
+Please note that in order to use the desired integration, the user needs to know the `VendorId` of the integration, which might not be known
+to the user. In that case, one can use the PagerDuty API to list the vendors (ref: https://developer.pagerduty.com/api-reference/d2aa663abec79-list-vendors)
+and find the vendor of interest to find its `VendorId`. Please also note that by default the API returns 25 services, so user might need to use the `offset` 
+query parameter to navigate through the paginated list of vendors. Unfortunately there is currently no way to find vendor data by name.
+
 ```yaml
   # 4. Integration
   PagerDutyIntegration:
