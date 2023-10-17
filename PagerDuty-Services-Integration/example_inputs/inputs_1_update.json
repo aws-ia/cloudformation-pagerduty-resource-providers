@@ -1,6 +1,6 @@
 {
     "Type": "event_transformer_api_inbound_integration",
     "Name":"Test Integration For Service Updated",
-    "ServiceId": "P4KW27I",
-    "VendorId": "PZQ6AUS"
+    "ServiceId": "ServiceId",
+    "VendorId": "VendorId (e.g. PZQ6AUS for AWS CloudWatch)"
 }
