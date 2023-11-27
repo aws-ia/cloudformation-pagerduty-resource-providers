@@ -108,6 +108,8 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ServicePayload, 
         delete (<any>from).last_incident_timestamp;
         delete (<any>from).teams;
         delete (<any>from).integrations;
+        delete (<any>from).escalation_policy;
+        delete (<any>from).scheduled_actions;
 
         // delete properties where api docs report this as deprecated, but it returned in the api
         delete (<any>from).response_play;
@@ -122,6 +124,14 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, ServicePayload, 
             scheduledActions: scheduledActions,
             escalationPolicyId: escalationPolicyId
         });
+
+        if (resourceModel.scheduledActions.length === 0) {
+            delete resourceModel.scheduledActions;
+        }
+
+        if (resourceModel.supportHours == null) {
+            delete resourceModel.supportHours;
+        }
 
         return resourceModel;
     }

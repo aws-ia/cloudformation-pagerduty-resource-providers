@@ -1,0 +1,23 @@
+{
+  "Name": "Test Service",
+  "Description": "Test Description",
+  "AutoResolveTimeout": 14400,
+  "AcknowledgementTimeout": 1800,
+  "Status": "active",
+  "EscalationPolicyId": "<POLICY_ID>",
+  "IncidentUrgencyRule": {
+    "Type": "constant",
+    "Urgency": "high"
+  },
+  "AlertCreation": "create_alerts_and_incidents",
+  "AlertGroupingParameters": {
+    "Type": "time",
+    "Config": {
+      "Timeout": 921
+    }
+  },
+  "AutoPauseNotificationsParameters": {
+    "Enabled": true,
+    "Timeout": 300
+  }
+}
