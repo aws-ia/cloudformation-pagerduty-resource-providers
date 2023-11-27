@@ -28,7 +28,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 
 A string that determines the schema of the object. This must be the standard name for the entity, suffixed by _reference if the object is a reference.
 
-_Required_: Yes
+_Required_: No
 
 _Type_: String
 
@@ -38,7 +38,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### Id
 
-_Required_: Yes
+_Required_: No
 
 _Type_: String
 

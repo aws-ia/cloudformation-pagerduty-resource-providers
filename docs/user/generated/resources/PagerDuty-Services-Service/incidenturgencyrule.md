@@ -42,7 +42,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### Urgency
 
-String representing the incidents' urgency, if type is constant.
+String representing the incidents' urgency, if type is constant, allowed values are: low, high, severity_based.
 
 _Required_: No
 
