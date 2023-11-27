@@ -26,6 +26,8 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 
 #### Type
 
+String representing the type of alert grouping, allowed values are: time, intelligent, content_based.
+
 _Required_: No
 
 _Type_: String

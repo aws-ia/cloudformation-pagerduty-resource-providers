@@ -20,12 +20,10 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#escalationpolicyid" title="EscalationPolicyId">EscalationPolicyId</a>" : <i>String</i>,
         "<a href="#incidenturgencyrule" title="IncidentUrgencyRule">IncidentUrgencyRule</a>" : <i><a href="incidenturgencyrule.md">IncidentUrgencyRule</a></i>,
         "<a href="#supporthours" title="SupportHours">SupportHours</a>" : <i><a href="supporthours.md">SupportHours</a></i>,
-        "<a href="#scheduledactions" title="ScheduledActions">ScheduledActions</a>" : <i>[ <a href="scheduledaction.md">ScheduledAction</a>, ... ]</i>,
+        "<a href="#scheduledactions" title="ScheduledActions">ScheduledActions</a>" : <i>[ String, ... ]</i>,
         "<a href="#alertcreation" title="AlertCreation">AlertCreation</a>" : <i>String</i>,
         "<a href="#alertgroupingparameters" title="AlertGroupingParameters">AlertGroupingParameters</a>" : <i><a href="alertgroupingparameters.md">AlertGroupingParameters</a></i>,
-        "<a href="#alertgrouping" title="AlertGrouping">AlertGrouping</a>" : <i>String</i>,
-        "<a href="#alertgroupingtimeout" title="AlertGroupingTimeout">AlertGroupingTimeout</a>" : <i>Integer</i>,
-        "<a href="#alertpausenotificationsparameters" title="AlertPauseNotificationsParameters">AlertPauseNotificationsParameters</a>" : <i><a href="alertpausenotificationsparameters.md">AlertPauseNotificationsParameters</a></i>,
+        "<a href="#autopausenotificationsparameters" title="AutoPauseNotificationsParameters">AutoPauseNotificationsParameters</a>" : <i><a href="autopausenotificationsparameters.md">AutoPauseNotificationsParameters</a></i>
     }
 }
 </pre>
@@ -44,12 +42,10 @@ Properties:
     <a href="#incidenturgencyrule" title="IncidentUrgencyRule">IncidentUrgencyRule</a>: <i><a href="incidenturgencyrule.md">IncidentUrgencyRule</a></i>
     <a href="#supporthours" title="SupportHours">SupportHours</a>: <i><a href="supporthours.md">SupportHours</a></i>
     <a href="#scheduledactions" title="ScheduledActions">ScheduledActions</a>: <i>
-      - <a href="scheduledaction.md">ScheduledAction</a></i>
+      - String</i>
     <a href="#alertcreation" title="AlertCreation">AlertCreation</a>: <i>String</i>
     <a href="#alertgroupingparameters" title="AlertGroupingParameters">AlertGroupingParameters</a>: <i><a href="alertgroupingparameters.md">AlertGroupingParameters</a></i>
-    <a href="#alertgrouping" title="AlertGrouping">AlertGrouping</a>: <i>String</i>
-    <a href="#alertgroupingtimeout" title="AlertGroupingTimeout">AlertGroupingTimeout</a>: <i>Integer</i>
-    <a href="#alertpausenotificationsparameters" title="AlertPauseNotificationsParameters">AlertPauseNotificationsParameters</a>: <i><a href="alertpausenotificationsparameters.md">AlertPauseNotificationsParameters</a></i>
+    <a href="#autopausenotificationsparameters" title="AutoPauseNotificationsParameters">AutoPauseNotificationsParameters</a>: <i><a href="autopausenotificationsparameters.md">AutoPauseNotificationsParameters</a></i>
 </pre>
 
 ## Properties
@@ -68,7 +64,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### Description
 
-Service description.
+The user-provided description of the service.
 
 _Required_: No
 
@@ -98,7 +94,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### Status
 
-A string that represent the current state of the Service.
+A string that represent the current state of the Service, allowed values are: active, warning, critical, maintenance, disabled.
 
 _Required_: No
 
@@ -112,7 +108,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 The ID of the Escalation Policy.
 
-_Required_: No
+_Required_: Yes
 
 _Type_: String
 
@@ -144,7 +140,7 @@ The list of scheduled actions for the service.
 
 _Required_: No
 
-_Type_: List of <a href="scheduledaction.md">ScheduledAction</a>
+_Type_: List of String
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -170,35 +166,13 @@ _Type_: <a href="alertgroupingparameters.md">AlertGroupingParameters</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
-#### AlertGrouping
-
-String that defines how alerts on this service will be automatically grouped into incidents.
-
-_Required_: No
-
-_Type_: String
-
-_Allowed Values_: <code>time</code> | <code>intelligent</code>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### AlertGroupingTimeout
-
-Integer representing the duration in minutes within which to automatically group incoming alerts.
-
-_Required_: No
-
-_Type_: Integer
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### AlertPauseNotificationsParameters
+#### AutoPauseNotificationsParameters
 
 Object that defines how alerts on this service are automatically suspended for a period of time before triggering, when identified as likely being transient.
 
 _Required_: No
 
-_Type_: <a href="alertpausenotificationsparameters.md">AlertPauseNotificationsParameters</a>
+_Type_: <a href="autopausenotificationsparameters.md">AutoPauseNotificationsParameters</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -216,7 +190,7 @@ For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::G
 
 #### Id
 
-Returns the <code>Id</code> value.
+The ID of the service.
 
 #### Summary
 
@@ -225,4 +199,12 @@ A short-form, server-generated string that provides succinct, important informat
 #### HtmlUrl
 
 A URL at which the entity is uniquely displayed in the Web app.
+
+#### Self
+
+String showing the URL at which the object is accessible.
+
+#### Type
+
+A string that determines the schema of the object, value must be: service.
 
