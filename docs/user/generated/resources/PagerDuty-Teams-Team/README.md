@@ -14,7 +14,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
     "Properties" : {
         "<a href="#name" title="Name">Name</a>" : <i>String</i>,
         "<a href="#description" title="Description">Description</a>" : <i>String</i>,
-        "<a href="#parent" title="Parent">Parent</a>" : <i><a href="parent.md">Parent</a></i>,
     }
 }
 </pre>
@@ -26,7 +25,6 @@ Type: PagerDuty::Teams::Team
 Properties:
     <a href="#name" title="Name">Name</a>: <i>String</i>
     <a href="#description" title="Description">Description</a>: <i>String</i>
-    <a href="#parent" title="Parent">Parent</a>: <i><a href="parent.md">Parent</a></i>
 </pre>
 
 ## Properties
@@ -39,9 +37,9 @@ _Required_: Yes
 
 _Type_: String
 
-_Minimum_: <code>1</code>
+_Minimum Length_: <code>1</code>
 
-_Maximum_: <code>100</code>
+_Maximum Length_: <code>100</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -53,17 +51,9 @@ _Required_: No
 
 _Type_: String
 
-_Minimum_: <code>1</code>
+_Minimum Length_: <code>1</code>
 
-_Maximum_: <code>1024</code>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### Parent
-
-_Required_: No
-
-_Type_: <a href="parent.md">Parent</a>
+_Maximum Length_: <code>1024</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
