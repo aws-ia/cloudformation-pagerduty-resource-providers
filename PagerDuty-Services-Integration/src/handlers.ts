@@ -31,7 +31,6 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, IntegrationPaylo
     private userAgent = `AWS CloudFormation (+https://aws.amazon.com/cloudformation/) CloudFormation resource ${this.typeName}/${version}`;
 
     async get(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<IntegrationPayload> {
-        this.loggerProxy.log(`!!!! GET ${JSON.stringify(model)}`);
         const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ integration: IntegrationPayload }>(
           'get',
           `/services/${model.serviceId}/integrations/${model.id}`);
@@ -45,7 +44,6 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, IntegrationPaylo
 
     async create(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<IntegrationPayload> {
         const integration = this.buildIntegrationFromModel(model);
-        console.log(`Integration Payload ${JSON.stringify(integration)}`);
         const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{ integration: IntegrationPayload }>(
           'post',
           `/services/${model.serviceId}/integrations`,

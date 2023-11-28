@@ -45,8 +45,57 @@
                 "StartsAfter": {
                     "type": "string"
                 },
-                "EndsWith": {
+                "EndsBefore": {
                     "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "MatchPredicate": {
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "type": "string",
+                    "enum": [
+                        "all",
+                        "any",
+                        "not",
+                        "contains",
+                        "exactly",
+                        "regex"
+                    ]
+                },
+                "Matcher": {
+                    "type": "string"
+                },
+                "Part": {
+                    "type": "string",
+                    "enum": [
+                        "body",
+                        "subject",
+                        "from_address"
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "RootMatchPredicate": {
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "type": "string",
+                    "enum": [
+                        "all",
+                        "any",
+                        "not"
+                    ]
+                },
+                "Children": {
+                    "type": "array",
+                    "insertionOrder": false,
+                    "items": {
+                        "$ref": "#/definitions/MatchPredicate"
+                    }
                 }
             },
             "additionalProperties": false
@@ -62,39 +111,7 @@
                     ]
                 },
                 "MatchPredicate": {
-                    "type": "object",
-                    "properties": {
-                        "Type": {
-                            "type": "string",
-                            "enum": [
-                                "all",
-                                "any",
-                                "not",
-                                "contains",
-                                "exactly",
-                                "regex"
-                            ]
-                        },
-                        "Matcher": {
-                            "type": "string"
-                        },
-                        "Part": {
-                            "type": "string",
-                            "enum": [
-                                "body",
-                                "subject",
-                                "from_address"
-                            ]
-                        },
-                        "Children": {
-                            "type": "array",
-                            "insertionOrder": false,
-                            "items": {
-                                "type": "object"
-                            }
-                        }
-                    },
-                    "additionalProperties": false
+                    "$ref": "#/definitions/RootMatchPredicate"
                 },
                 "ValueExtractors": {
                     "type": "array",

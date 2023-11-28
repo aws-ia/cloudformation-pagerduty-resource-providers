@@ -15,9 +15,17 @@
         "endpoint_url": null,
         "region": null,
         "target_schemas": [],
-        "profile": null,
-        "use_docker": true,
-        "no_docker": false,
+        "useDocker": false,
         "protocolVersion": "2.0.0"
+    },
+    "contractSettings":{
+        "typeConfiguration": {
+            "configuration": {
+                "PagerDutyAccess": {
+                    "Token": "{{resolve:ssm-secure:/cfn/pagerduty/token:1}}"
+                }
+            },
+            "configurationAlias": "default"
+        }
     }
 }

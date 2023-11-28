@@ -22,13 +22,25 @@
             "Action": "trigger",
             "MatchPredicate": {
                 "Type": "any",
-                "Children": []
+                "Children": [{
+                    "Type": "exactly",
+                    "Matcher": "Thistest",
+                    "Part": "body"
+                }]
             },
             "ValueExtractors": [
                 {
-                    "Type": "entire",
+                    "Type": "regex",
                     "Part": "subject",
-                    "ValueName": "incident_key"
+                    "ValueName": "incident_key",
+                    "Regex": "This (\\d+)"
+                },
+                {
+                    "Type": "between",
+                    "Part": "body",
+                    "ValueName": "incident_body",
+                    "StartsAfter": "start",
+                    "EndsBefore": "end"
                 }
             ]
         }

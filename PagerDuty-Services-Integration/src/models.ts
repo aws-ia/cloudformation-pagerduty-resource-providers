@@ -174,11 +174,30 @@ export class EmailParser extends BaseModel {
     )
     action?: Optional<string>;
     @Expose({ name: 'MatchPredicate' })
-    @Type(() => MatchPredicate)
-    matchPredicate?: Optional<MatchPredicate>;
+    @Type(() => RootMatchPredicate)
+    matchPredicate?: Optional<RootMatchPredicate>;
     @Expose({ name: 'ValueExtractors' })
     @Type(() => ValueExtractor)
     valueExtractors?: Optional<Array<ValueExtractor>>;
+
+}
+
+export class RootMatchPredicate extends BaseModel {
+    ['constructor']: typeof RootMatchPredicate;
+
+
+    @Expose({ name: 'Type' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'type_', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    type_?: Optional<string>;
+    @Expose({ name: 'Children' })
+    @Type(() => MatchPredicate)
+    children?: Optional<Array<MatchPredicate>>;
 
 }
 
@@ -213,15 +232,6 @@ export class MatchPredicate extends BaseModel {
         }
     )
     part?: Optional<string>;
-    @Expose({ name: 'Children' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(Object, 'children', value, obj, [Array, Map]),
-        {
-            toClassOnly: true,
-        }
-    )
-    children?: Optional<Array<Map<string, object>>>;
 
 }
 
@@ -274,15 +284,15 @@ export class ValueExtractor extends BaseModel {
         }
     )
     startsAfter?: Optional<string>;
-    @Expose({ name: 'EndsWith' })
+    @Expose({ name: 'EndsBefore' })
     @Transform(
         (value: any, obj: any) =>
-            transformValue(String, 'endsWith', value, obj, []),
+            transformValue(String, 'endsBefore', value, obj, []),
         {
             toClassOnly: true,
         }
     )
-    endsWith?: Optional<string>;
+    endsBefore?: Optional<string>;
 
 }
 
