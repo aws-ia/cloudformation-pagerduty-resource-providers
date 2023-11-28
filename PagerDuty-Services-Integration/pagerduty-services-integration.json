@@ -85,12 +85,23 @@
                                 "subject",
                                 "from_address"
                             ]
+                        },
+                        "Children": {
+                            "type": "array",
+                            "insertionOrder": false,
+                            "items": {
+                                "type": "object"
+                            }
                         }
                     },
                     "additionalProperties": false
                 },
                 "ValueExtractors": {
-                    "type": "string"
+                    "type": "array",
+                    "insertionOrder": false,
+                    "items": {
+                        "$ref": "#/definitions/ValueExtractor"
+                    }
                 }
             },
             "additionalProperties": false
@@ -267,24 +278,38 @@
         "/properties/Self",
         "/properties/IntegrationUrl"
     ],
+    "createOnlyProperties": [
+        "/properties/ServiceId"
+    ],
     "primaryIdentifier": [
-        "/properties/Id"
+        "/properties/Id",
+        "/properties/ServiceId"
     ],
     "handlers": {
         "create": {
-            "permissions": []
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
         },
         "read": {
-            "permissions": []
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
         },
         "update": {
-            "permissions": []
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
         },
         "delete": {
-            "permissions": []
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
         },
         "list": {
-            "permissions": []
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
         }
     }
 }

@@ -1,6 +1,36 @@
 {
-    "Type": "event_transformer_api_inbound_integration",
-    "Name":"Test Integration For Service",
+    "Type": "generic_email_inbound_integration",
+    "Name":"Email",
     "ServiceId": "ServiceId",
-    "VendorId": "VendorId (e.g. PZQ6AUS for AWS CloudWatch)"
+    "VendorId": "VendorId (e.g. PZQ6AUS for AWS CloudWatch)",
+    "IntegrationEmail": "test@dev-aws-cloudformation-cloudsoft.pagerduty.com",
+    "EmailIncidentCreation": "use_rules",
+    "EmailFilterMode": "or-rules-email",
+    "EmailParsingFallback": "discard",
+    "EmailFilters": [
+        {
+            "SubjectMode": "match",
+            "SubjectRegex": "alert",
+            "BodyMode": "match",
+            "BodyRegex": "alert",
+            "FromEmailMode": "match",
+            "FromEmailRegex": "alert"
+        }
+    ],
+    "EmailParsers": [
+        {
+            "Action": "trigger",
+            "MatchPredicate": {
+                "Type": "any",
+                "Children": []
+            },
+            "ValueExtractors": [
+                {
+                    "Type": "entire",
+                    "Part": "subject",
+                    "ValueName": "incident_key"
+                }
+            ]
+        }
+    ]
 }

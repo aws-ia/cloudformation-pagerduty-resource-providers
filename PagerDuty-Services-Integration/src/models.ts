@@ -10,6 +10,8 @@ export class ResourceModel extends BaseModel {
 
     @Exclude()
     protected readonly IDENTIFIER_KEY_ID: string = '/properties/Id';
+    @Exclude()
+    protected readonly IDENTIFIER_KEY_SERVICEID: string = '/properties/ServiceId';
 
     @Expose({ name: 'Id' })
     @Transform(
@@ -142,8 +144,12 @@ export class ResourceModel extends BaseModel {
             identifier[this.IDENTIFIER_KEY_ID] = this.id;
         }
 
+        if (this.serviceId != null) {
+            identifier[this.IDENTIFIER_KEY_SERVICEID] = this.serviceId;
+        }
+
         // only return the identifier if it can be used, i.e. if all components are present
-        return Object.keys(identifier).length === 1 ? identifier : null;
+        return Object.keys(identifier).length === 2 ? identifier : null;
     }
 
     @Exclude()
@@ -171,14 +177,8 @@ export class EmailParser extends BaseModel {
     @Type(() => MatchPredicate)
     matchPredicate?: Optional<MatchPredicate>;
     @Expose({ name: 'ValueExtractors' })
-    @Transform(
-        (value: any, obj: any) =>
-            transformValue(String, 'valueExtractors', value, obj, []),
-        {
-            toClassOnly: true,
-        }
-    )
-    valueExtractors?: Optional<string>;
+    @Type(() => ValueExtractor)
+    valueExtractors?: Optional<Array<ValueExtractor>>;
 
 }
 
@@ -213,6 +213,76 @@ export class MatchPredicate extends BaseModel {
         }
     )
     part?: Optional<string>;
+    @Expose({ name: 'Children' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(Object, 'children', value, obj, [Array, Map]),
+        {
+            toClassOnly: true,
+        }
+    )
+    children?: Optional<Array<Map<string, object>>>;
+
+}
+
+export class ValueExtractor extends BaseModel {
+    ['constructor']: typeof ValueExtractor;
+
+
+    @Expose({ name: 'Type' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'type_', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    type_?: Optional<string>;
+    @Expose({ name: 'Part' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'part', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    part?: Optional<string>;
+    @Expose({ name: 'ValueName' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'valueName', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    valueName?: Optional<string>;
+    @Expose({ name: 'Regex' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'regex', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    regex?: Optional<string>;
+    @Expose({ name: 'StartsAfter' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'startsAfter', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    startsAfter?: Optional<string>;
+    @Expose({ name: 'EndsWith' })
+    @Transform(
+        (value: any, obj: any) =>
+            transformValue(String, 'endsWith', value, obj, []),
+        {
+            toClassOnly: true,
+        }
+    )
+    endsWith?: Optional<string>;
 
 }
 
