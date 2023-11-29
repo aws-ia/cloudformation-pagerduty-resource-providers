@@ -45,8 +45,57 @@
                 "StartsAfter": {
                     "type": "string"
                 },
-                "EndsWith": {
+                "EndsBefore": {
                     "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "MatchPredicate": {
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "type": "string",
+                    "enum": [
+                        "all",
+                        "any",
+                        "not",
+                        "contains",
+                        "exactly",
+                        "regex"
+                    ]
+                },
+                "Matcher": {
+                    "type": "string"
+                },
+                "Part": {
+                    "type": "string",
+                    "enum": [
+                        "body",
+                        "subject",
+                        "from_address"
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "RootMatchPredicate": {
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "type": "string",
+                    "enum": [
+                        "all",
+                        "any",
+                        "not"
+                    ]
+                },
+                "Children": {
+                    "type": "array",
+                    "insertionOrder": false,
+                    "items": {
+                        "$ref": "#/definitions/MatchPredicate"
+                    }
                 }
             },
             "additionalProperties": false
@@ -62,35 +111,14 @@
                     ]
                 },
                 "MatchPredicate": {
-                    "type": "object",
-                    "properties": {
-                        "Type": {
-                            "type": "string",
-                            "enum": [
-                                "all",
-                                "any",
-                                "not",
-                                "contains",
-                                "exactly",
-                                "regex"
-                            ]
-                        },
-                        "Matcher": {
-                            "type": "string"
-                        },
-                        "Part": {
-                            "type": "string",
-                            "enum": [
-                                "body",
-                                "subject",
-                                "from_address"
-                            ]
-                        }
-                    },
-                    "additionalProperties": false
+                    "$ref": "#/definitions/RootMatchPredicate"
                 },
                 "ValueExtractors": {
-                    "type": "string"
+                    "type": "array",
+                    "insertionOrder": false,
+                    "items": {
+                        "$ref": "#/definitions/ValueExtractor"
+                    }
                 }
             },
             "additionalProperties": false
@@ -267,24 +295,38 @@
         "/properties/Self",
         "/properties/IntegrationUrl"
     ],
+    "createOnlyProperties": [
+        "/properties/ServiceId"
+    ],
     "primaryIdentifier": [
-        "/properties/Id"
+        "/properties/Id",
+        "/properties/ServiceId"
     ],
     "handlers": {
         "create": {
-            "permissions": []
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
         },
         "read": {
-            "permissions": []
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
         },
         "update": {
-            "permissions": []
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
         },
         "delete": {
-            "permissions": []
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
         },
         "list": {
-            "permissions": []
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
         }
     }
 }

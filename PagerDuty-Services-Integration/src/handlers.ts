@@ -1,6 +1,6 @@
 import {ResourceModel, TypeConfigurationModel} from './models';
 import {AbstractPagerDutyResource} from "../../PagerDuty-Common/src/abstract-pager-duty-resource";
-import {PagerDutyClient } from "../../PagerDuty-Common/src/pager-duty-client";
+import {PagerDutyClient} from "../../PagerDuty-Common/src/pager-duty-client";
 import {CaseTransformer, Transformer} from "../../PagerDuty-Common/src/util";
 import {InvalidRequest} from "@amazon-web-services-cloudformation/cloudformation-cli-typescript-lib/dist/exceptions";
 import {version} from '../package.json';
@@ -19,9 +19,9 @@ type IntegrationPayload = {
     integration_email?: string,
     email_incident_creation?: string,
     email_filter_mode?: string,
-    email_parsers?: any,
+    email_parsers?: any[],
     email_parsing_fallback?: string,
-    email_filters?: any,
+    email_filters?: any[],
     integration_key?: string,
     html_url?: string
 };
@@ -87,6 +87,16 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, IntegrationPaylo
         if (from.integration_key && from.html_url) {
             const region = from.html_url.indexOf('eu.pagerduty.com') > -1 ? 'eu' : 'us';
             params.integrationUrl = `https://events.${region}.pagerduty.com/integration/${from.integration_key}/enqueue`;
+        } else {
+            params.integrationUrl = "";
+        }
+
+        for (const emailFilter of from.email_filters) {
+            delete emailFilter.id;
+        }
+
+        for (const emailParser of from.email_parsers) {
+            delete emailParser.id;
         }
 
         // delete properties that are read only and unlikely to be needed/may cause drift
@@ -98,44 +108,39 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, IntegrationPaylo
         delete (<any>from).service;
         delete (<any>from).vendor;
 
-        const resourceModel = new ResourceModel({
+        return new ResourceModel({
             ...Transformer.for(from)
-              .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
-              .forModelIngestion()
-              .transform(),
+                .transformKeys(CaseTransformer.SNAKE_TO_CAMEL)
+                .forModelIngestion()
+                .transform(),
             ...params
         });
-        return resourceModel;
     }
 
 
     buildIntegrationFromModel(model: ResourceModel) : IntegrationPayload {
-        const integration : IntegrationPayload = {
+        const additionalParams : Partial<IntegrationPayload> = {};
+
+        if (model.vendorId) {
+            additionalParams.vendor = {
+                id: model.vendorId,
+                type: 'vendor_reference'
+            }
+            delete model.vendorId;
+        }
+
+        return {
             name: model.name,
             type: model.type_,
             service: {
                 id: model.serviceId,
                 type: 'service_reference'
-            }
+            },
+            ...Transformer.for(model.toJSON())
+                .transformKeys(CaseTransformer.PASCAL_TO_SNAKE)
+                .transform(),
+            ...additionalParams
         };
-
-        if (model.vendorId) {
-            integration.vendor = {
-                id: model.vendorId,
-                type: 'vendor_reference'
-            }
-        }
-
-        if ((model.type_ === 'generic_email_inbound_integration')){
-            integration.integration_email = model.integrationEmail;
-            integration.email_incident_creation = model.emailIncidentCreation;
-            integration.email_filter_mode = model.emailFilterMode;
-            integration.email_parsers = model.emailParsers;
-            integration.email_parsing_fallback = model.emailParsingFallback;
-            integration.email_filters = model.emailFilters;
-        }
-
-        return integration;
     }
 
 }

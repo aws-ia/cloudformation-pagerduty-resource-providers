@@ -9,8 +9,8 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 <pre>
 {
     "<a href="#action" title="Action">Action</a>" : <i>String</i>,
-    "<a href="#matchpredicate" title="MatchPredicate">MatchPredicate</a>" : <i><a href="emailparser.md">EmailParser</a></i>,
-    "<a href="#valueextractors" title="ValueExtractors">ValueExtractors</a>" : <i>String</i>
+    "<a href="#matchpredicate" title="MatchPredicate">MatchPredicate</a>" : <i><a href="rootmatchpredicate.md">RootMatchPredicate</a></i>,
+    "<a href="#valueextractors" title="ValueExtractors">ValueExtractors</a>" : <i>[ <a href="valueextractor.md">ValueExtractor</a>, ... ]</i>
 }
 </pre>
 
@@ -18,8 +18,9 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 
 <pre>
 <a href="#action" title="Action">Action</a>: <i>String</i>
-<a href="#matchpredicate" title="MatchPredicate">MatchPredicate</a>: <i><a href="emailparser.md">EmailParser</a></i>
-<a href="#valueextractors" title="ValueExtractors">ValueExtractors</a>: <i>String</i>
+<a href="#matchpredicate" title="MatchPredicate">MatchPredicate</a>: <i><a href="rootmatchpredicate.md">RootMatchPredicate</a></i>
+<a href="#valueextractors" title="ValueExtractors">ValueExtractors</a>: <i>
+      - <a href="valueextractor.md">ValueExtractor</a></i>
 </pre>
 
 ## Properties
@@ -38,7 +39,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 _Required_: No
 
-_Type_: <a href="emailparser.md">EmailParser</a>
+_Type_: <a href="rootmatchpredicate.md">RootMatchPredicate</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -46,7 +47,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 _Required_: No
 
-_Type_: String
+_Type_: List of <a href="valueextractor.md">ValueExtractor</a>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
