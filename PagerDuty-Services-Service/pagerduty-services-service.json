@@ -1,0 +1,393 @@
+{
+    "typeName": "PagerDuty::Services::Service",
+    "description": "Manage a Service in PagerDuty.",
+    "sourceUrl": "https://github.com/aws-ia/cloudformation-pagerduty-resource-providers.git",
+    "documentationUrl": "https://github.com/aws-ia/cloudformation-pagerduty-resource-providers",
+    "definitions": {
+        "PagerDutyAccess": {
+            "type": "object",
+            "properties": {
+                "Token": {
+                    "description": "Personal Access Token",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "Token"
+            ],
+            "additionalProperties": false
+        },
+        "UrgencyType": {
+            "description": "String representing the type of incident urgency: whether it's constant, or it's dependent on the support hours.",
+            "type": "string",
+            "default": "constant",
+            "enum": [
+                "constant",
+                "use_support_hours"
+            ]
+        },
+        "Urgency": {
+            "description": "String representing the incidents' urgency, if type is constant, allowed values are: low, high, severity_based.",
+            "type": "string",
+            "default": "high",
+            "enum": [
+                "low",
+                "high",
+                "severity_based"
+            ]
+        },
+        "ScheduledActionAt": {
+            "description": "Represents when scheduled action will occur, allowed values are: support_hours_start, support_hours_end.",
+            "type": "string",
+            "enum": [
+                "support_hours_start",
+                "support_hours_end"
+            ]
+        },
+        "HtmlUrl": {
+            "description": "A URL at which the entity is uniquely displayed in the Web app.",
+            "type": "string"
+        },
+        "Id": {
+            "description": "The ID of the service.",
+            "type": "string"
+        },
+        "Summary": {
+            "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
+            "type": "string"
+        },
+        "Team": {
+            "description": "Object representing a team associated with a service.",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "description": "String representing the ID of the team.",
+                    "type": "string"
+                },
+                "Type": {
+                    "description": "A string that determines the schema of the object, value must be team_reference.",
+                    "type": "string",
+                    "default": "team_reference",
+                    "enum": [
+                        "team_reference"
+                    ]
+                },
+                "Summary": {
+                    "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
+                    "type": "string"
+                },
+                "Self": {
+                    "description": "String showing URL at which the object is accessible.",
+                    "type": "string"
+                },
+                "HtmlUrl": {
+                    "description": "String representing a URL at which the entity is uniquely displayed in the Web app.",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "Integration": {
+            "description": "Object representing an integration associated with the service.",
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "description": "ID of the integration.",
+                    "type": "string"
+                },
+                "Type": {
+                    "description": "A string that determines the schema of the object. Refer to the documentation for allowed values.",
+                    "type": "string",
+                    "enum": [
+                        "aws_cloudwatch_inbound_integration",
+                        "cloudkick_inbound_integration",
+                        "event_transformer_api_inbound_integration",
+                        "generic_email_inbound_integration",
+                        "generic_events_api_inbound_integration",
+                        "keynote_inbound_integration",
+                        "nagios_inbound_integration",
+                        "pingdom_inbound_integration",
+                        "sql_monitor_inbound_integration",
+                        "events_api_v2_inbound_integration"
+                    ]
+                },
+                "Summary": {
+                    "description": "A short-form, server-generated string that provides succinct, important information about an object suitable for primary labeling of an entity in a client. In many cases, this will be identical to name, though it is not intended to be an identifier.",
+                    "type": "string"
+                },
+                "Self": {
+                    "description": "String showing the URL at which the object is accessible.",
+                    "type": "string"
+                },
+                "HtmlUrl": {
+                    "description": "String representing a URL at which the entity is uniquely displayed in the Web app.",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "typeConfiguration": {
+        "properties": {
+            "PagerDutyAccess": {
+                "$ref": "#/definitions/PagerDutyAccess"
+            }
+        },
+        "additionalProperties": false,
+        "required": [
+            "PagerDutyAccess"
+        ]
+    },
+    "properties": {
+        "Id": {
+            "$ref": "#/definitions/Id"
+        },
+        "Summary": {
+            "$ref": "#/definitions/Summary"
+        },
+        "Type": {
+            "description": "A string that determines the schema of the object, value must be: service.",
+            "type": "string",
+            "default": "service",
+            "enum": [
+                "service"
+            ]
+        },
+        "Self": {
+            "description": "String showing the URL at which the object is accessible.",
+            "type": "string"
+        },
+        "HtmlUrl": {
+            "$ref": "#/definitions/HtmlUrl"
+        },
+        "Name": {
+            "description": "The name of the service.",
+            "type": "string",
+            "minLength": 1
+        },
+        "Description": {
+            "description": "The user-provided description of the service.",
+            "type": "string"
+        },
+        "AutoResolveTimeout": {
+            "description": "A number that determines time in seconds that an incident is automatically resolved if left open for that long.",
+            "type": "integer",
+            "default": 14400,
+            "minimum": 0
+        },
+        "AcknowledgementTimeout": {
+            "description": "A number that determines time in seconds that an incident changes to the Triggered State after being Acknowledged.",
+            "type": "integer",
+            "default": 1800,
+            "minimum": 0
+        },
+        "Status": {
+            "description": "A string that represent the current state of the Service, allowed values are: active, warning, critical, maintenance, disabled.",
+            "type": "string",
+            "default": "active",
+            "enum": [
+                "active",
+                "warning",
+                "critical",
+                "maintenance",
+                "disabled"
+            ]
+        },
+        "EscalationPolicyId": {
+            "description": "The ID of the Escalation Policy.",
+            "type": "string"
+        },
+        "IncidentUrgencyRule": {
+            "description": "Object representing the Incident Urgency Rule.",
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "$ref": "#/definitions/UrgencyType"
+                },
+                "Urgency": {
+                    "$ref": "#/definitions/Urgency"
+                },
+                "DuringSupportHours": {
+                    "description": "Object representing the Incident Urgency Rule during support hours.",
+                    "type": "object",
+                    "properties": {
+                        "Type": {
+                            "$ref": "#/definitions/UrgencyType"
+                        },
+                        "Urgency": {
+                            "$ref": "#/definitions/Urgency"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "OutsideSupportHours": {
+                    "description": "Object representing the Incident Urgency Rule outside support hours.",
+                    "type": "object",
+                    "properties": {
+                        "Type": {
+                            "$ref": "#/definitions/UrgencyType"
+                        },
+                        "Urgency": {
+                            "$ref": "#/definitions/Urgency"
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "SupportHours": {
+            "description": "Object representing Support Hours.",
+            "type": "object",
+            "properties": {
+                "TimeZone": {
+                    "description": "String representing the time zone for the support hours.",
+                    "type": "string"
+                },
+                "StartTime": {
+                    "description": "String representing the support hours' starting time of day (date portion is ignored).",
+                    "type": "string"
+                },
+                "EndTime": {
+                    "description": "String representing the support hours' ending time of day (date portion is ignored).",
+                    "type": "string"
+                },
+                "Type": {
+                    "description": "String representing the type of support hours, value must be fixed_time_per_day.",
+                    "type": "string",
+                    "default": "fixed_time_per_day",
+                    "enum": [
+                        "fixed_time_per_day"
+                    ]
+                },
+                "DaysOfWeek": {
+                    "description": "Array representing the days of the week for support hours.",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "insertionOrder": false,
+                    "default": [1,2,3,4,5]
+                }
+            },
+            "additionalProperties": false
+        },
+        "ScheduledActions": {
+            "description": "The list of scheduled actions for the service.",
+            "type": "array",
+            "insertionOrder": false,
+            "items": {
+                "$ref": "#/definitions/ScheduledActionAt"
+            }
+        },
+        "AlertCreation": {
+            "description": "String representing whether a service creates only incidents, or both alerts and incidents.",
+            "type": "string",
+            "enum": [
+                "create_incidents",
+                "create_alerts_and_incidents"
+            ]
+        },
+        "AlertGroupingParameters": {
+            "description": "Object that defines how alerts on this service will be automatically grouped into incidents.",
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "description": "String representing the type of alert grouping, allowed values are: time, intelligent, content_based.",
+                    "type": "string",
+                    "enum": [
+                        "time",
+                        "intelligent",
+                        "content_based"
+                    ]
+                },
+                "Config": {
+                    "description": "Object representing configuration of the Alert Grouping.",
+                    "type": "object",
+                    "properties": {
+                        "Timeout": {
+                            "description": "Number representing the timeout of timeout for the Alert Grouping.",
+                            "type": "integer",
+                            "minimum": 300,
+                            "maximum": 3600
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "AutoPauseNotificationsParameters": {
+            "description": "Object that defines how alerts on this service are automatically suspended for a period of time before triggering, when identified as likely being transient.",
+            "type": "object",
+            "properties": {
+                "Enabled": {
+                    "description": "Boolean indicating if the Auto Pause Notification is enabled.",
+                    "type": "boolean",
+                    "default": false
+                },
+                "Timeout": {
+                    "description": "Number representing the timeout for Auto Pause Notification, valid values are: 120, 180, 300, 600, 900.",
+                    "type": "integer",
+                    "enum": [
+                        120,
+                        180,
+                        300,
+                        600,
+                        900
+                    ]
+                }
+
+            },
+            "additionalProperties": false
+        }
+    },
+    "additionalProperties": false,
+    "tagging": {
+        "taggable": false
+    },
+    "required": [
+        "Name",
+        "EscalationPolicyId"
+    ],
+    "readOnlyProperties": [
+        "/properties/Id",
+        "/properties/Summary",
+        "/properties/HtmlUrl",
+        "/properties/Self",
+        "/properties/Type"
+    ],
+    "writeOnlyProperties": [
+        "/properties/AutoPauseNotificationsParameters"
+    ],
+    "primaryIdentifier": [
+        "/properties/Id"
+    ],
+    "handlers": {
+        "create": {
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
+        },
+        "read": {
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
+        },
+        "update": {
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
+        },
+        "delete": {
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
+        },
+        "list": {
+            "permissions": [
+                "appsync:CreateApiKey"
+            ]
+        }
+    }
+}

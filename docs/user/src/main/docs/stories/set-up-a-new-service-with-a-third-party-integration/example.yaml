@@ -1,0 +1,83 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: |
+  The following CloudFormation PagerDuty resource types allow the creation and configuration of 
+  a service with an integration associated to it.
+  This allows creating and managing new services simply, efficiently, and consistently.
+
+Parameters:
+  From:
+    Type: String
+    Description: The email address of a valid user associated with the account making the request.
+
+Resources:
+  # 1. User
+  JamesUser:
+    Type: PagerDuty::Users::User
+    Properties:
+      Name: James Rodes
+      Email: james-rodes@acme.com
+      TimeZone: Europe/London
+      Color: blue
+      Role: admin
+      JobTitle: Lead Engineer
+
+  # 2. Escalation Policy
+  EscalationPolicy:
+    Type: PagerDuty::EscalationPolicies::EscalationPolicy
+    Properties:
+      Name: "Engineering Escalation Policy"
+      Description: "Escalation policy for the engineering team."
+      NumLoops: 2
+      OnCallHandoffNotifications: "if_has_services"
+      EscalationRules:
+        - EscalationDelayInMinutes: 30
+          Targets:
+            - Id: !Ref JamesUser
+              Type: "user_reference"
+
+  # 3. Service
+  PagerDutyService:
+    Type: PagerDuty::Services::Service
+    Properties:
+      Name: Test Service
+      Description: Service Description
+      AutoResolveTimeout: 14400
+      AcknowledgementTimeout: 1800
+      Status: active
+      EscalationPolicyId: !GetAtt EscalationPolicy.Id
+      IncidentUrgencyRule:
+        Type: use_support_hours,
+        DuringSupportHours:
+          Type: constant
+          Urgency: high
+        OutsideSupportHours:
+          Type: constant
+          Urgency: low
+      SupportHours:
+        Type: fixed_time_per_day
+        TimeZone: America/Lima
+        StartTime: 09:00:00
+        EndTime: 17:00:00
+        DaysOfWeek: [ 1,2,3,4,5 ]
+      ScheduledActions:
+        - support_hours_start
+      AlertCreation: create_alerts_and_incidents
+      AlertGroupingParameters:
+        Type: time
+        Config:
+          Timeout: 921
+      AutoPauseNotificationsParameters:
+        Enabled: true
+        Timeout: 300
+
+  # 4. Integration
+  PagerDutyIntegration:
+    Type: PagerDuty::Services::Integration
+    Properties:
+      Name: Test Integration for Test Service
+      Type: event_transformer_api_inbound_integration
+      ServiceId: !GetAtt PagerDutyService.Id
+      VendorId: PZQ6AUS
+

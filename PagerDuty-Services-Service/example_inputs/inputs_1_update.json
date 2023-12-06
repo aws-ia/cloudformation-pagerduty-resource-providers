@@ -1,0 +1,40 @@
+{
+    "Name":"Test Service 2",
+    "Description":"Test Description 2",
+    "AutoResolveTimeout":14400,
+    "AcknowledgementTimeout":1800,
+    "Status":"active",
+    "EscalationPolicyId":"<POLICY_ID>",
+    "IncidentUrgencyRule":{
+        "Type":"use_support_hours",
+        "DuringSupportHours": {
+            "Type":"constant",
+            "Urgency":"high"
+        },
+        "OutsideSupportHours": {
+            "Type":"constant",
+            "Urgency":"low"
+        }
+    },
+    "SupportHours":{
+        "Type": "fixed_time_per_day",
+        "TimeZone":"America/Lima",
+        "StartTime":"09:00:00",
+        "EndTime":"17:00:00",
+        "DaysOfWeek": [1,2,3,4,5]
+    },
+    "ScheduledActions":[
+        "support_hours_start"
+    ],
+    "AlertCreation":"create_alerts_and_incidents",
+    "AlertGroupingParameters":{
+        "Type":"time",
+        "Config":{
+            "Timeout":921
+        }
+    },
+    "AutoPauseNotificationsParameters":{
+        "Enabled":true,
+        "Timeout":300
+    }
+}
