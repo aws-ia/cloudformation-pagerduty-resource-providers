@@ -7,7 +7,7 @@ Resources:
       TimeZone: Europe/London
       ScheduleLayers:
         - Name: Night Shift
-          Start: '2024-11-06T20:00:00+00:00'
+          Start: '2015-11-06T20:00:00-05:00'
           End: '2025-11-06T20:00:00+00:00'
           RotationVirtualStart: '2015-11-06T20:00:00+00:00'
           RotationTurnLengthSeconds: 86400
@@ -20,6 +20,3 @@ Resources:
               StartTimeOfDay: '08:00:00'
               DurationSeconds: 32400
               StartDayOfWeek: 1
-      Teams:
-        - Id: PAGER_DUTY_TEAM_ID
-          Type: team_reference
