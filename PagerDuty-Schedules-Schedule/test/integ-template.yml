@@ -7,8 +7,8 @@ Resources:
       TimeZone: Europe/London
       ScheduleLayers:
         - Name: Night Shift
-          Start: '2023-11-06T20:00:00+00:00'
-          End: '2024-11-06T20:00:00+00:00'
+          Start: '2024-11-06T20:00:00+00:00'
+          End: '2025-11-06T20:00:00+00:00'
           RotationVirtualStart: '2015-11-06T20:00:00+00:00'
           RotationTurnLengthSeconds: 86400
           Users:
