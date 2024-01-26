@@ -21,6 +21,11 @@
         {
           "Type": "daily_restriction",
           "StartTimeOfDay": "08:00:00",
+          "DurationSeconds": 32400
+        },
+        {
+          "Type": "weekly_restriction",
+          "StartTimeOfDay": "08:00:00",
           "DurationSeconds": 32400,
           "StartDayOfWeek": 1
         }

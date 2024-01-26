@@ -178,26 +178,6 @@
       ],
       "additionalProperties": false
     },
-    "EscalationPolicy": {
-      "type": "object",
-      "properties": {
-        "Type": {
-          "description": "A string that determines the schema of the object. This must be the standard name for the entity, suffixed by _reference if the object is a reference./, =, +, and -.",
-          "type": "string",
-          "enum": [
-            "escalation_policy_reference"
-          ]
-        },
-        "Id": {
-          "$ref": "#/definitions/Id"
-        }
-      },
-      "required": [
-        "Type",
-        "Id"
-      ],
-      "additionalProperties": false
-    },
     "UserWrapper": {
       "type": "object",
       "properties": {
@@ -361,6 +341,7 @@
     "/properties/Self",
     "/properties/Users",
     "/properties/ScheduleLayers/*/Id",
+    "/properties/ScheduleLayers/*/Start",
     "/properties/ScheduleLayers/*/Users/*/Id",
     "/properties/ScheduleLayers/*/Users/*/Self",
     "/properties/ScheduleLayers/*/Users/*/Summary",
@@ -378,19 +359,29 @@
   ],
   "handlers": {
     "create": {
-      "permissions": []
+      "permissions": [
+        "appsync:CreateApiKey"
+      ]
     },
     "read": {
-      "permissions": []
+      "permissions": [
+        "appsync:CreateApiKey"
+      ]
     },
     "update": {
-      "permissions": []
+      "permissions": [
+        "appsync:CreateApiKey"
+      ]
     },
     "delete": {
-      "permissions": []
+      "permissions": [
+        "appsync:CreateApiKey"
+      ]
     },
     "list": {
-      "permissions": []
+      "permissions": [
+        "appsync:CreateApiKey"
+      ]
     }
   }
 }
