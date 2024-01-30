@@ -298,6 +298,14 @@
     "createOnlyProperties": [
         "/properties/ServiceId"
     ],
+    "writeOnlyProperties": [
+        "/properties/IntegrationEmail",
+        "/properties/EmailIncidentCreation",
+        "/properties/EmailFilterMode",
+        "/properties/EmailParsers",
+        "/properties/EmailParsingFallback",
+        "/properties/EmailFilters"
+    ],
     "primaryIdentifier": [
         "/properties/Id",
         "/properties/ServiceId"

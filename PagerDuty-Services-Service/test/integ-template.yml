@@ -1,0 +1,6 @@
+Resources:
+  SampleSchedule:
+    Type: PagerDuty::Services::Service
+    Properties:
+      Name: Test Service
+      EscalationPolicyId: PAGER_DUTY_POLICY_ID

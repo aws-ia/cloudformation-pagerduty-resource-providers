@@ -38,8 +38,19 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, IntegrationPaylo
     }
 
     async list(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<ResourceModel[]> {
-        // no api to list integrations
-        throw new InvalidRequest();
+        // no api to list integration, use Read as List.
+        try {
+            const response = await new PagerDutyClient(typeConfiguration?.pagerDutyAccess.token, this.userAgent).doRequest<{
+                integration: IntegrationPayload
+            }>(
+                'get',
+                `/services/${model.serviceId}/integrations/${model.id}`);
+            model = this.setModelFrom(model, response.data.integration)
+        } catch (e) {
+            return []
+        }
+
+        return [model];
     }
 
     async create(model: ResourceModel, typeConfiguration?: TypeConfigurationModel): Promise<IntegrationPayload> {
@@ -76,7 +87,6 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, IntegrationPaylo
         if (!from) {
             return model;
         }
-
         const params : Partial<ResourceModel> = {};
 
         params.serviceId = from.service.id;
@@ -89,14 +99,6 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, IntegrationPaylo
             params.integrationUrl = `https://events.${region}.pagerduty.com/integration/${from.integration_key}/enqueue`;
         } else {
             params.integrationUrl = "";
-        }
-
-        for (const emailFilter of from.email_filters) {
-            delete emailFilter.id;
-        }
-
-        for (const emailParser of from.email_parsers) {
-            delete emailParser.id;
         }
 
         // delete properties that are read only and unlikely to be needed/may cause drift

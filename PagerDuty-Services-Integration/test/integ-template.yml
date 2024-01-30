@@ -1,0 +1,8 @@
+Resources:
+  SampleSchedule:
+    Type: PagerDuty::Services::Integration
+    Properties:
+      Name: Test Integration for Service
+      Type: event_transformer_api_inbound_integration
+      ServiceId: PAGER_DUTY_SERVICE_ID
+      VendorId: PAGER_DUTY_VENDOR_ID
