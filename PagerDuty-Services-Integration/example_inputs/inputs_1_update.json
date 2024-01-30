@@ -1,8 +1,8 @@
 {
-    "Type": "generic_email_inbound_integration",
+    "Type": "event_transformer_api_inbound_integration",
     "Name":"Email",
-    "ServiceId": "ServiceId",
-    "VendorId": "VendorId (e.g. PZQ6AUS for AWS CloudWatch)",
+    "ServiceId": "PAGER_DUTY_SERVICE_ID",
+    "VendorId": "PAGER_DUTY_VENDOR_ID",
     "IntegrationEmail": "test@dev-aws-cloudformation-cloudsoft.pagerduty.com",
     "EmailIncidentCreation": "use_rules",
     "EmailFilterMode": "or-rules-email",

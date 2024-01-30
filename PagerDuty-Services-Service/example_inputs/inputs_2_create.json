@@ -4,7 +4,7 @@
     "AutoResolveTimeout":14400,
     "AcknowledgementTimeout":1800,
     "Status":"active",
-    "EscalationPolicyId":"<POLICY_ID>",
+    "EscalationPolicyId":"PAGER_DUTY_POLICY_ID",
     "IncidentUrgencyRule":{
         "Type":"constant",
         "Urgency":"high"
