@@ -95,8 +95,8 @@ class Resource extends AbstractPagerDutyResource<ResourceModel, IntegrationPaylo
         }
 
         if (from.integration_key && from.html_url) {
-            const region = from.html_url.indexOf('eu.pagerduty.com') > -1 ? 'eu' : 'us';
-            params.integrationUrl = `https://events.${region}.pagerduty.com/integration/${from.integration_key}/enqueue`;
+            const host = from.html_url.indexOf('eu.pagerduty.com') > -1 ? 'events.eu.pagerduty.com' : 'events.pagerduty.com';
+            params.integrationUrl = `https://${host}/integration/${from.integration_key}/enqueue`;
         } else {
             params.integrationUrl = "";
         }
